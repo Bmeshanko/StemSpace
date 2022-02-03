@@ -142,6 +142,5 @@ public class Profile {
 
     public void comment(String text, Post post, Comment parent) {
         Comment comment = new Comment(text, this, post, parent);
-        
     }
 }
