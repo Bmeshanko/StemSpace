@@ -1,6 +1,6 @@
 package Springboot;
 public class Profile {
-    private String id;
+    private String username;
     private String name;
     private String email;
     private String password; // Serializable?
@@ -19,8 +19,17 @@ public class Profile {
     private Comment[] comments;
     private int commentsCount;
 
-    public Profile() {
-        // Needs plenty of parameters.
+    public Profile(String username, String name, String email, String password) {
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.followers = new Profile[200];
+        this.following = new Profile[200];
+        this.blockedUsers = new Profile[10];
+        this.mutedUsers = new Profile[10];
+        this.followingTopics = new Topic[20];
+        this.likedPosts = new Post[200];
+        this.comments = new Comment[100];
     }
-
 }
