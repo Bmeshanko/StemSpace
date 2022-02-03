@@ -1,4 +1,4 @@
 package Springboot;
-public class Profile {
+public class Post {
     
 }
