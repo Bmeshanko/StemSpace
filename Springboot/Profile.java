@@ -13,7 +13,7 @@ public class Profile {
     private Profile[] mutedUsers;
     private int mutedUsersCount;
     private Topic[] followingTopics;
-    private int followngTopicsCount;
+    private int followingTopicsCount;
     private Post[] likedPosts;
     private int likedPostsCount;
     private Comment[] comments;
@@ -35,7 +35,7 @@ public class Profile {
         this.followingCount = 0;
         this.blockedUsersCount = 0;
         this.mutedUsersCount = 0;
-        this.followngTopicsCount = 0;
+        this.followingTopicsCount = 0;
         this.likedPostsCount = 0;
         this.commentsCount = 0;
     }
@@ -86,8 +86,6 @@ public class Profile {
     }
 
     public void followUser(Profile p) {
-        // If the array is full, double its size.
-        // O(1) Insertion, O(n) doubling.
         if (followingCount == following.length) {
             Profile[] newFollowing = new Profile[followingCount * 2];
             for (int i = 0; i < followingCount; i++) {
@@ -97,4 +95,39 @@ public class Profile {
         }
         following[followingCount++] = p;
     }
+
+    public void blockUser(Profile p) {
+        if (blockedUsersCount == blockedUsers.length) {
+            Profile[] newBlockedUsers = new Profile[blockedUsersCount * 2];
+            for (int i = 0; i < blockedUsersCount; i++) {
+                newBlockedUsers[i] = blockedUsers[i];
+            }
+            blockedUsers = newBlockedUsers;
+        }
+        blockedUsers[blockedUsersCount++] = p;
+    }
+
+    public void muteUser(Profile p) {
+        if (mutedUsersCount == mutedUsers.length) {
+            Profile[] newMutedUsers = new Profile[mutedUsersCount * 2];
+            for (int i = 0; i < mutedUsersCount; i++) {
+                newMutedUsers[i] = mutedUsers[i];
+            }
+            mutedUsers = newMutedUsers;
+        }
+        mutedUsers[mutedUsersCount++] = p;
+    }
+
+    public void followTopic(Topic t) {
+        if (followingTopicsCount == followingTopics.length) {
+            Topic[] newFollowingTopics = new Topic[followingTopicsCount * 2];
+            for (int i = 0; i < followingTopicsCount; i++) {
+                newFollowingTopics[i] = newFollowingTopics[i];
+            }
+            followingTopics = newFollowingTopics;
+        }
+        followingTopics[followingTopicsCount++] = t;
+    }
+
+    
 }
