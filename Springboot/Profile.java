@@ -140,7 +140,8 @@ public class Profile {
         likedPosts[likedPostsCount++] = p;
     }
 
-    public void comment(String text, Comment parent, Post post) {
+    public void comment(String text, Post post, Comment parent) {
+        Comment comment = new Comment(text, this, post, parent);
         
     }
 }
