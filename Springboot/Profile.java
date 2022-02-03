@@ -31,6 +31,13 @@ public class Profile {
         this.followingTopics = new Topic[20];
         this.likedPosts = new Post[200];
         this.comments = new Comment[100];
+        this.followersCount = 0;
+        this.followingCount = 0;
+        this.blockedUsersCount = 0;
+        this.mutedUsersCount = 0;
+        this.followngTopicsCount = 0;
+        this.likedPostsCount = 0;
+        this.commentsCount = 0;
     }
 
     public String getUsername() {
@@ -63,5 +70,31 @@ public class Profile {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void addFollower(Profile p) {
+        // If the array is full, double its size.
+        // O(1) Insertion, O(n) doubling.
+        if (followersCount == followers.length) {
+            Profile[] newFollowers = new Profile[followersCount * 2];
+            for (int i = 0; i < followersCount; i++) {
+                newFollowers[i] = followers[i];
+            }
+            followers = newFollowers;
+        }
+        followers[followersCount++] = p;
+    }
+
+    public void followUser(Profile p) {
+        // If the array is full, double its size.
+        // O(1) Insertion, O(n) doubling.
+        if (followingCount == following.length) {
+            Profile[] newFollowing = new Profile[followingCount * 2];
+            for (int i = 0; i < followingCount; i++) {
+                newFollowing[i] = following[i];
+            }
+            following = newFollowing;
+        }
+        following[followingCount++] = p;
     }
 }
