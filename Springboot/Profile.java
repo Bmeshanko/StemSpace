@@ -122,12 +122,25 @@ public class Profile {
         if (followingTopicsCount == followingTopics.length) {
             Topic[] newFollowingTopics = new Topic[followingTopicsCount * 2];
             for (int i = 0; i < followingTopicsCount; i++) {
-                newFollowingTopics[i] = newFollowingTopics[i];
+                newFollowingTopics[i] = followingTopics[i];
             }
             followingTopics = newFollowingTopics;
         }
         followingTopics[followingTopicsCount++] = t;
     }
 
-    
+    public void likePost(Post p) {
+        if (likedPostsCount == likedPosts.length) {
+            Post[] newLikedPosts = new Post[likedPostsCount * 2];
+            for (int i = 0; i < likedPostsCount; i++) {
+                newLikedPosts[i] = likedPosts[i];
+            }
+            likedPosts = newLikedPosts;
+        }
+        likedPosts[likedPostsCount++] = p;
+    }
+
+    public void comment(String text, Comment parent, Post post) {
+        
+    }
 }
