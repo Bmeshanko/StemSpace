@@ -163,6 +163,11 @@ public class Profile {
             }
             posts = newPosts;
         }
+        
+        // Add post to Topic's array.
         posts[postsCount++] = p;
+        if (topic != null) {
+            topic.addPost(p);
+        }
     }
 }
