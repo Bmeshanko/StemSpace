@@ -18,6 +18,8 @@ public class Profile {
     private int likedPostsCount;
     private Comment[] comments;
     private int commentsCount;
+    private Post[] posts;
+    private int postsCount;
 
     public Profile(String username, String name, String email, String password) {
         this.setUsername(username);
@@ -150,5 +152,17 @@ public class Profile {
             comments = newComments;
         }
         comments[commentsCount++] = c;
+    }
+
+    public void post(String text, Topic topic) {
+        Post p = new Post(this, text, topic);
+        if (postsCount == posts.length) {
+            Post[] newPosts = new Post[postsCount * 2];
+            for (int i = 0; i < postsCount; i++) {
+                newPosts[i] = posts[i];
+            }
+            posts = newPosts;
+        }
+        posts[postsCount++] = p;
     }
 }
