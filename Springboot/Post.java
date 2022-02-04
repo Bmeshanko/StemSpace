@@ -11,5 +11,8 @@ public class Post {
         this.author = author;
         this.text = text;
         this.topic = topic;
+        this.comments = new Comment[20];
+        this.commentsCount = 0;
+        this.likes = 0;
     }
 }
