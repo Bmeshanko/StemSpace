@@ -1,4 +1,15 @@
 package Springboot;
 public class Post {
-    //kevin is the best
+    private Profile author;
+    private String text;
+    private Topic topic;
+    private Comment[] comments;
+    private int commentsCount;
+    private int likes;
+    
+    public Post(Profile author, String text, Topic topic) {
+        this.author = author;
+        this.text = text;
+        this.topic = topic;
+    }
 }
