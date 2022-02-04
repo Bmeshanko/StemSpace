@@ -4,22 +4,22 @@ public class Profile {
     private String name;
     private String email;
     private String password; // Serializable?
-    private Profile[] followers;
-    private int followersCount;
-    private Profile[] following;
-    private int followingCount;
+    public Profile[] followers;
+    public int followersCount;
+    public Profile[] following;
+    public int followingCount;
     private Profile[] blockedUsers;
     private int blockedUsersCount;
     private Profile[] mutedUsers;
     private int mutedUsersCount;
-    private Topic[] followingTopics;
-    private int followingTopicsCount;
-    private Post[] likedPosts;
-    private int likedPostsCount;
-    private Comment[] comments;
-    private int commentsCount;
-    private Post[] posts;
-    private int postsCount;
+    public Topic[] followingTopics;
+    public int followingTopicsCount;
+    public Post[] likedPosts;
+    public int likedPostsCount;
+    public Comment[] comments;
+    public int commentsCount;
+    public Post[] posts;
+    public int postsCount;
 
     public Profile(String username, String name, String email, String password) {
         this.setUsername(username);
@@ -72,6 +72,14 @@ public class Profile {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Profile[] getBlockedUsers() {
+        return blockedUsers;
+    }
+
+    public Profile[] getMutedUsers() {
+        return mutedUsers;
     }
 
     public void addFollower(Profile p) {
@@ -163,8 +171,8 @@ public class Profile {
             }
             posts = newPosts;
         }
-        
-        // Add post to Topic's array.
+
+        // Add post to Topic's array of posts.
         posts[postsCount++] = p;
         if (topic != null) {
             topic.addPost(p);
