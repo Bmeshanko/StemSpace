@@ -4,21 +4,21 @@ public class Profile {
     private String name;
     private String email;
     private String password; // Serializable?
-    public Profile[] followers;
+    private Profile[] followers;
     public int followersCount;
-    public Profile[] following;
+    private Profile[] following;
     public int followingCount;
     private Profile[] blockedUsers;
     private int blockedUsersCount;
     private Profile[] mutedUsers;
     private int mutedUsersCount;
-    public Topic[] followingTopics;
-    public int followingTopicsCount;
-    public Post[] likedPosts;
-    public int likedPostsCount;
-    public Comment[] comments;
-    public int commentsCount;
-    public Post[] posts;
+    private Topic[] followingTopics;
+    private int followingTopicsCount;
+    private Post[] likedPosts;
+    private int likedPostsCount;
+    private Comment[] comments;
+    private int commentsCount;
+    private Post[] posts;
     public int postsCount;
 
     public Profile(String username, String name, String email, String password) {
