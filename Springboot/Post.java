@@ -31,4 +31,15 @@ public class Post {
     public String getText(){
         return text;
     }
+
+    public void addComment(Comment c) {
+        if (commentsCount == comments.length) {
+            Comment[] newComments = new Comment[commentsCount * 2];
+            for (int i = 0; i < commentsCount; i++) {
+                newComments[i] = comments[i];
+            }
+            comments = newComments;
+        }
+        comments[commentsCount++] = c;
+    }
 }

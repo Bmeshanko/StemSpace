@@ -160,6 +160,10 @@ public class Profile {
             comments = newComments;
         }
         comments[commentsCount++] = c;
+        post.addComment(c);
+        if (parent != null) {
+            parent.addReply(c);
+        }
     }
 
     public void post(String text, Topic topic) {

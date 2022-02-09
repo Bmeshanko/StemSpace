@@ -28,5 +28,6 @@ public class Comment {
             replies = newReplies;
         }
         replies[repliesCount++] = c;
+        this.post.addComment(c);
     }
 }
