@@ -1,6 +1,27 @@
 package Springboot;
+/*
+
+Default List of Topics:
+1. Sports
+2. Compsci
+3. Earth
+4. Politics
+5. Biology
+6. Engineering
+7. Math
+8. Funny
+9. Gaming
+10. Psychology
+11. Fitness
+12. Blogs
+13. Music
+14. Art
+15. Health
+
+*/
 public class Topic {
     private String name;
+    private String description;
     private Post[] posts;
     private int postsCount;
     private Profile[] followers;
@@ -12,6 +33,18 @@ public class Topic {
         this.followers = new Profile[1000];
         this.postsCount = 0;
         this.followersCount = 0;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getDescription() {
+        return this.description;
     }
 
     public void addFollower(Profile p) {
