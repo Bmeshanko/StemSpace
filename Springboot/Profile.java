@@ -128,6 +128,26 @@ public class Profile {
         following[followingCount++] = p;
     }
 
+    public void unfollowUser(Profile p) {
+        if (followingCount * 2 < following.length) {
+            Profile[] newFollowing = new Profile[followingCount + 1];
+            for (int i = 0; i < followingCount; i++) {
+                if (following[i] == null) break;
+                newFollowing[i] = following[i];
+            }
+            following = newFollowing;
+        }
+
+        for (int i = 0; i < followingCount; i++) {
+            if (following[i].equals(p)) {
+                while (i < followingCount - 1) {
+                    following[i] = following[i + 1];
+                }
+            }
+        }
+        following[followingCount--] = null;
+    }
+
     public void blockUser(Profile p) {
         if (blockedUsersCount == blockedUsers.length) {
             Profile[] newBlockedUsers = new Profile[blockedUsersCount * 2];
@@ -139,6 +159,26 @@ public class Profile {
         blockedUsers[blockedUsersCount++] = p;
     }
 
+    public void unblockUser(Profile p) {
+        if (blockedUsersCount * 2 < blockedUsers.length) {
+            Profile[] newBlockedUsers = new Profile[blockedUsersCount + 1];
+            for (int i = 0; i < blockedUsersCount; i++) {
+                if (blockedUsers[i] == null) break;
+                newBlockedUsers[i] = blockedUsers[i];
+            }
+            blockedUsers = newBlockedUsers;
+        }
+
+        for (int i = 0; i < blockedUsersCount; i++) {
+            if (blockedUsers[i].equals(p)) {
+                while (i < blockedUsersCount - 1) {
+                    blockedUsers[i] = blockedUsers[i + 1];
+                }
+            }
+        }
+        blockedUsers[blockedUsersCount--] = null;
+    }
+
     public void muteUser(Profile p) {
         if (mutedUsersCount == mutedUsers.length) {
             Profile[] newMutedUsers = new Profile[mutedUsersCount * 2];
@@ -148,6 +188,26 @@ public class Profile {
             mutedUsers = newMutedUsers;
         }
         mutedUsers[mutedUsersCount++] = p;
+    }
+
+    public void unmuteUser(Profile p) {
+        if (mutedUsersCount * 2 < mutedUsers.length) {
+            Profile[] newMutedUsers = new Profile[mutedUsersCount + 1];
+            for (int i = 0; i < mutedUsersCount; i++) {
+                if (mutedUsers[i] == null) break;
+                newMutedUsers[i] = mutedUsers[i];
+            }
+            mutedUsers = newMutedUsers;
+        }
+
+        for (int i = 0; i < mutedUsersCount; i++) {
+            if (mutedUsers[i].equals(p)) {
+                while (i < mutedUsersCount - 1) {
+                    mutedUsers[i] = mutedUsers[i + 1];
+                }
+            }
+        }
+        mutedUsers[mutedUsersCount--] = null;
     }
 
     public void followTopic(Topic t) {
