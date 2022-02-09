@@ -88,4 +88,24 @@ public class Topic {
         }
         posts[postsCount++] = p;
     }
+
+    public void removePost(Post p) {
+        if (postsCount * 2 < posts.length) {
+            Post[] newPosts = new Post[postsCount + 1];
+            for (int i = 0; i < postsCount; i++) {
+                if (posts[i] == null) break;
+                newPosts[i] = posts[i];
+            }
+            posts = newPosts;
+        }
+
+        for (int i = 0; i < postsCount; i++) {
+            if (posts[i].equals(p)) {
+                while (i < postsCount - 1) {
+                    posts[i] = posts[i + 1];
+                }
+            }
+        }
+        posts[postsCount--] = null;
+    }
 }

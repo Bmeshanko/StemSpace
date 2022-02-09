@@ -311,6 +311,7 @@ public class Profile {
         if (c.getParent() != null) {
             c.getParent().removeReply(c);
         }
+        // Java's Garbage collector should kick in here - not entirely sure though.
     }
 
     public void post(String text, Topic topic) {
@@ -323,10 +324,38 @@ public class Profile {
             posts = newPosts;
         }
 
-        // Add post to Topic's array of posts.
         posts[postsCount++] = p;
         if (topic != null) {
             topic.addPost(p);
+        }
+    }
+
+    public void deletePost(Post p) {
+        if (postsCount * 2 < posts.length) {
+            Post[] newPosts = new Post[postsCount + 1];
+            for (int i = 0; i < postsCount; i++) {
+                if (posts[i] == null) break;
+                newPosts[i] = posts[i];
+            }
+            posts = newPosts;
+        }
+
+        for (int i = 0; i < postsCount; i++) {
+            if (posts[i].equals(p)) {
+                while (i < postsCount - 1) {
+                    posts[i] = posts[i + 1];
+                }
+            }
+        }
+        posts[postsCount--] = null;
+        
+        if (p.getTopic() != null) {
+            p.getTopic().removePost(p);
+        }
+
+        for (int i = 0; i < p.getComments().length; i++) {
+            Comment c = p.getComments()[i];
+            c.getAuthor().removeComment(c);
         }
     }
 }

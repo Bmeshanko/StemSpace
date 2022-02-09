@@ -23,6 +23,10 @@ public class Comment {
         return parent;
     }
 
+    public Profile getAuthor() {
+        return author;
+    }
+
     public void addReply(Comment c) {
         if (repliesCount == replies.length) {
             Comment[] newReplies = new Comment[repliesCount * 2];
