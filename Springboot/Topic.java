@@ -48,8 +48,6 @@ public class Topic {
     }
 
     public void addFollower(Profile p) {
-        // If the array is full, double its size.
-        // O(1) Insertion, O(n) doubling.
         if (followersCount == followers.length) {
             Profile[] newFollowers = new Profile[followersCount * 2];
             for (int i = 0; i < followersCount; i++) {
@@ -58,6 +56,26 @@ public class Topic {
             followers = newFollowers;
         }
         followers[followersCount++] = p;
+    }
+
+    public void removeFollower(Profile p) {
+        if (followersCount * 2 < followers.length) {
+            Profile[] newFollowers = new Profile[followersCount + 1];
+            for (int i = 0; i < followersCount; i++) {
+                if (followers[i] == null) break;
+                newFollowers[i] = followers[i];
+            }
+            followers = newFollowers;
+        }
+
+        for (int i = 0; i < followersCount; i++) {
+            if (followers[i].equals(p)) {
+                while (i < followersCount - 1) {
+                    followers[i] = followers[i + 1];
+                }
+            }
+        }
+        followers[followersCount--] = null;
     }
 
     public void addPost(Post p) {

@@ -19,6 +19,10 @@ public class Comment {
         }
     }
 
+    public Comment getParent() {
+        return parent;
+    }
+
     public void addReply(Comment c) {
         if (repliesCount == replies.length) {
             Comment[] newReplies = new Comment[repliesCount * 2];
@@ -29,5 +33,25 @@ public class Comment {
         }
         replies[repliesCount++] = c;
         this.post.addComment(c);
+    }
+
+    public void removeReply(Comment c) {
+        if (repliesCount * 2 < replies.length) {
+            Comment[] newReplies = new Comment[repliesCount + 1];
+            for (int i = 0; i < repliesCount; i++) {
+                if (replies[i] == null) break;
+                newReplies[i] = replies[i];
+            }
+            replies = newReplies;
+        }
+
+        for (int i = 0; i < repliesCount; i++) {
+            if (replies[i].equals(c)) {
+                while (i < repliesCount - 1) {
+                    replies[i] = replies[i + 1];
+                }
+            }
+        }
+        replies[repliesCount--] = null;
     }
 }

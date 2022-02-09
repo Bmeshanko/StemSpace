@@ -290,6 +290,29 @@ public class Profile {
         }
     }
 
+    public void removeComment(Comment c) {
+        if (commentsCount * 2 < comments.length) {
+            Comment[] newComments = new Comment[commentsCount + 1];
+            for (int i = 0; i < commentsCount; i++) {
+                if (comments[i] == null) break;
+                newComments[i] = comments[i];
+            }
+            comments = newComments;
+        }
+
+        for (int i = 0; i < commentsCount; i++) {
+            if (comments[i].equals(c)) {
+                while (i < commentsCount - 1) {
+                    comments[i] = comments[i + 1];
+                }
+            }
+        }
+        comments[commentsCount--] = null;
+        if (c.getParent() != null) {
+            c.getParent().removeReply(c);
+        }
+    }
+
     public void post(String text, Topic topic) {
         Post p = new Post(this, text, topic);
         if (postsCount == posts.length) {
