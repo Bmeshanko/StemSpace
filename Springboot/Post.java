@@ -15,4 +15,20 @@ public class Post {
         this.commentsCount = 0;
         this.likes = 0;
     }
+
+    public Comment[] getComments() {
+        return comments;
+    }
+
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
+    }
+
+    public String getText(){
+        return text;
+    }
 }
