@@ -221,6 +221,26 @@ public class Profile {
         followingTopics[followingTopicsCount++] = t;
     }
 
+    public void unfollowTopic(Topic t) {
+        if (followingTopicsCount * 2 < followingTopics.length) {
+            Topic[] newFollowingTopics = new Topic[followingTopicsCount + 1];
+            for (int i = 0; i < followingTopicsCount; i++) {
+                if (followingTopics[i] == null) break;
+                newFollowingTopics[i] = followingTopics[i];
+            }
+            followingTopics = newFollowingTopics;
+        }
+
+        for (int i = 0; i < followingTopicsCount; i++) {
+            if (followingTopics[i].equals(t)) {
+                while (i < followingTopicsCount - 1) {
+                    followingTopics[i] = followingTopics[i + 1];
+                }
+            }
+        }
+        followingTopics[followingTopicsCount--] = null;
+    }
+
     public void likePost(Post p) {
         if (likedPostsCount == likedPosts.length) {
             Post[] newLikedPosts = new Post[likedPostsCount * 2];
@@ -230,6 +250,28 @@ public class Profile {
             likedPosts = newLikedPosts;
         }
         likedPosts[likedPostsCount++] = p;
+        p.addLike();
+    }
+
+    public void unlikePost(Post p) {
+        if (likedPostsCount * 2 < likedPosts.length) {
+            Post[] newLikedPosts = new Post[likedPostsCount + 1];
+            for (int i = 0; i < likedPostsCount; i++) {
+                if (likedPosts[i] == null) break;
+                newLikedPosts[i] = likedPosts[i];
+            }
+            likedPosts = newLikedPosts;
+        }
+
+        for (int i = 0; i < likedPostsCount; i++) {
+            if (likedPosts[i].equals(p)) {
+                while (i < likedPostsCount - 1) {
+                    likedPosts[i] = likedPosts[i + 1];
+                }
+            }
+        }
+        likedPosts[likedPostsCount--] = null;
+        p.removeLike();
     }
 
     public void comment(String text, Post post, Comment parent) {
