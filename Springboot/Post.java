@@ -42,4 +42,16 @@ public class Post {
         }
         comments[commentsCount++] = c;
     }
+
+    public void addLike() {
+        likes++;
+    }
+
+    public void removeLike() {
+        likes--;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
 }
