@@ -4,7 +4,7 @@ public class Timeline {
 
     // Constructor called when refreshing/loading timeline.
     public Timeline(Profile profile) {
-
+        this.profile = profile;
     }
 
     public void calculateOrder() {
