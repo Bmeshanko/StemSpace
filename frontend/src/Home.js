@@ -5,6 +5,7 @@ function Home() {
     return (
         <div className="Home">
             <header className="Home-header">
+            <img src="Logo.png" alt="STEM"></img>
                 <p>
                     Welcome to StemSpace!
                 </p>
