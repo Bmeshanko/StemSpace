@@ -16,6 +16,10 @@ public class Post {
         this.likes = 0;
     }
 
+    public Profile getAuthor() {
+        return author;
+    }
+
     public Comment[] getComments() {
         return comments;
     }

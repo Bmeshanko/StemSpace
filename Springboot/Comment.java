@@ -27,6 +27,10 @@ public class Comment {
         return author;
     }
 
+    public String getText() {
+        return text;
+    }
+
     public void addReply(Comment c) {
         if (repliesCount == replies.length) {
             Comment[] newReplies = new Comment[repliesCount * 2];
