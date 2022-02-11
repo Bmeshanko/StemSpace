@@ -1,25 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import './Login.css';
 
-function App() {
+function Login() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
+    <div className="Login">
+      <header className="Login-header">
+        <img src="Logo.png" className="Logo" alt="STEM"></img>
+        <p className= "Login-message">
+          <b>Welcome to StemSpace!</b>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
   );
 }
 
-export default App;
+export default Login;

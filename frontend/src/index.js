@@ -4,10 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Home from './Home';
+import Login from './Login';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Home />
+    <Login />
   </React.StrictMode>,
   document.getElementById('root')
 );
