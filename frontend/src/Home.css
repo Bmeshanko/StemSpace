@@ -4,7 +4,7 @@
 
 
 .Home-header {
-    background-color: #000000;
+    background-color: #ffffff;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -17,3 +17,34 @@
 .Github-Link {
     color: #61dafb;
 }
+
+.toLogin {
+    width: max-content;
+    text-align: justify;
+    display: flex;
+    padding: 15px;
+    background-color: #3eb81d;
+    border-radius: 20px;
+    margin-top: 0px;
+    margin-left: 90px;
+    font-family: consolas;
+    color: #000;
+    position: relative;
+    right: 80px;
+    top: 2px
+  }
+
+  .toSignin {
+    width: max-content;
+    text-align: justify;
+    display: flex;
+    padding: 15px;
+    background-color: #3eb81d;
+    border-radius: 20px;
+    margin-top: 0px;
+    margin-left: 90px;
+    font-family: consolas;
+    color: #000;
+    position: relative;
+    top: 2px
+  }
