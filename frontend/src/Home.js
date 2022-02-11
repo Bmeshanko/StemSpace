@@ -14,7 +14,7 @@ function Home() {
     return (
         <div className="Home">
             <header className="Home-header">
-            <img src="Logo.png" alt="STEM"></img>
+            <img src="Logo_new.png" alt="STEM"></img>
             <Welcome></Welcome>
                 <a
                     className="Github-Link"

@@ -4,7 +4,7 @@ function Login() {
   return (
     <div className="Login">
       <header className="Login-header">
-        <img src="Logo.png" className="Logo" alt="STEM"></img>
+        <img src="Logo_new.png" className="Logo" alt="STEM"></img>
         <p className= "Login-message">
           <b>Welcome to StemSpace!</b>
         </p>
