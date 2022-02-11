@@ -1,14 +1,21 @@
 import './Home.css';
 import App from "./App";
 
+
+const Welcome = () => {
+    return(
+        <>
+        <h1 style={{color: "#1DBC60"}}>Welcome to StemSpace!</h1>
+        </>
+    );
+}
+
 function Home() {
     return (
         <div className="Home">
             <header className="Home-header">
-            <img src="Logo.png" style="float: left" alt="STEM"></img>
-                <p>
-                    Welcome to StemSpace!
-                </p>
+            <img src="Logo.png" alt="STEM"></img>
+            <Welcome></Welcome>
                 <a
                     className="Github-Link"
                     href="https://github.com/Bmeshanko/StemSpace"

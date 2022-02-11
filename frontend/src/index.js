@@ -8,7 +8,7 @@ import Login from './Login';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Login />
+    <Home />
   </React.StrictMode>,
   document.getElementById('root')
 );
