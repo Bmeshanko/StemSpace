@@ -5,10 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Home from './Home';
 import Login from './Login';
+import Profile from './Profile';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Home />
+    <Home/>
   </React.StrictMode>,
   document.getElementById('root')
 );
