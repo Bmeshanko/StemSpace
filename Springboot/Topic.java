@@ -47,7 +47,12 @@ public class Topic {
         return this.description;
     }
 
+    public int getFollowersCount(){
+        return followersCount;
+    }
+
     public void addFollower(Profile p) {
+        //if follwers array is full, double array size
         if (followersCount == followers.length) {
             Profile[] newFollowers = new Profile[followersCount * 2];
             for (int i = 0; i < followersCount; i++) {
@@ -55,10 +60,12 @@ public class Topic {
             }
             followers = newFollowers;
         }
+        //add new follower at end of array + increase followersCount
         followers[followersCount++] = p;
     }
 
     public void removeFollower(Profile p) {
+        //if followers array is less than half full, shorten array
         if (followersCount * 2 < followers.length) {
             Profile[] newFollowers = new Profile[followersCount + 1];
             for (int i = 0; i < followersCount; i++) {
@@ -67,7 +74,7 @@ public class Topic {
             }
             followers = newFollowers;
         }
-
+        //remove follower and decrease followersCount
         for (int i = 0; i < followersCount; i++) {
             if (followers[i].equals(p)) {
                 while (i < followersCount - 1) {
@@ -78,7 +85,12 @@ public class Topic {
         followers[followersCount--] = null;
     }
 
+    public int getPostCount(){
+        return postsCount;
+    }
+
     public void addPost(Post p) {
+        //if post array is full, double array length, add new post to end of array, increase postCount
         if (postsCount == posts.length) {
             Post[] newPosts = new Post[postsCount * 2];
             for (int i = 0; i < postsCount; i++) {
@@ -90,6 +102,7 @@ public class Topic {
     }
 
     public void removePost(Post p) {
+        //if post array is less than half full, shorten array
         if (postsCount * 2 < posts.length) {
             Post[] newPosts = new Post[postsCount + 1];
             for (int i = 0; i < postsCount; i++) {
@@ -98,7 +111,7 @@ public class Topic {
             }
             posts = newPosts;
         }
-
+        //remove post and decrease postCount
         for (int i = 0; i < postsCount; i++) {
             if (posts[i].equals(p)) {
                 while (i < postsCount - 1) {

@@ -1,13 +1,16 @@
 package Springboot;
+import java.sql.Timestamp;
+
 public class Profile {
     private String username;
     private String name;
     private String email;
     private String password; // Serializable?
+    private String bio;
     private Profile[] followers;
-    public int followersCount;
+    private int followersCount;
     private Profile[] following;
-    public int followingCount;
+    private int followingCount;
     private Profile[] blockedUsers;
     private int blockedUsersCount;
     private Profile[] mutedUsers;
@@ -19,7 +22,8 @@ public class Profile {
     private Comment[] comments;
     private int commentsCount;
     private Post[] posts;
-    public int postsCount;
+    private int postsCount;
+    private Timestamp creationDate;
 
     public Profile(String username, String name, String email, String password) {
         this.setUsername(username);
@@ -40,6 +44,7 @@ public class Profile {
         this.followingTopicsCount = 0;
         this.likedPostsCount = 0;
         this.commentsCount = 0;
+        this.creationDate = new Timestamp(System.currentTimeMillis());
     }
 
     public String getUsername() {
@@ -70,8 +75,19 @@ public class Profile {
         return password;
     }
 
+    //SHA-1 hashing? 
+    //is the argument going to be already hashed
+    //or will hashing be done in this method?
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getBio(){
+        return bio;
+    }
+
+    public void setBio(String bio){
+        this.bio = bio;
     }
 
     public Profile[] getBlockedUsers() {
@@ -80,6 +96,10 @@ public class Profile {
 
     public Profile[] getMutedUsers() {
         return mutedUsers;
+    }
+
+    public int getFollowersCount(){
+        return followersCount;
     }
 
     public void addFollower(Profile p) {
@@ -117,6 +137,10 @@ public class Profile {
         followers[followersCount--] = null;
     }
 
+    public int getFollowingCount(){
+        return followingCount;
+    }
+
     public void followUser(Profile p) {
         if (followingCount == following.length) {
             Profile[] newFollowing = new Profile[followingCount * 2];
@@ -146,6 +170,10 @@ public class Profile {
             }
         }
         following[followingCount--] = null;
+    }
+
+    public int getBlockedUsersCount(){
+        return blockedUsersCount;
     }
 
     public void blockUser(Profile p) {
@@ -179,6 +207,10 @@ public class Profile {
         blockedUsers[blockedUsersCount--] = null;
     }
 
+    public int getMutedUsersCount(){
+        return mutedUsersCount;
+    }
+
     public void muteUser(Profile p) {
         if (mutedUsersCount == mutedUsers.length) {
             Profile[] newMutedUsers = new Profile[mutedUsersCount * 2];
@@ -208,6 +240,10 @@ public class Profile {
             }
         }
         mutedUsers[mutedUsersCount--] = null;
+    }
+
+    public int getFollowingTopicsCount(){
+        return followingTopicsCount;
     }
 
     public void followTopic(Topic t) {
@@ -241,6 +277,10 @@ public class Profile {
         followingTopics[followingTopicsCount--] = null;
     }
 
+    public int getLikedPostsCount(){
+        return likedPostsCount;
+    }
+
     public void likePost(Post p) {
         if (likedPostsCount == likedPosts.length) {
             Post[] newLikedPosts = new Post[likedPostsCount * 2];
@@ -272,6 +312,10 @@ public class Profile {
         }
         likedPosts[likedPostsCount--] = null;
         p.removeLike();
+    }
+
+    public int getCommentsCount(){
+        return commentsCount;
     }
 
     public void comment(String text, Post post, Comment parent) {
@@ -312,6 +356,10 @@ public class Profile {
             c.getParent().removeReply(c);
         }
         // Java's Garbage collector should kick in here - not entirely sure though.
+    }
+
+    public int getPostsCount(){
+        return postsCount;
     }
 
     public void post(String text, Topic topic) {
@@ -357,5 +405,9 @@ public class Profile {
             Comment c = p.getComments()[i];
             c.getAuthor().removeComment(c);
         }
+    }
+
+    public Timestamp getCreationDate(){
+        return creationDate;
     }
 }
