@@ -1,3 +1,13 @@
+.Signup-header {
+    text-align: center;
+    margin-top: 50px;
+    margin-left: calc(50% - 250px);
+    padding: 50px;
+    background-color: #DDDDDD;
+    width: 350px;
+    border-radius: 20px;
+}
+
 .Signup-username-field {
     font-family: Consolas;
     padding: 10px;
@@ -42,6 +52,17 @@
     padding: 10px;
     font-size: 16px;
     width: 300px;
+    border-radius: 8px;
+    border-color: #1F1F1F;
+    border-width: 1px;
+}
+
+.Signup-button2 {
+    font-family: Consolas;
+    font-size: 20px;
+    padding: 12px;
+    width: 240px;
+    background-color: #5FAA4B;
     border-radius: 8px;
     border-color: #1F1F1F;
     border-width: 1px;

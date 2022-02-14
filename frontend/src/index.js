@@ -9,7 +9,7 @@ import Signup from './Signup';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Signup />
+    <Login />
   </React.StrictMode>,
   document.getElementById('root')
 );
