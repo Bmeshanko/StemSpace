@@ -9,7 +9,7 @@ import Profile from './Profile';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Home/>
+    <Login />
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,6 +1,11 @@
 .Logo {
   text-align: left;
-  padding: 50px 20px 20px 50px;
+  margin-left: 120px;
+}
+.Body {
+  font-family: consolas;
+  overflow-y: fragments;
+  height: 100%;
 }
 
 .Login-message {
@@ -10,17 +15,73 @@
   background-color: #DDDDDD;
   border-radius: 20px;
   margin-top: 0px;
-  margin-left: 90px;
-  font-family: consolas;
+  margin-left: 150px;
 }
 
-.Login-header {
+.Login-left {
   background-color: #FFFFFF;
   min-height: 100vh;
-  display: inline;
+  display: inline-grid;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   font-size: 24px;
   color: #1F1F1F;
+}
+
+.Login-right {
+  text-align: center;
+  display: inline-grid;
+  vertical-align: top;
+  background-color: #DDDDDD;
+  padding: 15px;
+  border-radius: 20px;
+  margin-left: 300px;
+  margin-top: 150px;
+  font-size: 24px;
+}
+
+.Login-button {
+  font-family: Consolas;
+  font-size: 20px;
+  padding: 12px;
+  width: 320px;
+  background-color: #5FAA4B;
+  border-radius: 8px;
+  border-color: #1F1F1F;
+  border-width: 1px;
+}
+
+.Signup-button {
+  font-family: Consolas;
+  font-size: 20px;
+  padding: 12px;
+  width: 320px;
+  background-color: #5FAA4B;
+  border-radius: 8px;
+  border-color: #1F1F1F;
+  border-width: 1px;
+}
+
+.Login-username-field {
+  font-family: Consolas;
+  padding: 10px;
+  font-size: 16px;
+  width: 300px;
+  border-radius: 8px;
+  border-color: #1F1F1F;
+  border-width: 1px;
+}
+.Login-password-field {
+  font-family: Consolas;
+  padding: 10px;
+  font-size: 16px;
+  width: 300px;
+  border-radius: 8px;
+  border-color: #1F1F1F;
+  border-width: 1px;
+}
+
+.space {
+  margin-top: 30px;
 }

@@ -1,4 +1,4 @@
-package net.stemspace.springboot;
+/*package net.stemspace.springboot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,4 +10,4 @@ class SpringbootApplicationTests {
 	void contextLoads() {
 	}
 
-}
+}*/
