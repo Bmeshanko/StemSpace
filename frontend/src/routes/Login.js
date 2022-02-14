@@ -1,4 +1,6 @@
 import './Login.css';
+import './Signup';
+import {Link} from "react-router-dom";
 
 function Login() {
   return (
@@ -24,18 +26,26 @@ function Login() {
             <br></br>
             <a
                 className="Forgot-password"
-                href="https://reactjs.org"
+                href="Signup"
                 target="_blank"
                 rel="noopener noreferrer"
             >
                 Forgot Password?
             </a>
             <div className="space"></div>
-            <button className="Signup-button" onClick="myFunction()"><b>Create an Account</b></button>
+            <button className="Signup-button" onClick="Navigate()"><b>Create an Account</b></button>
         </form>
       </section>
     </body>
   );
+}
+
+function Navigate() {
+    return(
+        <div>
+            <Link to="/Signup"/>
+        </div>
+    )
 }
 
 export default Login;

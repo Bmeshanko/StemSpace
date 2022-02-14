@@ -3,13 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Home from './Home';
-import Login from './Login';
+import Login from './routes/Login';
 import Profile from './Profile';
-import Signup from './Signup';
+import Signup from './routes/Signup';
+import {BrowserRouter, hashHistory, Route, Link, Routes} from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Login />
+      <BrowserRouter>
+          <Routes>
+              <Route path="/Login" element={<Login />} />
+              <Route path="/Signup" element={<Signup />} />
+          </Routes>
+      </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
