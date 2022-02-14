@@ -1,5 +1,6 @@
 import './Login.css';
 import './Signup';
+import './ForgotPassword';
 import {Link} from "react-router-dom";
 
 function Login() {
@@ -22,9 +23,9 @@ function Login() {
                 <input className="Login-password-field" type="text" id="password" name="password" placeholder="Password" />
                 <div className="space"></div>
             </label>
-            <button className="Login-button" onClick="window.location='/Signup'"><b>Log In</b></button>
+            <button className="Login-button"><b>Log In</b></button>
             <br></br>
-            <Link to="/Signup" className="Forgot-password">
+            <Link to="/ForgotPassword" className="Forgot-password">
                 Forgot Password?
             </Link>
             <div className="space"></div>
@@ -32,7 +33,8 @@ function Login() {
                 onClick={(e) => {
                     e.preventDefault();
                     window.location.href='/Signup';
-            }}><b>Create an Account</b></button>
+                }}><b>Create an Account</b>
+            </button>
         </form>
       </section>
     </body>
