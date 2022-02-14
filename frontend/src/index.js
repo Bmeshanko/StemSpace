@@ -7,7 +7,8 @@ import Login from './routes/Login';
 import Profile from './routes/Profile';
 import Signup from './routes/Signup';
 import {BrowserRouter, hashHistory, Route, Link, Routes} from "react-router-dom";
-import Forgotpassword from "./routes/ForgotPassword";
+import ForgotPassword from "./routes/ForgotPassword";
+import RecoverAccount from "./routes/RecoverAccount";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,8 +17,8 @@ ReactDOM.render(
               <Route path="/" element={<Home />} />
               <Route path="/Login" element={<Login />} />
               <Route path="/Signup" element={<Signup />} />
-              <Route path="/Profile" element={<Profile />} />
-              <Route path="/ForgotPassword" element={<Forgotpassword />} />
+              <Route path="/ForgotPassword" element={<ForgotPassword />} />
+              <Route path="/RecoverAccount" element={<RecoverAccount />} />
           </Routes>
       </BrowserRouter>
   </React.StrictMode>,

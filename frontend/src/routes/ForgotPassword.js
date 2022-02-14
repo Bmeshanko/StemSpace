@@ -14,10 +14,10 @@ function ForgotPassword() {
                        name="forgot-password-email"
                        placeholder="Email" />
                 <div className="space"></div>
-                <button className="Signup-button"
+                <button className="Recover-account-button"
                         onClick={(e) => {
                             e.preventDefault();
-                            window.location.href='/Signup';
+                            window.location.href='/RecoverAccount';
                         }}><b>Recover Account</b>
                 </button>
             </label>
