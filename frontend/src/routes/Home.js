@@ -31,22 +31,16 @@ const Login_button = () => (
 
 function Home() {
     return (
-        <div className="Home">
-            <header className="Home-header">
-            <img src="Logo_new.png" alt="STEM"></img>
+        <div>
 
-            <Welcome></Welcome>
-            <Login_button> </Login_button>
-            <Signin_button></Signin_button>
-                <a
-                    className="Github-Link"
-                    href="https://github.com/Bmeshanko/StemSpace"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Link to GitHub
-                </a>
-            </header>
+            <button className='button-class'
+                onClick={(e) => {
+                    e.preventDefault();
+                    window.location.href='/Signup';
+                }}><b><img className='Logo-position' src="Logo_new.png" alt="STEM"></img></b>
+            </button>
+            <p className='Stem-text'>StemSpace</p>
+            <p className='topLine'></p>
         </div>
     );
 }
