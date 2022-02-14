@@ -4,7 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Home from './Home';
 import Login from './routes/Login';
-import Profile from './Profile';
+import Profile from './routes/Profile';
 import Signup from './routes/Signup';
 import {BrowserRouter, hashHistory, Route, Link, Routes} from "react-router-dom";
 import ForgotPassword from "./routes/ForgotPassword";
