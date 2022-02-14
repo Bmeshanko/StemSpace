@@ -22,30 +22,17 @@ function Login() {
                 <input className="Login-password-field" type="text" id="password" name="password" placeholder="Password" />
                 <div className="space"></div>
             </label>
-            <button className="Login-button" onClick="myFunction()"><b>Log In</b></button>
+            <button className="Login-button" onClick="window.location='/Signup'"><b>Log In</b></button>
             <br></br>
-            <a
-                className="Forgot-password"
-                href="Signup"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
+            <Link to="/Signup" className="Forgot-password">
                 Forgot Password?
-            </a>
+            </Link>
             <div className="space"></div>
-            <button className="Signup-button" onClick="Navigate()"><b>Create an Account</b></button>
+            <button className="Signup-button" onClick={Link}><b>Create an Account</b></button>
         </form>
       </section>
     </body>
   );
-}
-
-function Navigate() {
-    return(
-        <div>
-            <Link to="/Signup"/>
-        </div>
-    )
 }
 
 export default Login;
