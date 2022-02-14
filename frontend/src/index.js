@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Home from './Home';
+import Home from './routes/Home';
 import Login from './routes/Login';
 import Profile from './routes/Profile';
 import Signup from './routes/Signup';
@@ -13,6 +13,7 @@ ReactDOM.render(
   <React.StrictMode>
       <BrowserRouter>
           <Routes>
+              <Route path="/" element={<Home />} />
               <Route path="/Login" element={<Login />} />
               <Route path="/Signup" element={<Signup />} />
               <Route path="/Profile" element={<Profile />} />
