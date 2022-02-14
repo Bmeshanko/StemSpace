@@ -1,5 +1,4 @@
 import './Home.css';
-import App from "./App";
 
 
 const Welcome = () => {

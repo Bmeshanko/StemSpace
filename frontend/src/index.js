@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Home from './Home';
 import Login from './Login';
 import Profile from './Profile';
+import Signup from './Signup';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Login />
+    <Signup />
   </React.StrictMode>,
   document.getElementById('root')
 );
