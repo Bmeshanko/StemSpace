@@ -19,6 +19,7 @@ ReactDOM.render(
               <Route path="/Signup" element={<Signup />} />
               <Route path="/ForgotPassword" element={<ForgotPassword />} />
               <Route path="/RecoverAccount" element={<RecoverAccount />} />
+              <Route path="/Profile" element={<Profile />} />
           </Routes>
       </BrowserRouter>
   </React.StrictMode>,
