@@ -48,3 +48,41 @@
     position: relative;
     top: 2px
   }
+
+  .button-class {
+	background: #fff;
+	border-color: #fff;
+	border-style: solid;
+}
+
+.Logo-position {
+    display: flex;
+    width:50px;
+    vertical-align: top;
+    background-color: #DDDDDD;
+    border-radius: 20px;
+    margin-top: 8px;
+    margin-bottom: -5px;
+    margin-left: 5px;
+  }
+
+  .Stem-text{
+    font-size: 20px;
+    position: absolute; 
+	top: 4px; 
+	left: 75px;
+    color:#5FAA4B;
+    font-family: cursive;
+  }
+
+  .topLine{
+    font-family: Consolas;
+    padding: 12px;
+    width: 1512px;
+    background-color: #5FAA4B;
+    border-radius: 8px;
+    border-color: #1F1F1F;
+    border-width: 2px;
+  }
+
+  
