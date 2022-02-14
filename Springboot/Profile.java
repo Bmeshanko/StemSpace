@@ -1,6 +1,5 @@
 package Springboot;
 import java.sql.Timestamp;
-
 public class Profile {
     private String username;
     private String name;
