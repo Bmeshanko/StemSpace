@@ -28,7 +28,11 @@ function Login() {
                 Forgot Password?
             </Link>
             <div className="space"></div>
-            <button className="Signup-button" onClick={Link}><b>Create an Account</b></button>
+            <button className="Signup-button"
+                onClick={(e) => {
+                    e.preventDefault();
+                    window.location.href='/Signup';
+            }}><b>Create an Account</b></button>
         </form>
       </section>
     </body>
@@ -36,3 +40,5 @@ function Login() {
 }
 
 export default Login;
+
+
