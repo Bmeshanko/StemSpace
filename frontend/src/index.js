@@ -4,7 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Home from './Home';
 import Login from './routes/Login';
-import Profile from './Profile';
+import Profile from './routes/Profile';
 import Signup from './routes/Signup';
 import {BrowserRouter, hashHistory, Route, Link, Routes} from "react-router-dom";
 import Forgotpassword from "./routes/ForgotPassword";
@@ -15,6 +15,7 @@ ReactDOM.render(
           <Routes>
               <Route path="/Login" element={<Login />} />
               <Route path="/Signup" element={<Signup />} />
+              <Route path="/Profile" element={<Profile />} />
               <Route path="/ForgotPassword" element={<Forgotpassword />} />
           </Routes>
       </BrowserRouter>
