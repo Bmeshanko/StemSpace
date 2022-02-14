@@ -1,4 +1,4 @@
-package Springboot;
+package net.stemspace.springboot;
 public class Timeline {
     private Profile profile;
 

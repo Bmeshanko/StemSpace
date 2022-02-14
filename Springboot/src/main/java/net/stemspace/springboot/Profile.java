@@ -1,4 +1,4 @@
-package Springboot;
+package net.stemspace.springboot;
 import java.sql.Timestamp;
 public class Profile {
     private String username;

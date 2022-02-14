@@ -1,6 +1,5 @@
-package Springboot;
+package net.stemspace.springboot;
 /*
-
 Default List of Topics:
 1. Sports
 2. Compsci
@@ -17,8 +16,8 @@ Default List of Topics:
 13. Music
 14. Art
 15. Health
-
 */
+
 public class Topic {
     private String name;
     private String description;
