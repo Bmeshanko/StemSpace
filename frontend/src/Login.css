@@ -8,24 +8,27 @@
   height: 100%;
 }
 
-.Login-message {
+.Login-welcome {
   width: max-content;
-  text-align: justify;
+  text-align: center;
   padding: 15px;
   background-color: #DDDDDD;
   border-radius: 20px;
-  margin-top: 0px;
   margin-left: 150px;
+}
+
+.description {
+  text-align: center;
+  font-size: 16px;
 }
 
 .Login-left {
   background-color: #FFFFFF;
-  min-height: 100vh;
   display: inline-grid;
   flex-direction: column;
   align-items: center;
   justify-content: left;
-  font-size: 24px;
+  font-size: 32px;
   color: #1F1F1F;
 }
 
@@ -56,11 +59,16 @@
   font-family: Consolas;
   font-size: 20px;
   padding: 12px;
-  width: 320px;
+  width: 240px;
   background-color: #5FAA4B;
   border-radius: 8px;
   border-color: #1F1F1F;
   border-width: 1px;
+}
+
+.Forgot-password {
+  font-size: 16px;
+  color: #1F1F1F;
 }
 
 .Login-username-field {

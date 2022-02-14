@@ -5,8 +5,9 @@ function Login() {
     <body>
       <section className="Login-left">
         <img src="Logo_new.png" className="Logo" alt="STEM"></img>
-        <p className= "Login-message">
-          <b>Welcome to StemSpace!</b>
+        <p className= "Login-welcome">
+          <b>StemSpace</b>
+          <p className="description">Connect with classmates in your field</p>
         </p>
       </section>
       <section className="Login-right">
@@ -19,9 +20,18 @@ function Login() {
                 <input className="Login-password-field" type="text" id="password" name="password" placeholder="Password" />
                 <div className="space"></div>
             </label>
-            <button className="Login-button" onClick="myFunction()">Log In</button>
+            <button className="Login-button" onClick="myFunction()"><b>Log In</b></button>
+            <br></br>
+            <a
+                className="Forgot-password"
+                href="https://reactjs.org"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Forgot Password?
+            </a>
             <div className="space"></div>
-            <button className="Signup-button" onClick="myFunction()">Sign Up</button>
+            <button className="Signup-button" onClick="myFunction()"><b>Create an Account</b></button>
         </form>
       </section>
     </body>
