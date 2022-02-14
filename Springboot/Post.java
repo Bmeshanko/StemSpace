@@ -1,4 +1,6 @@
 package Springboot;
+import java.sql.Timestamp;
+
 public class Post {
     private Profile author;
     private String text;
@@ -6,7 +8,8 @@ public class Post {
     private Comment[] comments;
     private int commentsCount;
     private int likes;
-    
+    private Timestamp time;
+
     public Post(Profile author, String text, Topic topic) {
         this.author = author;
         this.text = text;
@@ -14,6 +17,7 @@ public class Post {
         this.comments = new Comment[20];
         this.commentsCount = 0;
         this.likes = 0;
+        this.time = new Timestamp(System.currentTimeMillis());
     }
 
     public Profile getAuthor() {
@@ -36,7 +40,12 @@ public class Post {
         return text;
     }
 
+    public Timestamp getTime(){
+        return time;
+    }
+
     public void addComment(Comment c) {
+        //if comments array is full, double the length
         if (commentsCount == comments.length) {
             Comment[] newComments = new Comment[commentsCount * 2];
             for (int i = 0; i < commentsCount; i++) {
@@ -44,10 +53,12 @@ public class Post {
             }
             comments = newComments;
         }
+        //add new comment at end of array
         comments[commentsCount++] = c;
     }
 
     public void removeComment(Comment c) {
+        //if comment array is less than half full, shorten array length
         if (commentsCount * 2 < comments.length) {
             Comment[] newComments = new Comment[commentsCount + 1];
             for (int i = 0; i < commentsCount; i++) {
@@ -56,7 +67,7 @@ public class Post {
             }
             comments = newComments;
         }
-
+        //remove comment from array
         for (int i = 0; i < commentsCount; i++) {
             if (comments[i].equals(c)) {
                 while (i < commentsCount - 1) {
@@ -64,7 +75,9 @@ public class Post {
                 }
             }
         }
+
         comments[commentsCount--] = null;
+        //remove reply from all comments in the chain
         if (c.getParent() != null) {
             c.getParent().removeReply(c);
         }
