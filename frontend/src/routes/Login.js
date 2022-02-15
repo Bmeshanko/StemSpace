@@ -10,7 +10,7 @@ function Login() {
         <img src="Logo_new.png" className="Logo" alt="STEM"></img>
         <p className= "Login-welcome">
           <b>StemSpace</b>
-          <p className="description">Connect with classmates in your field</p>
+          <p className="description">Connect with peers in your field</p>
         </p>
       </section>
       <section className="Login-right">

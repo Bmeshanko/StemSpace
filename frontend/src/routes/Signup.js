@@ -4,6 +4,8 @@ function Signup() {
     return (
         <body>
             <header className="Signup-header">
+                <p className="Signup-text">Create an account on StemSpace today and join others
+                    engaging with peers in their fields.</p>
                 <label for="username">
                     <input className="Signup-username-field" type="text" id="username" name="username"
                            placeholder="Username"/>
