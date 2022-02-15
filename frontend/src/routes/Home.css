@@ -84,5 +84,14 @@
     border-color: #1F1F1F;
     border-width: 2px;
   }
+  .black{
+      font-family: Consolas;
+      padding: 12px;
+      width: 1512px;
+      background-color: #0a0808;
+      border-radius: 8px;
+      border-color: #1F1F1F;
+      border-width: 2px;
+  }
 
   

@@ -1,38 +1,18 @@
+
+import React, {useState} from "react";
 import './Home.css';
-
-
-const Welcome = () => {
-    return(
-        <>
-        <h1 style={{color: "#1DBC60"}}>Welcome to StemSpace!</h1>
-        </>
-    );
-}
-
-const Login_button = () => (
-        <>
-        <header className='toLogin'>
-
-            Login
-
-        </header>
-        </>
-    );
-
-    const Signin_button = () => (
-        <>
-        <header className='toSignin'>
-
-            Signup
-
-        </header>
-        </>
-    );
+import {useRef} from "react";
 
 function Home() {
+
+    const[style, setStyle] = useState(true);
+
+    const changeStyle = ()=> {
+        setStyle(!style);
+    }
+
     return (
         <div>
-
             <button className='button-class'
                 onClick={(e) => {
                     e.preventDefault();
@@ -40,9 +20,12 @@ function Home() {
                 }}><b><img className='Logo-position' src="Logo_new.png" alt="STEM"></img></b>
             </button>
             <p className='Stem-text'>StemSpace</p>
-            <p className='topLine'></p>
+            <p className={style ? "topLine" : "black"}></p>
+            <button className="button-class" onClick={changeStyle}>
+                press
+                </button>
         </div>
     );
-}
+};
 
 export default Home;
