@@ -71,7 +71,7 @@ span.posts{
     /*scrollbar-color: ;*/
     scrollbar-width: thin;
     padding: 5px;
-    border: 1px solid blue;
+    border: 1px solid #5FAA4B;
 }
 
 span.chats{
@@ -84,14 +84,7 @@ span.chats{
     overflow-y: scroll;
     /*scrollbar-color: ;*/
     scrollbar-width: thin;
-    border: 1px solid blue;
-}
-
-.post-chat-divider {
-    background-color:#1F1F1F;
-    width: 1px;
-    height: 1000px;
-    display: inline-block;
+    border: 1px solid #5FAA4B;
 }
 
 .DM-header{
