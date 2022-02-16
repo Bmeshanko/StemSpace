@@ -8,6 +8,27 @@
     background-color: #5FAA4B;
     padding: 12px;
 }
+
+.Logo-position {
+    display: flex;
+    width:50px;
+    vertical-align: top;
+    background-color: #DDDDDD;
+    border-radius: 20px;
+    margin-top: 5px;
+    margin-bottom: -5px;
+    margin-left: 5px;
+  }
+
+  .Stem-text{
+    font-size: 50px;
+    position: absolute; 
+	top: -35px; 
+	left: 75px;
+    color:#EEEEEE;
+    font-family: consolas;
+}
+
 .Timeline-bar-horizontal {
     background-color:#1F1F1F;
     height: 1px;
@@ -38,4 +59,43 @@
     display: inline-grid;
     padding: 10px;
     margin-left: 19%
+}
+
+span.posts{
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    width: 59.5%;
+    height: 80%;
+    overflow-y: scroll;
+    /*scrollbar-color: ;*/
+    scrollbar-width: thin;
+    padding: 5px;
+    border: 1px solid blue;
+}
+
+span.chats{
+    position: absolute;
+    display: inline-block;
+    width: 39.3%;
+    height: 80%;
+    padding: 5px;
+    right: 0;
+    overflow-y: scroll;
+    /*scrollbar-color: ;*/
+    scrollbar-width: thin;
+    border: 1px solid blue;
+}
+
+.post-chat-divider {
+    background-color:#1F1F1F;
+    width: 1px;
+    height: 1000px;
+    display: inline-block;
+}
+
+.DM-header{
+    font-family: Consolas;
+    font-size: 24px;
+    margin-left: 45%;   
 }
