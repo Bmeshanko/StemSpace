@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 
 function Login() {
   return (
-    <body>
+     <body>
       <section className="Login-left">
         <img src="Logo_new.png" className="Logo" alt="STEM"></img>
         <p className= "Login-welcome">
@@ -23,7 +23,12 @@ function Login() {
                 <input className="Login-password-field" type="text" id="password" name="password" placeholder="Password" />
                 <div className="space"></div>
             </label>
-            <button className="Login-button"><b>Log In</b></button>
+            <button className="Login-button"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href='/Timeline';
+                    }}><b>Log In</b>
+            </button>
             <br></br>
             <Link to="/ForgotPassword" className="Forgot-password">
                 Forgot Password?

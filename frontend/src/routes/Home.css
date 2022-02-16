@@ -49,10 +49,10 @@
     top: 2px
   }
 
-  .button-class {
-	background: #fff;
-	border-color: #fff;
-	border-style: solid;
+    .button-class {
+    background: #fff;
+    border-color: #fff;
+    border-style: solid;
 }
 
 .Logo-position {
@@ -72,7 +72,7 @@
 	top: 4px; 
 	left: 75px;
     color:#5FAA4B;
-    font-family: cursive;
+    font-family: consolas;
   }
 
   .topLine{

@@ -9,7 +9,7 @@ import Signup from './routes/Signup';
 import {BrowserRouter, hashHistory, Route, Link, Routes} from "react-router-dom";
 import ForgotPassword from "./routes/ForgotPassword";
 import RecoverAccount from "./routes/RecoverAccount";
-
+import Timeline from "./routes/Timeline";
 ReactDOM.render(
   <React.StrictMode>
       <BrowserRouter>
@@ -20,6 +20,7 @@ ReactDOM.render(
               <Route path="/ForgotPassword" element={<ForgotPassword />} />
               <Route path="/RecoverAccount" element={<RecoverAccount />} />
               <Route path="/Profile" element={<Profile />} />
+              <Route path="/Timeline" element={<Timeline />} />
           </Routes>
       </BrowserRouter>
   </React.StrictMode>,

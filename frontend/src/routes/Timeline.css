@@ -1,0 +1,41 @@
+.Timeline-banner {
+    font-family: Consolas;
+    font-size: 48px;
+    text-align: left;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    background-color: #5FAA4B;
+    padding: 12px;
+}
+.Timeline-bar-horizontal {
+    background-color:#1F1F1F;
+    height: 1px;
+    margin-top: 0px;
+}
+.Timeline-bar-vertical {
+    background-color:#1F1F1F;
+    width: 1px;
+    height: 96px;
+    display: inline-grid;
+    position: absolute;
+}
+
+.Timeline-selector {
+    font-family: Consolas;
+    font-size: 24px;
+    background-color: #EEEEEE;
+}
+
+.Timeline-following {
+    display: inline-grid;
+    padding: 10px;
+    margin-left: 19%;
+    margin-right: 19%;
+}
+
+.Timeline-topics {
+    display: inline-grid;
+    padding: 10px;
+    margin-left: 19%
+}
