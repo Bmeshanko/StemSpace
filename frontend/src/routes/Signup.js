@@ -22,12 +22,12 @@ function Signup() {
                 </label>
                 <div className="space"></div>
                 <label htmlFor="password">
-                    <input className="Signup-password-field" type="text" id="password" name="password"
+                    <input className="Signup-password-field" type="password" id="password" name="password"
                            placeholder="Password"/>
                 </label>
                 <div className="space"></div>
                 <label htmlFor="confirm-password">
-                    <input className="Signup-confirm-password-field" type="text" id="confirm-password"
+                    <input className="Signup-confirm-password-field" type="password" id="confirm-password"
                            name="confirm-password"
                            placeholder="Confirm Password"/>
                 </label>
@@ -35,7 +35,7 @@ function Signup() {
                 <button className="Signup-button2"
                         onClick={(e) => {
                             e.preventDefault();
-                            window.location.href='/Timeline';
+                            window.location.href='/Login';
                         }}><b>Sign Up</b>
                 </button>
             </header>

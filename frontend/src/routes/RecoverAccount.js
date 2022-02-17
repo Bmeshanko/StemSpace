@@ -9,13 +9,13 @@ function RecoverAccount() {
             </p>
             <label for="Recover-account-password">
                 <input className="Recover-account-password-field"
-                       type="text"
+                       type="password"
                        id="recover-account-password"
                        name="recover-account-password"
                        placeholder="New Password" />
                 <div className="space"></div>
                 <input className="Recover-account-confirm-password-field"
-                       type="text"
+                       type="password"
                        id="recover-account-confirm-password"
                        name="recover-account-confirm-password"
                        placeholder="Confirm Password" />

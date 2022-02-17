@@ -20,7 +20,7 @@ function Login() {
                 <div className="space"></div>
             </label>
             <label for="password">
-                <input className="Login-password-field" type="text" id="password" name="password" placeholder="Password" />
+                <input className="Login-password-field" type="password" id="password" name="password" placeholder="Password" />
                 <div className="space"></div>
             </label>
             <button className="Login-button"
