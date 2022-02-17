@@ -9,6 +9,9 @@ function Timeline() {
             <img className='Logo-position' src="Logo_new.png" alt="STEM"></img>
             StemSpace
                 <button className="Notification-button"
+                onClick={(e) => {
+                    e.preventDefault();
+                    window.location.href='/Timeline';}}
                         ><b><img src="Notification.png" className="Notification-logo" alt="Notification"/></b>
                 </button>
             </p>
