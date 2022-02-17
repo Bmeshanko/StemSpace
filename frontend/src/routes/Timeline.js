@@ -5,7 +5,9 @@ function Timeline() {
     return(
         <body className="wrapper">
 
-            <p className="Timeline-banner">StemSpace
+            <p className="Timeline-banner">
+            <img className='Logo-position' src="Logo_new.png" alt="STEM"></img>
+            StemSpace
                 <button className="Notification-button"
                         ><b><img src="Notification.png" className="Notification-logo" alt="Notification"/></b>
                 </button>

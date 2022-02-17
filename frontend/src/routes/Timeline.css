@@ -47,13 +47,14 @@
 
 .Timeline-following {
     display: inline-grid;
-    margin-left: 280px;
-    margin-right: 280px;
+    width: 50%;
+    text-align: center;
 }
 
 .Timeline-topics {
     display: inline-grid;
-    margin-left: 280px;
+    width: 50%;
+    text-align: center;
 }
 
 .DM-Logo {
