@@ -1,13 +1,14 @@
-const express = require("express");
-const app = express();
-const cors = require("cors");
+// can change "vars" to "const" based on needs
+var express = require("express");
+var app = express();
+var cors = require("cors");
 require("dotenv").config({ path: "./config.env" });
-const port = process.env.PORT || 5000;
+var port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 app.use(require("./routes/record"));
 // get driver connection
-const dbo = require("./db/conn");
+var dbo = require("./db/conn");
  
 app.listen(port, () => {
   // perform a database connection when server starts

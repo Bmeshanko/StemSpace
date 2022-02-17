@@ -2,25 +2,20 @@ import './Profile.css';
 
 function Profile() {
   return (
-    <div className="Profile">
-    <header className="Profile-title">
-        <img src="Logo_new.png" className="Logo-size" alt="STEM"></img>
-        <p>StemSpace</p>
+    <body>
+    <p className="Profile-banner">
+        <img className='Logo' src="Logo_new.png" alt="STEM"></img>
+        <p className='Stem-text'>StemSpace</p>
+    </p>
+    <header className="Profile-bio">
+        <img className='Profile-picture' src="Blank-Profile.png" alt="STEM"></img>
+        <p class="username">User Name</p>
+        <p>Bio</p>
     </header>
-    <br></br>
-    <img src="Blank-Profile.png" className="Profile-picture" alt="STEM"></img>
-    <header className="Profile-body">
-        <p>User Name</p>
-        <p>Bio Stuff</p>
-    </header>
-    <header className="Profile-posts">
-        <p>Post History</p>
-        <p>Post</p>
-        <p>Post</p>
-        <p>Post</p>
-        <p>Post</p>
-    </header>
-    </div>
+    <span class="post-history">
+        Post History
+    </span>
+</body>
   );
 }
 
