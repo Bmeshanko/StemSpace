@@ -8,9 +8,14 @@ function Timeline() {
                 <img src="DM.png"
                      className="DM-Logo"
                      alt="DM"/>
-                <img src="Notification.png"
-                     className="Notification-Logo"
-                     alt="Notification"/>
+
+                <button className="Notification-Button"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            window.location.href='/Timeline';
+                        }}><b><img src="Notification.png" className="Notification-Logo" alt="Notification"/></b>
+                </button>
+
             </p>
             <div className="Timeline-bar-horizontal"/>
             <header className="Timeline-selector">
