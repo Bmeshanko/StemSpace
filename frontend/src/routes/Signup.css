@@ -37,6 +37,12 @@
     border-width: 1px;
 }
 
+.Signup-text {
+    font-family: Consolas;
+    margin-top: 0px;
+    font-size: 18px;
+    text-align: left;
+}
 .Signup-confirm-password-field {
     font-family: Consolas;
     padding: 10px;
@@ -66,4 +72,8 @@
     border-radius: 8px;
     border-color: #1F1F1F;
     border-width: 1px;
+}
+
+.space {
+    margin-top: 20px;
 }

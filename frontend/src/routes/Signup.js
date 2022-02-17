@@ -4,6 +4,8 @@ function Signup() {
     return (
         <body>
             <header className="Signup-header">
+                <p className="Signup-text">Create an account on StemSpace today and join others
+                    engaging with peers in their fields.</p>
                 <label for="username">
                     <input className="Signup-username-field" type="text" id="username" name="username"
                            placeholder="Username"/>
@@ -30,7 +32,12 @@ function Signup() {
                            placeholder="Confirm Password"/>
                 </label>
                 <div className="space"></div>
-                <button className="Signup-button2" onClick="myFunction()"><b>Sign Up</b></button>
+                <button className="Signup-button2"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            window.location.href='/Timeline';
+                        }}><b>Sign Up</b>
+                </button>
             </header>
         </body>
     );

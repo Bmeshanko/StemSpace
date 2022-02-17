@@ -1,0 +1,97 @@
+.Timeline-banner {
+    font-family: Consolas;
+    font-size: 48px;
+    text-align: left;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    background-color: #5FAA4B;
+    padding: 12px;
+}
+
+.Stem-text{
+    font-size: 50px;
+    position: absolute;
+    top: -35px;
+    left: 75px;
+    color:#EEEEEE;
+    font-family: consolas;
+}
+
+.Timeline-bar-horizontal {
+    background-color:#1F1F1F;
+    height: 1px;
+    margin-top: 0px;
+}
+
+.Timeline-bar-vertical {
+    background-color:#1F1F1F;
+    width: 1px;
+    height: 64px;
+    display: inline-grid;
+    position: absolute;
+    margin: 0px 0px 0px 0px;
+}
+
+.Timeline-selector {
+    font-family: Consolas;
+    font-size: 20px;
+    background-color: #EEEEEE;
+    margin-right: 0px;
+}
+
+.Timeline-following {
+    display: inline-grid;
+    margin-left: 280px;
+    margin-right: 280px;
+}
+
+.Timeline-topics {
+    display: inline-grid;
+    margin-left: 280px;
+}
+
+.DM-Logo {
+    display: inline-grid;
+    width: 50px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    margin-left: 200px;
+}
+.Notification-Logo {
+    display: inline-grid;
+    width: 50px;
+    margin-bottom: -8px;
+    margin-top: 8px;
+    margin-left: 80px;
+}
+
+.Timeline-posts {
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    width: 59.5%;
+    height: 2000px;
+    overflow-y: scroll;
+    /*scrollbar-color: ;*/
+    scrollbar-width: thin;
+    padding: 5px;
+}
+
+.Timeline-DMs {
+    position: absolute;
+    display: inline-block;
+    width: 39.3%;
+    height: 80%;
+    padding: 5px;
+    right: 0;
+    overflow-y: scroll;
+    /*scrollbar-color: ;*/
+    scrollbar-width: thin;
+}
+
+.DM-header{
+    font-family: Consolas;
+    font-size: 24px;
+    margin-left: 45%;
+}

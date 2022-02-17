@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   sodipodi:docname="Email Logo.svg"
+   inkscape:export-filename="C:\Users\benme\OneDrive\Desktop\StemSpace\StemSpace\frontend\src\Notification.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:object-paths="true"
+     inkscape:zoom="0.45522587"
+     inkscape:cx="396.50646"
+     inkscape:cy="386.62126"
+     inkscape:window-width="1366"
+     inkscape:window-height="697"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="rect846"
+       style="fill:#ffffff;fill-opacity:0;stroke:#000004;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 51.989807,92.8002 v 55.318 h 81.754523 v -55.318 z"
+       inkscape:export-filename="C:\Users\benme\OneDrive\Desktop\StemSpace\StemSpace\frontend\public\Notification.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       sodipodi:type="star"
+       style="fill:#ffffff;fill-opacity:0;stroke:#000004;stroke-width:12.417;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path2294"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="196.84094"
+       sodipodi:cy="445.9325"
+       sodipodi:r1="188.75545"
+       sodipodi:r2="94.377716"
+       sodipodi:arg1="-0.52409909"
+       sodipodi:arg2="0.52309846"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 360.26072,351.473 196.93538,634.68792 33.326732,351.63657 Z"
+       transform="matrix(0.24575534,0,0,0.10407153,44.917873,56.267923)"
+       inkscape:transform-center-x="0.011603698"
+       inkscape:transform-center-y="4.9067625"
+       inkscape:export-filename="C:\Users\benme\OneDrive\Desktop\StemSpace\StemSpace\frontend\src\Notification.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+  </g>
+</svg>
