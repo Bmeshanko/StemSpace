@@ -6,7 +6,7 @@ import Home from './routes/Home';
 import Login from './routes/Login';
 import Profile from './routes/Profile';
 import Signup from './routes/Signup';
-import {BrowserRouter, hashHistory, Route, Link, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Link, Routes} from "react-router-dom";
 import ForgotPassword from "./routes/ForgotPassword";
 import RecoverAccount from "./routes/RecoverAccount";
 import Timeline from "./routes/Timeline";
