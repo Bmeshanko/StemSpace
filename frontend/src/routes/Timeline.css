@@ -79,7 +79,7 @@
     left: 0;
     display: inline-block;
     width: 59.5%;
-    height: 2000px;
+    height: calc(100vh - 165px);
     overflow-y: scroll;
     /*scrollbar-color: ;*/
     scrollbar-width: thin;
@@ -90,7 +90,7 @@
     position: absolute;
     display: inline-block;
     width: 39.3%;
-    height: 80%;
+    height: calc(100vh - 165px);
     padding: 5px;
     right: 0;
     overflow-y: scroll;
