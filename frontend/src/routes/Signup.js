@@ -32,7 +32,12 @@ function Signup() {
                            placeholder="Confirm Password"/>
                 </label>
                 <div className="space"></div>
-                <button className="Signup-button2" onClick="myFunction()"><b>Sign Up</b></button>
+                <button className="Signup-button2"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            window.location.href='/Timeline';
+                        }}><b>Sign Up</b>
+                </button>
             </header>
         </body>
     );

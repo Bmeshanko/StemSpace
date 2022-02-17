@@ -9,22 +9,11 @@
     padding: 12px;
 }
 
-.Logo-position {
-    display: flex;
-    width:50px;
-    vertical-align: top;
-    background-color: #DDDDDD;
-    border-radius: 20px;
-    margin-top: 5px;
-    margin-bottom: -5px;
-    margin-left: 5px;
-  }
-
-  .Stem-text{
+.Stem-text{
     font-size: 50px;
-    position: absolute; 
-	top: -35px; 
-	left: 75px;
+    position: absolute;
+    top: -35px;
+    left: 75px;
     color:#EEEEEE;
     font-family: consolas;
 }
@@ -34,47 +23,62 @@
     height: 1px;
     margin-top: 0px;
 }
+
 .Timeline-bar-vertical {
     background-color:#1F1F1F;
     width: 1px;
-    height: 96px;
+    height: 64px;
     display: inline-grid;
     position: absolute;
+    margin: 0px 0px 0px 0px;
 }
 
 .Timeline-selector {
     font-family: Consolas;
-    font-size: 24px;
+    font-size: 20px;
     background-color: #EEEEEE;
+    margin-right: 0px;
 }
 
 .Timeline-following {
     display: inline-grid;
-    padding: 10px;
-    margin-left: 19%;
-    margin-right: 19%;
+    margin-left: 280px;
+    margin-right: 280px;
 }
 
 .Timeline-topics {
     display: inline-grid;
-    padding: 10px;
-    margin-left: 19%
+    margin-left: 280px;
 }
 
-span.posts{
+.DM-Logo {
+    display: inline-grid;
+    width: 50px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    margin-left: 200px;
+}
+.Notification-Logo {
+    display: inline-grid;
+    width: 50px;
+    margin-bottom: -8px;
+    margin-top: 8px;
+    margin-left: 80px;
+}
+
+.Timeline-posts {
     position: absolute;
     left: 0;
     display: inline-block;
     width: 59.5%;
-    height: 80%;
+    height: 2000px;
     overflow-y: scroll;
     /*scrollbar-color: ;*/
     scrollbar-width: thin;
     padding: 5px;
-    border: 1px solid #5FAA4B;
 }
 
-span.chats{
+.Timeline-DMs {
     position: absolute;
     display: inline-block;
     width: 39.3%;
@@ -84,11 +88,10 @@ span.chats{
     overflow-y: scroll;
     /*scrollbar-color: ;*/
     scrollbar-width: thin;
-    border: 1px solid #5FAA4B;
 }
 
 .DM-header{
     font-family: Consolas;
     font-size: 24px;
-    margin-left: 45%;   
+    margin-left: 45%;
 }
