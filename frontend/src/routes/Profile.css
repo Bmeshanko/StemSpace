@@ -19,8 +19,11 @@
     margin-bottom: -5px;
     margin-left: 5px;
   }
+
 .Profile-picture {
-    width: 15%;
+    display: inline-block;
+    height: 200px;
+    width: 200px;
   } 
 
 .Stem-text{
@@ -32,23 +35,27 @@
     font-family: consolas;
 }
 
-.Profile-bio {
+.Profile-info{
+    display: inline-block;
+    vertical-align: top;
+    height: 200px;
+    width: calc(100vw - 210px);
     font-family: Consolas;
     font-size: 24px;
-    background-color: #EEEEEE;
+    padding-left: 10px;
+    background-color: #DDDDDD;
 }
-p.username{
-    display: inline-grid;
-    padding-left: 5%;
+.Profile-bio {
+    font-size: 14px;
 }
-span.post-history{
+
+.Post-history{
     position: absolute;
     left: 0;
     display: inline-block;
-    width: 90%;
-    height: 80%;
+    width: 99.9%;
+    height: calc(100vh - 280px);
     overflow-y: scroll;
     /*scrollbar-color: ;*/
     scrollbar-width: thin;
-    border: 1px solid #5FAA4B;
 }
