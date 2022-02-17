@@ -4,10 +4,10 @@ import {Link} from "react-router-dom";
 function Timeline() {
     return(
         <body className="wrapper">
-            <p className="Timeline-banner">StemSpace
-                <img src="DM.png"
-                     className="DM-Logo"
-                     alt="DM"/>
+            
+            <p className="Timeline-banner">
+                <img className='Logo-position' src="Logo_new.png" alt="STEM"></img>StemSpace
+                
 
                 <button className="Notification-Button"
                         onClick={(e) => {
@@ -16,6 +16,9 @@ function Timeline() {
                         }}><b><img src="Notification.png" className="Notification-Logo" alt="Notification"/></b>
                 </button>
 
+                <img src="DM.png"
+                     className="DM-Logo"
+                     alt="DM"/>
             </p>
             <div className="Timeline-bar-horizontal"/>
             <header className="Timeline-selector">
