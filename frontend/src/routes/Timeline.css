@@ -6,36 +6,63 @@
     margin-left: 0px;
     margin-bottom: 0px;
     background-color: #5FAA4B;
+    grid-row: 1;
     padding: 12px;
 }
+
+.wrapper {
+}
+
 .Timeline-bar-horizontal {
     background-color:#1F1F1F;
     height: 1px;
     margin-top: 0px;
 }
+
+.Title-bar-horizontal {
+    background-color:#1F1F1F;
+    height: 1px;
+    margin-top: 0px;
+}
+
 .Timeline-bar-vertical {
     background-color:#1F1F1F;
     width: 1px;
-    height: 96px;
+    height: 64px;
     display: inline-grid;
     position: absolute;
+    margin: 0px 0px 0px 0px;
 }
 
 .Timeline-selector {
     font-family: Consolas;
-    font-size: 24px;
+    font-size: 20px;
     background-color: #EEEEEE;
+    margin-right: 0px;
 }
 
 .Timeline-following {
     display: inline-grid;
-    padding: 10px;
-    margin-left: 19%;
-    margin-right: 19%;
+    margin-left: 280px;
+    margin-right: 280px;
 }
 
 .Timeline-topics {
     display: inline-grid;
-    padding: 10px;
-    margin-left: 19%
+    margin-left: 280px;
+}
+
+.DM-Logo {
+    display: inline-grid;
+    width: 50px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    margin-left: 200px;
+}
+.Notification-Logo {
+    display: inline-grid;
+    width: 50px;
+    margin-bottom: -8px;
+    margin-top: 8px;
+    margin-left: 80px;
 }
