@@ -6,7 +6,7 @@ function Timeline() {
         <body className="wrapper">
             <div className="Timeline-banner">
                 <img className='Timeline-logo' src="Logo_new.png" alt="STEM"></img>
-                <p className="Timeline-banner-text">StemSpace</p>
+                <a className="Timeline-banner-text">StemSpace</a>
                 <button className="Notification-button"
                 onClick={(e) => {
                     e.preventDefault();
