@@ -1,7 +1,9 @@
 .Logo {
   text-align: left;
   margin-left: 120px;
+  display: inline-grid;
 }
+
 .Body {
   font-family: consolas;
   overflow-y: fragments;
