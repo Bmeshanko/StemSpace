@@ -7,7 +7,7 @@ function Login() {
   return (
      <body>
       <section className="Login-left">
-          <img src="Biglogo.png" className="Logo" alt="STEM"/>
+          <img src="Big_logo.png" className="Login-logo" alt="STEM"/>
           <p className= "Login-welcome">
           <b>StemSpace</b>
           <p className="description">Connect with peers in your field</p>

@@ -1,20 +1,32 @@
 .Timeline-banner {
-    font-family: Consolas;
-    font-size: 48px;
-    text-align: left;
     margin-top: 0px;
     margin-left: 0px;
     margin-bottom: 0px;
     background-color: #5FAA4B;
-    padding: 12px;
+    padding-top: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 6px;
+    display: flex;
 }
 
-.Logo-position {
+.Timeline-banner-text {
+    font-family: Consolas;
+    font-size: 28px;
+    margin-top: 4px;
+    margin-bottom: 0px;
+}
+
+.Timeline-logo {
     display: inline;
     margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    background-color: #DDDDDD;
+    border-radius: 20px;
   }
 
-.Stem-text{
+.Stem-text {
     font-size: 50px;
     position: absolute;
     top: -35px;
@@ -57,29 +69,19 @@
     text-align: center;
 }
 
-.DM-Logo {
-    float: right;
-    display: inline-grid;
-    width: 50px;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-bottom: 0px;
-    margin-top: 15px;
-}
-
 .Notification-button {
     float: right;
     background: #5FAA4B;
     border-width: 0px;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     margin-right: 20px;
     margin-left: 10px;
 }
 
 .Notification-logo {
     display: inline-grid;
-    width: 50px;
+    width: 40px;
     margin-bottom: -8px;
     margin-top: 0px;
     margin-left: 0px;

@@ -4,17 +4,16 @@ import {Link} from "react-router-dom";
 function Timeline() {
     return(
         <body className="wrapper">
-
-            <p className="Timeline-banner">
-            <img className='Logo-position' src="Logo_new.png" alt="STEM"></img>
-            StemSpace
+            <div className="Timeline-banner">
+                <img className='Timeline-logo' src="Logo_new.png" alt="STEM"></img>
+                <p className="Timeline-banner-text">StemSpace</p>
                 <button className="Notification-button"
                 onClick={(e) => {
                     e.preventDefault();
                     window.location.href='/Timeline';}}
                         ><b><img src="Notification.png" className="Notification-logo" alt="Notification"/></b>
                 </button>
-            </p>
+            </div>
             <div className="Timeline-bar-horizontal"/>
             <header className="Timeline-selector">
                 <p className="Timeline-following">Following</p>
