@@ -59,3 +59,10 @@
     /*scrollbar-color: ;*/
     scrollbar-width: thin;
 }
+.filetype{
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    width: 99.9%;
+    height: calc(100vh - 280px);
+}
