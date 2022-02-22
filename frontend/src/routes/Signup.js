@@ -23,7 +23,7 @@ function Signup() {
 
     function handleClick(event) {
         const newUser = {
-            username: input.name,
+            username: input.username,
             password: input.password,
             email: input.email
         }
@@ -65,7 +65,7 @@ function Signup() {
                         onClick={(e) => {
                             e.preventDefault();
                             handleClick();
-                            //window.location.href='/Login';
+                            window.location.href='/Login';
                         }}><b>Sign Up</b>
                 </button>
             </header>

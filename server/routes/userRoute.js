@@ -15,4 +15,8 @@ router.route("/createUser").post((req, res) => {
     newUser.save();
 })
 
+router.route("/getUsers").get((req, res) => {
+    User.find().then(retrievedUsers => res.json(retrievedUsers))
+})
+
 module.exports = router;
