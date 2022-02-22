@@ -1,51 +1,29 @@
-const express = require('express');
-const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
-const cors = require('cors');
-const {response} = require("express");
-
+const express = require('express')
 const app = express();
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(cors());
+let PORT = process.env.PORT || 3000
 
 
-app.get('/', ()=>{
-    resizeBy.send('welcome to it')
-})
-
-app.post('http://localhost:5000/createUser', (req, res)=>{
-
-    let data =req.body
-    let smtpTransport = nodemailer.createTransport({
-        service: 'hotmail',
-        port:5000,
-        auth:{
-            user:"test23313@outlook.com",
-            pass: "thisishard!"
-        }
-    });
-
-    let mailOptions={
-        from:"test23313@outlook.com",
-        to: data.email,
-        subject: "Hitscb"
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: "stemspacecompany@gmail.com",
+        pass: "StemSpace123"
+    },
+    tls: {
+        rejectUnauthorized: false
     }
+});
 
-    smtpTransport.sendMail(mailOptions, (error, response) => {
-        if(error){
-            res.send(error)
-        }
-        else {
-            res.send('success')
-        }
-    })
+const mailConfigurations = {
+    from: 'stemspacecompany@gmail.com',
+    to: 'jepsubotro@vusra.com',
+    subject: 'Sending Email using Node.js',
+    text: 'Hi! There, You know I am using the NodeJS '
+        + 'Code along with NodeMailer to send this email.'
+};
 
-    smtpTransport.close;
-})
-
-const PORT = process.env.PORT||5000;
-app.listen(PORT,()=> {
-    console.log("server starting at port");
-})
+transporter.sendMail(mailConfigurations, function(err, info){
+    if (err) throw Error(err);
+    console.log('Email Sent Successfully');
+});
