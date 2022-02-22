@@ -19,16 +19,20 @@ router.route("/createUser").post((req, res) => {
 router.route("/getUsers").get((req, res) => {
     const username = req.body.username;
     const password = req.body.password;
-    const user = User.find({ username: username }, {password: password});
-    
+
+    const user = dbo.findOne();
+
+    console.log(user);
+
     let response = {
         username: '',
         password: ''
     }
 
-    if (user == null || password != user.password) {
+    if (user != null) {
         response.username = username;
         response.password = password;
+        return response;
     }
 })
 

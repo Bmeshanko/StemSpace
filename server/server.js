@@ -4,6 +4,8 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 
+let url = "mongodb://localhost:5000/";
+
 require("dotenv").config({ path: "./config.env" });
 var port = process.env.PORT || 5000;
 
