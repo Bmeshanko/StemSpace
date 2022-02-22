@@ -7,7 +7,9 @@ function Signup() {
     const [input, setInput] = useState({
         username: '',
         email: '',
-        password: ''
+        password: '',
+        confirmEmail: '',
+        confirmPassword: ''
     })
 
     function handleChange(event) {
@@ -27,7 +29,12 @@ function Signup() {
             password: input.password,
             email: input.email
         }
-        axios.post('http://localhost:5000/createUser', newUser);
+        if (input.confirmEmail == input.email && input.password == input.confirmPassword) {
+            axios.post('http://localhost:5000/createUser', newUser);
+            window.location.href='/Login';
+        } else {
+            console.log("Error, confirm email/password must be equal.");
+        }
     }
 
     return (
@@ -45,8 +52,8 @@ function Signup() {
                            placeholder="Email Address"/>
                 </label>
                 <div className="space"></div>
-                <label for="confirm-email">
-                    <input onChange={handleChange} className="Signup-confirm-email-field" type="text" id="confirm-email" name="confirm-email"
+                <label for="confirmEmail">
+                    <input onChange={handleChange} value={input.confirmEmail} className="Signup-confirm-email-field" type="text" id="confirm-email" name="confirmEmail"
                            placeholder="Confirm Email"/>
                 </label>
                 <div className="space"></div>
@@ -55,9 +62,9 @@ function Signup() {
                            placeholder="Password"/>
                 </label>
                 <div className="space"></div>
-                <label htmlFor="confirm-password">
-                    <input onChange={handleChange} className="Signup-confirm-password-field" type="password" id="confirm-password"
-                           name="confirm-password"
+                <label htmlFor="confirmPassword">
+                    <input onChange={handleChange} value={input.confirmPassword} className="Signup-confirm-password-field" type="password" id="confirmPassword"
+                           name="confirmPassword"
                            placeholder="Confirm Password"/>
                 </label>
                 <div className="space"></div>
@@ -65,7 +72,6 @@ function Signup() {
                         onClick={(e) => {
                             e.preventDefault();
                             handleClick();
-                            window.location.href='/Login';
                         }}><b>Sign Up</b>
                 </button>
             </header>
