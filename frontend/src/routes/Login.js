@@ -27,7 +27,12 @@ function Login() {
             username: input.username,
             password: input.password
         }
-        axios.get('http://localhost:5000/getUsers')
+        fetch("/getUsers").then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+        })
+
     }
 
     return (

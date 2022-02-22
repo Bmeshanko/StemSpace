@@ -16,24 +16,9 @@ router.route("/createUser").post((req, res) => {
     newUser.save();
 })
 
-router.route("/getUsers").get((req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-
-    const user = dbo.findOne();
-
-    console.log(user);
-
-    let response = {
-        username: '',
-        password: ''
-    }
-
-    if (user != null) {
-        response.username = username;
-        response.password = password;
-        return response;
-    }
+router.route("/getUsers").post((req, res) => {
+    User.find()
+        .then(foundUsers => res.json(foundUsers));
 })
 
 module.exports = router;
