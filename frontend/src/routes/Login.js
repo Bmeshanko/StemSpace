@@ -6,7 +6,6 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 
 function Login() {
-
     const [input, setInput] = useState({
         username: '',
         password: ''
@@ -28,19 +27,10 @@ function Login() {
             username: input.username,
             password: input.password
         }
-
-        let response = {
-            username: '',
-            password: ''
-        }
-
-        response = axios.post('http://localhost:5000/getUsers', user);
-        if (response.username == 'Benjamin628' && response.password != '') {
-            window.location.href='/Timeline';
-        }
+        axios.get('http://localhost:5000/getUsers')
     }
 
-  return (
+    return (
      <body>
       <section className="Login-left">
           <img src="Big_logo.png" className="Login-logo" alt="STEM"/>
@@ -79,7 +69,7 @@ function Login() {
         </form>
       </section>
     </body>
-  );
+    );
 }
 
 export default Login;
