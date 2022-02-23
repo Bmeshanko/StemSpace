@@ -2,16 +2,11 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
-
-
 require("dotenv").config({ path: "./config.env" });
 var port = process.env.PORT || 5000;
-
 var db = mongoose.connection;
-
 app.use(cors());
 app.use(express.json());
-
 mongoose.connect("mongodb+srv://mern:Password@merndemo.i6veu.mongodb.net/StemSpace")
 
 app.use(require("./routes/record"));
@@ -19,6 +14,14 @@ app.use("/", require("./routes/userRoute"));
 
 // get driver connection
 var dbo = require("./db/conn");
+const User = require("./models/userModel");
+
+app.get("/", function (req, res) {
+  const user = User.find({email: 'testuser@gmail.com'}, function(err, users) {
+    console.log(users)
+    res.json(users)
+  })
+})
 
 app.listen(port, () => {
   // perform a database connection when server starts

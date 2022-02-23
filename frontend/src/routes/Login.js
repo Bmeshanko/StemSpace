@@ -4,8 +4,12 @@ import './ForgotPassword';
 import {Link} from "react-router-dom";
 import React, {useState, useEffect} from "react";
 import axios from "axios";
+import data from "bootstrap/js/src/dom/data";
+
+
 
 function Login() {
+
     const [input, setInput] = useState({
         username: '',
         password: ''
@@ -27,12 +31,9 @@ function Login() {
             username: input.username,
             password: input.password
         }
-        fetch("/getUsers").then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-        })
-
+        fetch("/getUsers", {
+        }).then(res => res.json()
+            .then(data => console.log(data)))
     }
 
     return (

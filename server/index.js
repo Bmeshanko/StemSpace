@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
 
 const mailConfigurations = {
     from: 'stemspacecompany@gmail.com',
-    to: 'dutta36@purdue.edu',
+    to: '',
     subject: 'Sending Email using Node.js',
     text: 'Hi! I just wanted to let you know Zach is cooler. .'
 };

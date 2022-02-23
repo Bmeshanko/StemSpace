@@ -28,13 +28,11 @@ router.route("/createUser").post((req, res) => {
 })
 */
 
-router.route("/getUsers").get( (req, res) => {
-    const id = req.params.email;
-    User.findById(id).exec().then(doc => {
-        console.log(doc);
-        res.status(200).json(doc);
+router.get("/getUsers", (req, res) => {
+    const user = User.find({email: 'testuser@gmail.com'}, function(err, users) {
+        console.log(users)
+        res.json(users)
     })
-
 })
 
 /*router.post('/createUser', (req, res) => {
@@ -50,5 +48,7 @@ router.route("/getUsers").get( (req, res) => {
 User.find({email: 'testuser@gmail.com'}, function(err, users) {
     console.log(users)
 })
+
+
 
 module.exports = router;
