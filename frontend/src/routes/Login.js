@@ -10,7 +10,9 @@ import data from "bootstrap/js/src/dom/data";
 
 function Login() {
 
-    const [input, setInput] = useState({
+    const [input, setInput] = useState([])
+
+    const [user, setUser] = useState({
         username: '',
         password: ''
     })
@@ -26,14 +28,20 @@ function Login() {
         })
     }
 
+    const getInput = () => {
+        axios.get("/getUsers")
+            .then((res) => {
+                console.log(res.data);
+                const myInput = res.data
+                setInput(myInput)
+            })
+    }
     function handleClick(event) {
-        const user = {
-            username: input.username,
-            password: input.password
-        }
-        fetch("/getUsers", {
-        }).then(res => res.json()
-            .then(data => console.log(data)))
+        getInput()
+        console.log(input[0].username)
+        setUser(prevState => {
+            return {...prevState, username: input[0].username, password: input[0].password}
+        })
     }
 
     return (
@@ -48,11 +56,11 @@ function Login() {
       <section className="Login-right">
         <form>
             <label for="username">
-                <input onChange={handleChange} value={input.username} className="Login-username-field" type="text" id="username" name="username" placeholder="Username or Email" />
+                <input onChange={handleChange} value={user.username} className="Login-username-field" type="text" id="username" name="username" placeholder="Username or Email" />
                 <div className="space"></div>
             </label>
             <label for="password">
-                <input onChange={handleChange} value={input.password} className="Login-password-field" type="password" id="password" name="password" placeholder="Password" />
+                <input onChange={handleChange} value={user.password} className="Login-password-field" type="password" id="password" name="password" placeholder="Password" />
                 <div className="space"></div>
             </label>
             <button className="Login-button"
