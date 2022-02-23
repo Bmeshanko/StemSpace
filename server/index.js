@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const express = require('express')
 const app = express();
-let PORT = process.env.PORT || 3000
+let PORT = process.env.PORT || 5000
 
 
 const transporter = nodemailer.createTransport({
@@ -17,10 +17,9 @@ const transporter = nodemailer.createTransport({
 
 const mailConfigurations = {
     from: 'stemspacecompany@gmail.com',
-    to: 'jepsubotro@vusra.com',
+    to: 'dutta36@purdue.edu',
     subject: 'Sending Email using Node.js',
-    text: 'Hi! There, You know I am using the NodeJS '
-        + 'Code along with NodeMailer to send this email.'
+    text: 'Hi! I just wanted to let you know Zach is cooler. .'
 };
 
 transporter.sendMail(mailConfigurations, function(err, info){
