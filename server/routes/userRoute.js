@@ -67,7 +67,7 @@ router.post("/forgotPassword", (req, res) => {
          }
         }, {collection: 'users'})
     } catch (e) {
-        console.log("well shit")
+        console.log("well ")
     }
 })
 
