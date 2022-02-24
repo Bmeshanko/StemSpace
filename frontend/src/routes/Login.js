@@ -34,7 +34,7 @@ function Login() {
         axios.post("/getUsers", {
             username: user.username,
             password: user.password
-        } ).then(res => {
+        }).then(res => {
             if(res.data == null || res.data.password !== user.password) {
                 alert("Incorrect Username or Password")
             }else {
