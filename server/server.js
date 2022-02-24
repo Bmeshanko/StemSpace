@@ -17,10 +17,6 @@ var dbo = require("./db/conn");
 const User = require("./models/userModel");
 
 app.get("/", function (req, res) {
-  const user = User.find({email: 'testuser@gmail.com'}, function(err, users) {
-    console.log(users)
-    res.json(users)
-  })
 })
 
 app.listen(port, () => {

@@ -28,12 +28,19 @@ router.route("/createUser").post((req, res) => {
 })
 */
 
-router.get("/getUsers", (req, res) => {
-    const user = User.find({email: 'testuser@gmail.com'}, function(err, users) {
+router.post("/getUsers", (req, res) => {
+    try {
+        const request = req.body.username
+        console.log(req.body.username)
+    const user = User.findOne({username: request}, function(err, users) {
         console.log(users)
         res.json(users)
     })
-})
+    }catch(e) {
+        console.log("well shit")
+        }
+});
+
 
 /*router.post('/createUser', (req, res) => {
     const newUser = new User({
@@ -45,9 +52,7 @@ router.get("/getUsers", (req, res) => {
 })
 */
 
-User.find({email: 'testuser@gmail.com'}, function(err, users) {
-    console.log(users)
-})
+
 
 
 
