@@ -20,28 +20,26 @@ function Login() {
     function handleChange(event) {
         const {name, value} = event.target;
 
-        setInput(prevInput=> {
+        setUser(prevUser=> {
             return {
-                ...prevInput,
+                ...prevUser,
                 [name]: value
             }
         })
     }
-
-    const getInput = () => {
-        axios.get("/getUsers")
-            .then((res) => {
-                console.log(res.data);
-                const myInput = res.data
-                setInput(myInput)
-            })
-    }
-    function handleClick(event) {
-        getInput()
-        console.log(input[0].username)
-        setUser(prevState => {
-            return {...prevState, username: input[0].username, password: input[0].password}
+    function checkUserName() {
+        console.log(user.username)
+        axios.post("/getUsers", {
+            username: user.username,
+            password: user.password
+        } ).then(res => {
+            console.log(res.data.password)
         })
+    }
+
+
+    function handleClick(event) {
+        checkUserName()
     }
 
     return (
