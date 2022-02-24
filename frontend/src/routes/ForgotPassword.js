@@ -12,10 +12,11 @@ function ForgotPassword() {
         axios.post("/forgotPassword", {
             email: email
         }).then(res => {
-            console.log(res.data)
-            window.location.href='/Login';
+            if (res.data != null) {
+                window.location.href = '/Login';
+            }
         }).catch(function (error) {
-            console.log("welp fuck")
+            console.log("Error")
         })
     }
 
