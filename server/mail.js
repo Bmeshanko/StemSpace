@@ -25,7 +25,7 @@ function sendMail(email, password) {
         from: 'stemspacecompany@gmail.com',
         to: email,
         subject: 'Sending Email using Node.js',
-        text: 'The recovery code for your account is ' + password + '.'
+        text: 'The password for your account is ' + password + '.'
     };
 
     transporter.sendMail(mailConfigurations, function (err, info) {

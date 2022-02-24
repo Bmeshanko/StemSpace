@@ -6,11 +6,11 @@ const assert = require("assert");
 const sendMail = require('../mail.js');
 
 
-router.route("/createUser").post((req, res) => {
+router.post("/createUser", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
-    
+    console.log("heyy plz")
     const newUser = new User({
         username,
         password,
@@ -18,6 +18,7 @@ router.route("/createUser").post((req, res) => {
     });
 
     newUser.save();
+    res.end()
 })
 
 
@@ -61,7 +62,6 @@ router.post("/forgotPassword", (req, res) => {
          if(info == null) {
              res.json(null)
          } else {
-             const code = makeid(5);
              sendMail(info.email, info.password)
              res.end()
          }
