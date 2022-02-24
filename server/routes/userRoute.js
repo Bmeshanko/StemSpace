@@ -3,8 +3,7 @@ const router = express.Router();
 const User = require("../models/userModel");
 const mongoose = require("mongoose");
 const assert = require("assert");
-
-
+const sendMail = require('../mail.js');
 
 
 router.route("/createUser").post((req, res) => {
@@ -54,6 +53,23 @@ router.post("/getUsers", (req, res) => {
 */
 
 
+router.post("/forgotPassword", (req, res) => {
+    try {
+        const request = req.body.email
+        console.log(request)
+     const user = User.findOne({email: request}, function (err, info) {
+         if(info == null) {
+             res.json(null)
+         } else {
+             const code = makeid(5);
+             sendMail(info.email, info.password)
+             res.end()
+         }
+        }, {collection: 'users'})
+    } catch (e) {
+        console.log("well shit")
+    }
+})
 
 
 
