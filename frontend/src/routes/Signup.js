@@ -30,9 +30,8 @@ function Signup() {
             email: input.email
         }
         if (input.confirmEmail == input.email && input.password == input.confirmPassword) {
-            axios.post('/createUser', newUser).then(r => {
-                window.location.href='/Login';
-            });
+            axios.post('/createUser', newUser);
+            window.location.href='/Login';
         } else {
             console.log("Error, confirm email/password must be equal.");
         }

@@ -10,7 +10,6 @@ router.post("/createUser", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
-    console.log("heyy plz")
     const newUser = new User({
         username,
         password,
@@ -18,7 +17,6 @@ router.post("/createUser", (req, res) => {
     });
 
     newUser.save();
-    res.end()
 })
 
 
