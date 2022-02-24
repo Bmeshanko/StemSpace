@@ -2,11 +2,11 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "mail.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "server": "nodemon index.js",
+    "start": "node mail.js",
+    "server": "nodemon mail.js",
     "client": "npm start frontend",
     "dev": "concurrently \"npm run server\" \"npm start --prefix frontend\""
   },

@@ -1,11 +1,24 @@
 import './Profile.css';
-import { Component } from 'react';
+import { Component, useEffect } from 'react';
+import {useLocation} from "react-router-dom";
+let location
+const UseLocation = () => {
+  location = useLocation()
+  return null
+}
 class Profile extends Component{
-  state = {
-    bio: 'Nothing Here',
-    showName: false ,
-    showProfile: false ,
-    image: "Blank-Profile.png"
+  constructor(){
+    super();
+    this.state = {
+      username:'',
+      bio: 'Nothing Here',
+      showName: false ,
+      showProfile: false ,
+      image: "Blank-Profile.png"
+    }
+  }
+  componentDidMount(){
+    this.setState({username:location.state.username})
   }
   displayNameHandler = (e) => {
     let updatedBio = e.target.value;
@@ -14,7 +27,7 @@ class Profile extends Component{
   handleBioSubmit = (e) => {
     e.preventDefault();
     this.setState({
-      showName: true,
+      showName: true
     });
   }
   handleBioClose = (e) => {
@@ -33,7 +46,9 @@ class Profile extends Component{
     }
   }
    render(){
-      return (<body>
+      return (  
+      <body>
+        <UseLocation />
          <p className="Profile-banner">
              <img className='Logo' src="Logo_new.png" alt="STEM"></img>
              <p className='Stem-text'>StemSpace</p>
@@ -41,7 +56,7 @@ class Profile extends Component{
          <header className="Profile-bio">
              <img className='Profile-picture' src={this.state.image}></img>
              <span className="Profile-info">
-               <p class="username">@UserName</p>
+               <p class="username">@{this.state.username}</p>
                {/* MAX CHAR for bio about 1500 */}
                <div>
                   <form onSubmit={this.handleSubmit}>

@@ -3,15 +3,14 @@ const router = express.Router();
 const User = require("../models/userModel");
 const mongoose = require("mongoose");
 const assert = require("assert");
+const sendMail = require('../mail.js');
 
 
-
-
-router.route("/createUser").post((req, res) => {
+router.post("/createUser", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
-    
+    console.log("heyy plz")
     const newUser = new User({
         username,
         password,
@@ -19,6 +18,7 @@ router.route("/createUser").post((req, res) => {
     });
 
     newUser.save();
+    res.end()
 })
 
 
@@ -33,13 +33,13 @@ router.post("/getUsers", (req, res) => {
         const request = req.body.username
         console.log(req.body.username)
         let criteria = (request.indexOf('@') === -1) ? {username: request} : {email: request};
-        const user = User.findOne(criteria, function(err, users) {
-            console.log(users)
-            res.json(users)
-        }, {collection: 'users'})
-    } catch(e) {
-        console.log("Error!")
-    }
+    const user = User.findOne(criteria, function(err, users) {
+        console.log(users)
+        res.json(users)
+    }, {collection: 'users'})
+    }catch(e) {
+        console.log("well shit")
+        }
 });
 
 
@@ -52,5 +52,25 @@ router.post("/getUsers", (req, res) => {
     newUser.save();
 })
 */
+
+
+router.post("/forgotPassword", (req, res) => {
+    try {
+        const request = req.body.email
+        console.log(request)
+     const user = User.findOne({email: request}, function (err, info) {
+         if(info == null) {
+             res.json(null)
+         } else {
+             sendMail(info.email, info.password)
+             res.end()
+         }
+        }, {collection: 'users'})
+    } catch (e) {
+        console.log("well shit")
+    }
+})
+
+
 
 module.exports = router;

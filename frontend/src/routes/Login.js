@@ -1,14 +1,15 @@
 import './Login.css';
 import './Signup';
 import './ForgotPassword';
-import {Link} from "react-router-dom";
+import Profile from './Profile';
+import ReactDOM from 'react-dom';
+import {BrowserRouter, Route, Link, Routes, useNavigate} from "react-router-dom";
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import data from "bootstrap/js/src/dom/data";
 
-
-
 function Login() {
+
 
     const [input, setInput] = useState([])
 
@@ -27,6 +28,7 @@ function Login() {
             }
         })
     }
+    const navigate = useNavigate();
     function checkUserName() {
         console.log(user.username)
         axios.post("/getUsers", {
@@ -36,7 +38,7 @@ function Login() {
             if(res.data == null || res.data.password !== user.password) {
                 alert("Incorrect Username or Password")
             }else {
-                window.location.href='/Profile';
+                navigate("/Profile", {state:{username:user.username}});
             }
             console.log(res.data.password)
         }).catch(function (error) {
