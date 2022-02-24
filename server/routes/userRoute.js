@@ -33,13 +33,13 @@ router.post("/getUsers", (req, res) => {
         const request = req.body.username
         console.log(req.body.username)
         let criteria = (request.indexOf('@') === -1) ? {username: request} : {email: request};
-    const user = User.findOne(criteria, function(err, users) {
-        console.log(users)
-        res.json(users)
-    }, {collection: 'users'})
-    }catch(e) {
-        console.log("well shit")
-        }
+        const user = User.findOne(criteria, function(err, users) {
+            console.log(users)
+            res.json(users)
+        }, {collection: 'users'})
+    } catch(e) {
+        console.log("Error!")
+    }
 });
 
 
@@ -52,9 +52,5 @@ router.post("/getUsers", (req, res) => {
     newUser.save();
 })
 */
-
-
-
-
 
 module.exports = router;
