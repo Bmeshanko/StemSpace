@@ -32,10 +32,11 @@ router.post("/getUsers", (req, res) => {
     try {
         const request = req.body.username
         console.log(req.body.username)
-    const user = User.findOne({username: request}, function(err, users) {
+        let criteria = (request.indexOf('@') === -1) ? {username: request} : {email: request};
+    const user = User.findOne(criteria, function(err, users) {
         console.log(users)
         res.json(users)
-    })
+    }, {collection: 'users'})
     }catch(e) {
         console.log("well shit")
         }

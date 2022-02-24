@@ -33,7 +33,15 @@ function Login() {
             username: user.username,
             password: user.password
         } ).then(res => {
+            if(res.data == null || res.data.password !== user.password) {
+                alert("Incorrect Username or Password")
+            }else {
+                window.location.href='/Profile';
+            }
             console.log(res.data.password)
+        }).catch(function (error) {
+            console.log("welp that didn't work")
+            console.log(error)
         })
     }
 
