@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const userSchema = {
     username: String,
     password: String,
-    email: String
+    email: String,
+    bio: String
 }
 
 const User = mongoose.model("User", userSchema);
