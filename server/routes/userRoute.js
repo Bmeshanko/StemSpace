@@ -31,7 +31,7 @@ router.post("/createUser", (req, res) => {
 router.post("/getUsers", (req, res) => {
     try {
         const request = req.body.username
-        console.log(req.body.username)
+        //console.log(req.body.username)
         let criteria = (request.indexOf('@') === -1) ? {username: request} : {email: request};
     const user = User.findOne(criteria, function(err, users) {
         console.log(users)

@@ -1,6 +1,7 @@
 import './Profile.css';
 import { Component, useEffect } from 'react';
 import {useLocation} from "react-router-dom";
+import axios from "axios";
 let location
 const UseLocation = () => {
   location = useLocation()
@@ -11,7 +12,7 @@ class Profile extends Component{
     super();
     this.state = {
       username:'',
-      bio: 'Nothing Here',
+      bio: '',
       showName: false ,
       showProfile: false ,
       image: "Blank-Profile.png"
@@ -19,6 +20,19 @@ class Profile extends Component{
   }
   componentDidMount(){
     this.setState({username:location.state.username})
+    axios.post("/getUsers", {
+        username: location.state.username
+    }).then(res => {
+        console.log(res);
+        if(res.data == null ) {
+            alert("Profile not Found")
+        }else {
+            this.setState({bio: res.data.bio});
+        }
+    }).catch(function (error) {
+        console.log("welp that didn't work")
+        console.log(error)
+    })
   }
   displayNameHandler = (e) => {
     let updatedBio = e.target.value;
