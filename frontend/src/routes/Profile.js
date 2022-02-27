@@ -30,7 +30,7 @@ class Profile extends Component{
             this.setState({bio: res.data.bio});
         }
     }).catch(function (error) {
-        console.log("welp that didn't work")
+        console.log("Something wrong")
         console.log(error)
     })
   }

@@ -38,7 +38,7 @@ router.post("/getUsers", (req, res) => {
         res.json(users)
     }, {collection: 'users'})
     }catch(e) {
-        console.log("well shit")
+        console.log("UH OH")
         }
 });
 
