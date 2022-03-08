@@ -2,13 +2,15 @@ import './Profile.css';
 import { Component, useEffect } from 'react';
 import {useLocation} from "react-router-dom";
 import axios from "axios";
+
 let location
 const UseLocation = () => {
   location = useLocation()
-  return null
+  return null;
 }
-class Profile extends Component{
-  constructor(){
+
+class Profile extends Component {
+  constructor() {
     super();
     this.state = {
       username:'',
@@ -26,12 +28,11 @@ class Profile extends Component{
         console.log(res);
         if(res.data == null ) {
             alert("Profile not Found")
-        }else {
+        } else {
             this.setState({bio: res.data.bio});
         }
     }).catch(function (error) {
-        console.log("Something wrong")
-        console.log(error)
+        console.log("Error Detected")
     })
   }
   displayNameHandler = (e) => {
@@ -46,6 +47,11 @@ class Profile extends Component{
   }
   handleBioClose = (e) => {
     e.preventDefault();
+    axios.post("/editBio", {
+        bio: this.state.bio,
+        username: this.state.username
+    });
+
     this.setState({
       showName: false
     });
@@ -71,13 +77,13 @@ class Profile extends Component{
              <img className='Profile-picture' src={this.state.image}></img>
              <span className="Profile-info">
                <p class="username">@{this.state.username}</p>
-               {/* MAX CHAR for bio about 1500 */}
+               {}
                <div>
                   <form onSubmit={this.handleSubmit}>
                     <label>Bio:</label>
                     <button type="submit" onClick={this.handleBioSubmit}>Edit Bio</button>
                     
-                    {this.state.showName && <input type="text" name="firstName" onChange={this.displayNameHandler} value={this.state.firstName} />}
+                    {this.state.showName && <input type="text" onChange={this.displayNameHandler}name="bio" value={this.state.bio} />}
 
                     {this.state.showName && <button type="button" onClick={this.handleBioClose}>Close</button>}
                     {<p>{this.state.bio}</p>}

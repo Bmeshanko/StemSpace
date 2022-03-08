@@ -9,8 +9,6 @@ import axios from "axios";
 import data from "bootstrap/js/src/dom/data";
 
 function Login() {
-
-
     const [input, setInput] = useState([])
 
     const [user, setUser] = useState({
@@ -37,16 +35,14 @@ function Login() {
         }).then(res => {
             if(res.data == null || res.data.password !== user.password) {
                 alert("Incorrect Username or Password")
-            }else {
+            } else {
                 navigate("/Profile", {state:{username:user.username}});
             }
             console.log(res.data.password)
         }).catch(function (error) {
-            console.log("welp that didn't work")
-            console.log(error)
+            console.log("Error Detected")
         })
     }
-
 
     function handleClick(event) {
         checkUserName()
