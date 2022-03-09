@@ -12,11 +12,13 @@ router.post("/createUser", (req, res) => {
     const password = req.body.password;
     const email = req.body.email;
     const bio = "";
+    const image = new Image(300, 300);
     const newUser = new User({
         username,
         password,
         email,
-        bio
+        bio,
+        image
     });
 
     newUser.save();
@@ -58,6 +60,19 @@ router.post("/editBio", (req, res) => {
         let criteria = {username: name};
         let update = {bio: newBio};
         const user = User.findOneAndUpdate(criteria, update, function(err, users) {
+            res.json(users)
+        }, {collection: 'users'});
+    } catch (e) {
+        console.log(e);
+    }
+});
+
+router.post("/deleteUser", (req, res) => {
+    try {
+        const name = req.body.username;
+        const password = req.body.password;
+        let criteria = {username: name, password: password};
+        const user = User.findOneAndDelete(criteria, function(err, users) {
             res.json(users)
         }, {collection: 'users'});
     } catch (e) {
