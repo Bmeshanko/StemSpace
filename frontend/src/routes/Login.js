@@ -9,8 +9,6 @@ import axios from "axios";
 import data from "bootstrap/js/src/dom/data";
 
 function Login() {
-    const [input, setInput] = useState([])
-
     const [user, setUser] = useState({
         username: '',
         password: ''
