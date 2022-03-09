@@ -26,7 +26,7 @@ class Profile extends Component {
         username: location.state.username
     }).then(res => {
         console.log(res);
-        if(res.data == null ) {
+        if(res.data == null) {
             alert("Profile not Found")
         } else {
             this.setState({bio: res.data.bio});
@@ -50,6 +50,8 @@ class Profile extends Component {
     axios.post("/editBio", {
         bio: this.state.bio,
         username: this.state.username
+    }).then(res => {
+        console.log(res.data);
     });
 
     this.setState({

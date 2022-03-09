@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const assert = require("assert");
 const sendMail = require('../mail.js');
 const { $where } = require("../models/userModel");
+const { getSystemErrorMap } = require("util");
 
 router.post("/createUser", (req, res) => {
     const username = req.body.username;
@@ -54,24 +55,13 @@ router.post("/editBio", (req, res) => {
     try {
         const newBio = req.body.bio;
         const name = req.body.username;
-        console.log(newBio + " " + name);
-        const user = User.findOne({username: name}, function(err, users) {
+        let criteria = {username: name};
+        let update = {bio: newBio};
+        const user = User.findOneAndUpdate(criteria, update, function(err, users) {
             res.json(users)
-        }, {collection: 'users'})
-
-        console.log(user);
-        
-        //User.updateOne({username: name}, {$set: {bio: newBio}});
-        
-
-        /*try {
-            user.bio = newBio;
-            user.save();
-        } catch (e) {
-            console.log("Error Detected!");
-        }*/
+        }, {collection: 'users'});
     } catch (e) {
-        console.log("Error Detected");
+        console.log(e);
     }
 });
 
