@@ -4,8 +4,7 @@ const userSchema = {
     username: String,
     password: String,
     email: String,
-    bio: String,
-    pic: Image
+    bio: String
 }
 
 const User = mongoose.model("User", userSchema);

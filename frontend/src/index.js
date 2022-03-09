@@ -11,6 +11,7 @@ import ForgotPassword from "./routes/ForgotPassword";
 import RecoverAccount from "./routes/RecoverAccount";
 import Timeline from "./routes/Timeline";
 import Front from './routes/Front';
+import DeleteAccount from "./routes/DeleteAccount";
 ReactDOM.render(
   <React.StrictMode>
       <BrowserRouter>
@@ -23,6 +24,7 @@ ReactDOM.render(
               <Route path="/Profile" element={<Profile />} />
               <Route path="/Timeline" element={<Timeline />} />
               <Route path="/Front" element={<Front />} />
+              <Route path="/DeleteAccount" element={<DeleteAccount />} />
           </Routes>
       </BrowserRouter>
   </React.StrictMode>,
