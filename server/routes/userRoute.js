@@ -12,13 +12,11 @@ router.post("/createUser", (req, res) => {
     const password = req.body.password;
     const email = req.body.email;
     const bio = "";
-    const image = new Image(300, 300);
     const newUser = new User({
         username,
         password,
         email,
-        bio,
-        image
+        bio
     });
 
     newUser.save();
@@ -71,6 +69,7 @@ router.post("/deleteUser", (req, res) => {
     try {
         const name = req.body.username;
         const password = req.body.password;
+        console.log(name + " " + password);
         let criteria = {username: name, password: password};
         const user = User.findOneAndDelete(criteria, function(err, users) {
             res.json(users)
