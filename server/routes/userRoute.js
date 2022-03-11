@@ -97,7 +97,23 @@ router.post("/createPost", (req, res) => {
 });
 
 router.post("/likePost", (req, res) => {
-    
+    const username = req.body.username;
+    let criteria = {username: username};
+    const user = User.findOne(criteria, function(err, users) {
+        res.json(users)
+    }, {collection: 'users'});
+
+    const id = req.body.id;
+    criteria = {_id: id};
+    const post = Post.findOne(criteria, function(err, posts) {
+        res.json(posts)
+    }, {collection: 'posts'});
+
+    const postInUser = user.posts.findOne(criteria);
+
+    if (postInUsers != null && postInUsers == post) {
+        
+    }
 });
 
 module.exports = router;
