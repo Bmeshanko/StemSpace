@@ -1,10 +1,11 @@
+const { Int32 } = require("mongodb");
 const mongoose = require("mongoose");
 const User = require("./userModel");
 
 const postSchema = {
     text: String,
     author: User,
-    likes: Integer
+    likes: Int32
 }
 
 const Post = mongoose.model("Post", postSchema);

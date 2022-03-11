@@ -24,8 +24,8 @@ router.post("/createUser", (req, res) => {
 
 router.post("/getUsers", (req, res) => {
     try {
-        const request = req.body.username
-        //console.log(req.body.username)
+        const usernameOrEmail = req.body.username; 
+        // Called "username" but could also be email.
         let criteria = (request.indexOf('@') === -1) ? {username: request} : {email: request};
         const user = User.findOne(criteria, function(err, users) {
             res.json(users)
@@ -54,8 +54,8 @@ router.post("/forgotPassword", (req, res) => {
 router.post("/editBio", (req, res) => {
     try {
         const newBio = req.body.bio;
-        const name = req.body.username;
-        let criteria = {username: name};
+        const username = req.body.username;
+        let criteria = {username: username};
         let update = {bio: newBio};
         const user = User.findOneAndUpdate(criteria, update, function(err, users) {
             res.json(users)
@@ -67,16 +67,33 @@ router.post("/editBio", (req, res) => {
 
 router.post("/deleteUser", (req, res) => {
     try {
-        const name = req.body.username;
+        const username = req.body.username;
         const password = req.body.password;
-        console.log(name + " " + password);
-        let criteria = {username: name, password: password};
+        let criteria = {username: username, password: password};
         const user = User.findOneAndDelete(criteria, function(err, users) {
             res.json(users)
         }, {collection: 'users'});
     } catch (e) {
         console.log(e);
     }
+});
+
+router.post("/createPost", (req, res) => {
+    const username = req.body.username;
+    let criteria = {username: username};
+    const user = User.findOne(criteria, function(err, users) {
+        res.json(users)
+    }, {collection: 'users'});
+
+    const text = req.body.text;
+    const likes = 0;
+    const newPost = new Post({
+        text,
+        Author,
+        likes
+    });
+
+    newPost.save();
 });
 
 module.exports = router;

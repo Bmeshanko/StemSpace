@@ -2,6 +2,9 @@ import './Timeline.css';
 import {Link} from "react-router-dom";
 
 function Timeline() {
+
+
+
     return(
         <body className="wrapper">
             <div className="Timeline-banner">
