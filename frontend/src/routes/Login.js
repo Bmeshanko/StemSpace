@@ -26,7 +26,6 @@ function Login() {
     }
     const navigate = useNavigate();
     function checkUserName() {
-        console.log(user.username)
         axios.post("/getUsers", {
             username: user.username,
             password: user.password

@@ -19,6 +19,15 @@ function DeleteAccount() {
             }
         })
     }
+
+    function pressButton(e) {
+        console.log()
+        axios.post("/deleteUser", {
+            username: user.username,
+            password: user.password
+        });
+    }
+
     return (
         <body>
         <header className="Delete-account-header">
