@@ -96,4 +96,8 @@ router.post("/createPost", (req, res) => {
     newPost.save();
 });
 
+router.post("/likePost", (req, res) => {
+    
+});
+
 module.exports = router;
