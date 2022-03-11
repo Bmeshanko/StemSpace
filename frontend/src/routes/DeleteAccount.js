@@ -21,11 +21,12 @@ function DeleteAccount() {
     }
 
     function pressButton(e) {
-        console.log()
-        axios.post("/deleteUser", {
-            username: user.username,
-            password: user.password
-        });
+        if (user.confirm == user.password) {
+            axios.post("/deleteUser", {
+                username: user.username,
+                password: user.password
+            });
+        }
     }
 
     return (
@@ -65,12 +66,8 @@ function DeleteAccount() {
             </label>
             <div className="space"></div>
             <button className="Delete-account-button"
-                    onClick={
-                        (e) =>
-                        {
-                            this.pressButton(e)
-                        }
-                    }><b>Delete Account</b>
+                    onClick={pressButton}
+                    ><b>Delete Account</b>
             </button>
         </header>
         </body>
