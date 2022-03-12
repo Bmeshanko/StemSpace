@@ -6,7 +6,6 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Link, Routes, useNavigate} from "react-router-dom";
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-import data from "bootstrap/js/src/dom/data";
 
 function Login() {
     const [user, setUser] = useState({
