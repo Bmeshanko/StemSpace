@@ -69,6 +69,7 @@ router.post("/deleteUser", (req, res) => {
         const username = req.body.username;
         const password = req.body.password;
         let criteria = {username: username, password: password};
+        console.log(criteria);
         const user = User.findOneAndDelete(criteria, function(err, users) {
             res.json(users)
         }, {collection: 'users'});
