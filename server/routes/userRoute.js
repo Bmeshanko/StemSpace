@@ -24,9 +24,8 @@ router.post("/createUser", (req, res) => {
 
 router.post("/getUsers", (req, res) => {
     try {
-        const usernameOrEmail = req.body.username; 
-        // Called "username" but could also be email.
-        let criteria = (request.indexOf('@') === -1) ? {username: request} : {email: request};
+        const request = req.body.username;
+        let criteria = (request.indexOf('@') == -1) ? {username: request} : {email: request};
         const user = User.findOne(criteria, function(err, users) {
             res.json(users)
         }, {collection: 'users'})
@@ -47,7 +46,7 @@ router.post("/forgotPassword", (req, res) => {
             }
         }, {collection: 'users'})
     } catch (e) {
-        console.log("Error Detected");
+        console.log(e);
     }
 });
 

@@ -6,12 +6,7 @@ const userSchema = {
     username: String,
     password: String,
     email: String,
-    bio: String,
-    posts: [Post],
-    likedPosts: [Post],
-    postCount: Int32,
-    following: [User],
-    followers: [User]
+    bio: String
 }
 
 const User = mongoose.model("User", userSchema);

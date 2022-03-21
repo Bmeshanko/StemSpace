@@ -4,8 +4,7 @@ const User = require("./userModel");
 
 const postSchema = {
     text: String,
-    author: User,
-    likes: Int32
+    author: User
 }
 
 const Post = mongoose.model("Post", postSchema);
