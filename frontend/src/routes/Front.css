@@ -1,13 +1,14 @@
-.Front-left {
-    margin-left: 120px;
+.Front-top {
+    margin-left: 390px;
     margin-top: 120px;
     font-family: Consolas;
-    padding: 15px;
+    padding: 10px 80px 30px 80px;
     background-color: #EEEEEE;
     flex-direction: column;
     display: inline-grid;
-    align-items: center;
     border-radius: 20px;
+    text-align: center;
+    justify-content: center;
 }
 
 .Front-logo {
@@ -16,5 +17,4 @@
 }
 
 .Front-left-text {
-    align-items: center;
 }
