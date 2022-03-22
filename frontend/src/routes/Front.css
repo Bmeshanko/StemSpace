@@ -1,0 +1,20 @@
+.Front-left {
+    margin-left: 120px;
+    margin-top: 120px;
+    font-family: Consolas;
+    padding: 15px;
+    background-color: #EEEEEE;
+    flex-direction: column;
+    display: inline-grid;
+    align-items: center;
+    border-radius: 20px;
+}
+
+.Front-logo {
+    margin-right: 10px;
+    width: 400px;
+}
+
+.Front-left-text {
+    align-items: center;
+}
