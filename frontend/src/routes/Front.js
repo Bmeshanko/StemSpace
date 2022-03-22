@@ -6,7 +6,7 @@ function Front() {
     return(
         <body>
             <section className="Front-top">
-                <p className="Front-left-text">
+                <p>
                     StemSpace is bringing the STEM community together <br/>
                     by fostering a sense of inclusion within fields.
                 </p>
@@ -14,7 +14,9 @@ function Front() {
             </section>
 
             <section className="Front-bottom">
-
+                <p>
+                    Register or login to join the StemSpace community!
+                </p>
             </section>
         </body>
     );
