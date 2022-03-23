@@ -20,6 +20,7 @@ router.post("/createUser", (req, res) => {
     });
 
     newUser.save();
+    res.json(newUser)
 });
 
 router.post("/getUsers", (req, res) => {
@@ -37,12 +38,14 @@ router.post("/getUsers", (req, res) => {
 router.post("/forgotPassword", (req, res) => {
     try {
         const request = req.body.email;
+        const code = Math.floor(1000 + Math.random() * 9000);
+        console.log(code);
         const user = User.findOne({email: request}, function (err, info) {
             if (info == null) {
                 res.json(null)
             } else {
-                sendMail(info.email, info.password)
-                res.end()
+                sendMail(info.email, code)
+                res.json(code)
             }
         }, {collection: 'users'})
     } catch (e) {

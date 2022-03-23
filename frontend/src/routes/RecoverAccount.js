@@ -1,6 +1,20 @@
 import './RecoverAccount.css';
+import React from "react";
+import {useParams} from "react-router-dom";
 
 function RecoverAccount() {
+
+    const {id} = useParams();
+    console.log(id)
+    const queryString = '?' + id;
+    console.log(queryString)
+    const urlParams = new URLSearchParams(queryString);
+    const email = urlParams.get('email')
+    console.log(email)
+
+    function handleClick{
+    }
+
     return (
         <body>
         <header className="Recover-account-header">
