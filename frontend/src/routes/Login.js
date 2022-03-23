@@ -6,11 +6,8 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Link, Routes, useNavigate} from "react-router-dom";
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-import data from "bootstrap/js/src/dom/data";
 
 function Login() {
-    const [input, setInput] = useState([])
-
     const [user, setUser] = useState({
         username: '',
         password: ''
@@ -28,7 +25,6 @@ function Login() {
     }
     const navigate = useNavigate();
     function checkUserName() {
-        console.log(user.username)
         axios.post("/getUsers", {
             username: user.username,
             password: user.password

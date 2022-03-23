@@ -1,0 +1,31 @@
+.Front-top {
+    margin-left: 390px;
+    margin-top: 40px;
+    font-family: Consolas;
+    padding: 10px 80px 20px 80px;
+    background-color: #EEEEEE;
+    flex-direction: column;
+    display: inline-grid;
+    border-radius: 20px;
+    text-align: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.Front-logo {
+    margin-right: 10px;
+    width: 400px;
+}
+
+.Front-bottom {
+    margin-left: 390px;
+    margin-top: 40px;
+    font-family: Consolas;
+    padding: 10px 76px 20px 76px;
+    background-color: #EEEEEE;
+    flex-direction: column;
+    display: inline-grid;
+    border-radius: 20px;
+    text-align: center;
+    justify-content: center;
+}

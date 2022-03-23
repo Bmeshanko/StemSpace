@@ -1,5 +1,5 @@
 import './Profile.css';
-import { Component, useEffect } from 'react';
+import {Component} from 'react';
 import {useLocation} from "react-router-dom";
 import axios from "axios";
 
