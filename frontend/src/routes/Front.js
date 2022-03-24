@@ -17,17 +17,20 @@ function Front() {
                 <p>
                     Register or login to join the StemSpace community!
                 </p>
-                <button className="Front-login-button"
-                        onClick={(e) => {
-                            e.preventDefault();
-                        }}><b>Log In</b>
-                </button>
-                <button className="Front-signup-button"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            window.location.href='/Signup';
-                        }}><b>Signup</b>
-                </button>
+                <div className="buttons">
+                    <button className="Front-login-button"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                window.location.href='/Login';
+                            }}><b>Log In</b>
+                    </button>
+                    <button className="Front-signup-button"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                window.location.href='/Signup';
+                            }}><b>Signup</b>
+                    </button>
+                </div>
             </section>
         </body>
     );

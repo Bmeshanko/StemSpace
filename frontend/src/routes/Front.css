@@ -24,31 +24,37 @@
     padding: 10px 76px 20px 76px;
     background-color: #DDDDDD;
     flex-direction: column;
-    display: inline-grid;
+    display: inline-flex;
     border-radius: 20px;
     text-align: center;
     justify-content: center;
+    margin-left: 390px;
+}
+
+.buttons {
+    display: inline;
 }
 
 .Front-login-button {
     font-family: Consolas;
     font-size: 20px;
     padding: 12px;
-    width: 320px;
+    width: 180px;
     background-color: #5FAA4B;
     border-radius: 8px;
+    margin-right: 20px;
     border-color: #1F1F1F;
     border-width: 1px;
+    display: inline;
 }
 
 .Front-signup-button {
     font-family: Consolas;
     font-size: 20px;
     padding: 12px;
-    width: 240px;
+    width: 180px;
     background-color: #5FAA4B;
     border-radius: 8px;
     border-color: #1F1F1F;
     border-width: 1px;
-    display: inline-grid;
 }
