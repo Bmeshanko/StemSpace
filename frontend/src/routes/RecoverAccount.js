@@ -12,7 +12,7 @@ function RecoverAccount() {
     const email = urlParams.get('email')
     console.log(email)
 
-    function handleClick{
+    function handleClick() {
     }
 
     return (
