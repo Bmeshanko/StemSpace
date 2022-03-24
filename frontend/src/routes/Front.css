@@ -3,7 +3,7 @@
     margin-top: 40px;
     font-family: Consolas;
     padding: 10px 80px 20px 80px;
-    background-color: #EEEEEE;
+    background-color: #DDDDDD;
     flex-direction: column;
     display: inline-grid;
     border-radius: 20px;
@@ -22,10 +22,33 @@
     margin-top: 40px;
     font-family: Consolas;
     padding: 10px 76px 20px 76px;
-    background-color: #EEEEEE;
+    background-color: #DDDDDD;
     flex-direction: column;
     display: inline-grid;
     border-radius: 20px;
     text-align: center;
     justify-content: center;
+}
+
+.Front-login-button {
+    font-family: Consolas;
+    font-size: 20px;
+    padding: 12px;
+    width: 320px;
+    background-color: #5FAA4B;
+    border-radius: 8px;
+    border-color: #1F1F1F;
+    border-width: 1px;
+}
+
+.Front-signup-button {
+    font-family: Consolas;
+    font-size: 20px;
+    padding: 12px;
+    width: 240px;
+    background-color: #5FAA4B;
+    border-radius: 8px;
+    border-color: #1F1F1F;
+    border-width: 1px;
+    display: inline-grid;
 }
