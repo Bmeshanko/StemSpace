@@ -7,13 +7,12 @@ function ForgotPassword() {
 
     const[email, setEmail] = useState([])
 
-
     function sendEmail() {
         axios.post("/forgotPassword", {
             email: email
         }).then(res => {
             if (res.data != null) {
-                window.location.href = '/Login';
+                console.log(res.data);
             }
         }).catch(function (error) {
             console.log("Error")

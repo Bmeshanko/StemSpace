@@ -20,7 +20,7 @@ ReactDOM.render(
               <Route path="/Login" element={<Login />} />
               <Route path="/Signup" element={<Signup />} />
               <Route path="/ForgotPassword" element={<ForgotPassword />} />
-              <Route path="/RecoverAccount" element={<RecoverAccount />} />
+              <Route path="/RecoverAccount/:id" element={<RecoverAccount />} />
               <Route path="/Profile" element={<Profile />} />
               <Route path="/Timeline" element={<Timeline />} />
               <Route path="/Front" element={<Front />} />

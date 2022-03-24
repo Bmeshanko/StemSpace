@@ -1,6 +1,7 @@
 import './Signup.css';
 import React, {useState} from "react";
 import axios from "axios";
+import {wait} from "@testing-library/user-event/dist/utils";
 
 function Signup() {
 
@@ -29,9 +30,13 @@ function Signup() {
             password: input.password,
             email: input.email
         }
-        if (input.confirmEmail == input.email && input.password == input.confirmPassword) {
-            axios.post('/createUser', newUser);
-            window.location.href='/Login';
+        if (input.confirmEmail === input.email && input.password === input.confirmPassword) {
+            axios.post('/createUser', newUser).then(res => {
+                if (res.data != null) {
+                    console.log(res.data);
+                    window.location.href = '/Login';
+                }
+            })
         } else {
             console.log("Error, confirm email/password must be equal.");
         }
