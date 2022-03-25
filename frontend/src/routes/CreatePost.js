@@ -1,13 +1,12 @@
 import './CreatePost.css';
-import Sha1 from './Sha1.js';
 import React, {useState} from "react";
 import axios from "axios";
 
 function CreatePost() {
 
     const [input, setInput] = useState({
-        username: '',
-        email: '',
+        topic: '',
+        text: '',
         password: '',
         confirmEmail: '',
         confirmPassword: ''
@@ -26,51 +25,35 @@ function CreatePost() {
 
     function handleClick(event) {
         const newUser = {
-            username: input.username,
-            password: Sha1.hash(input.password),
-            email: input.email
-        }
-        if (input.confirmEmail === input.email && input.password === input.confirmPassword) {
-            axios.post('/createUser', newUser).then(res => {
-                if (res.data != null) {
-                    console.log(res.data);
-                    window.location.href = '/Login';
-                }
-            })
-        } else {
-            console.log("Error, confirm email/password must be equal.");
+            text: input.text,
+            topic: input.topic
         }
     }
 
     return (
         <body>
-        <header className="Signup-header">
-            <p className="Signup-text">Create Post:</p>
-            <label for="text">
-                <input onChange={handleChange} value={input.text} className="Post-text-field" type="text" id="username" name="username"
-                       placeholder="Write a post here..."/>
-            </label>
+        <header className="Create-post-header">
+            <p className="Create-post-text">Create Post:</p>
+            <textarea onChange={handleChange} value={input.text} id="text" name="text" placeholder="Write something..">
+            </textarea>
             <div className="space"></div>
-            <label for="email">
-                <input onChange={handleChange} value={input.email} className="Signup-email-field" type="text" id="email" name="email"
-                       placeholder="Email Address"/>
-            </label>
-            <div className="space"></div>
-            <label for="confirmEmail">
-                <input onChange={handleChange} value={input.confirmEmail} className="Signup-confirm-email-field" type="text" id="confirm-email" name="confirmEmail"
-                       placeholder="Confirm Email"/>
-            </label>
-            <div className="space"></div>
-            <label htmlFor="password">
-                <input onChange={handleChange} value={input.password} className="Signup-password-field" type="password" id="password" name="password"
-                       placeholder="Password"/>
-            </label>
-            <div className="space"></div>
-            <label htmlFor="confirmPassword">
-                <input onChange={handleChange} value={input.confirmPassword} className="Signup-confirm-password-field" type="password" id="confirmPassword"
-                       name="confirmPassword"
-                       placeholder="Confirm Password"/>
-            </label>
+            <label for="topic">Topic: </label>
+            <select className="topic" name="topic" id="topic" value={input.topic} onChange={handleChange}>
+                <option value="Art">Art</option>
+                <option value="Biology">Biology</option>
+                <option value="Blogs">Blogs</option>
+                <option value="ComSci">ComSci</option>
+                <option value="Earth">Earth</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Fitness">Fitness</option>
+                <option value="Funny">Funny</option>
+                <option value="Gaming">Gaming</option>
+                <option value="Health">Health</option>
+                <option value="Math">Math</option>
+                <option value="Music">Music</option>
+                <option value="Psychology">Psychology</option>
+                <option value="Sports">Sports</option>
+            </select>
             <div className="space"></div>
             <button className="Signup-button2"
                     onClick={(e) => {
