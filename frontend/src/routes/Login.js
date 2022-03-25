@@ -1,6 +1,7 @@
 import './Login.css';
 import './Signup';
 import './ForgotPassword';
+import Sha1 from './Sha1.js';
 import Profile from './Profile';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Link, Routes, useNavigate} from "react-router-dom";
@@ -29,7 +30,7 @@ function Login() {
             username: user.username,
             password: user.password
         }).then(res => {
-            if(res.data == null || res.data.password !== user.password) {
+            if(res.data == null || res.data.password !== Sha1.hash(user.password)) {
                 alert("Incorrect Username or Password")
             } else {
                 navigate("/Profile", {state:{username:user.username}});

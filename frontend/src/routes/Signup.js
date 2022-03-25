@@ -1,4 +1,5 @@
 import './Signup.css';
+import Sha1 from './Sha1.js';
 import React, {useState} from "react";
 import axios from "axios";
 import {wait} from "@testing-library/user-event/dist/utils";
@@ -27,7 +28,7 @@ function Signup() {
     function handleClick(event) {
         const newUser = {
             username: input.username,
-            password: input.password,
+            password: Sha1.hash(input.password),
             email: input.email
         }
         if (input.confirmEmail === input.email && input.password === input.confirmPassword) {
