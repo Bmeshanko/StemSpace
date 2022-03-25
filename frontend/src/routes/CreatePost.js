@@ -37,7 +37,7 @@ function CreatePost() {
             <textarea onChange={handleChange} value={input.text} id="text" name="text" placeholder="Write something..">
             </textarea>
             <div className="space"></div>
-            <label for="topic">Topic: </label>
+            <label for="topic"><p className="topic-text">Topic: </p> </label>
             <select className="topic" name="topic" id="topic" value={input.topic} onChange={handleChange}>
                 <option value="Art">Art</option>
                 <option value="Biology">Biology</option>
@@ -59,7 +59,7 @@ function CreatePost() {
                     onClick={(e) => {
                         e.preventDefault();
                         handleClick();
-                    }}><b>Sign Up</b>
+                    }}><b>Submit Post</b>
             </button>
         </header>
         </body>
