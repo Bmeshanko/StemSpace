@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Home from './routes/Home';
 import Login from './routes/Login';
 import Profile from './routes/Profile';
 import Signup from './routes/Signup';
@@ -12,6 +11,7 @@ import RecoverAccount from "./routes/RecoverAccount";
 import Timeline from "./routes/Timeline";
 import Front from './routes/Front';
 import DeleteAccount from "./routes/DeleteAccount";
+import CreatePost from "./routes/CreatePost";
 ReactDOM.render(
   <React.StrictMode>
       <BrowserRouter>
@@ -25,6 +25,7 @@ ReactDOM.render(
               <Route path="/Timeline" element={<Timeline />} />
               <Route path="/Front" element={<Front />} />
               <Route path="/DeleteAccount" element={<DeleteAccount />} />
+              <Route path="/CreatePost" element={<CreatePost />} />
           </Routes>
       </BrowserRouter>
   </React.StrictMode>,

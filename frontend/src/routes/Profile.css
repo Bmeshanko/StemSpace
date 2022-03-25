@@ -35,8 +35,8 @@
     font-family: consolas;
 }
 
-.Profile-info{
-    display: inline-block;
+.Profile-info {
+    display: flex;
     vertical-align: top;
     height: 200px;
     width: calc(100vw - 210px);
@@ -51,18 +51,14 @@
 
 .Post-history{
     position: absolute;
-    left: 0;
     display: inline-block;
     width: 99.9%;
     height: calc(100vh - 280px);
     overflow-y: scroll;
-    /*scrollbar-color: ;*/
     scrollbar-width: thin;
 }
 .filetype{
     position: absolute;
-    left: 0;
-    display: inline-block;
     width: 99.9%;
     height: calc(100vh - 280px);
 }

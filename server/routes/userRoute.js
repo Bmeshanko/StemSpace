@@ -11,7 +11,7 @@ router.post("/createUser", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
-    const bio = "";
+    const bio = "Hello World!";
     const newUser = new User({
         username,
         password,
