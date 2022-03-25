@@ -7,11 +7,11 @@ function Timeline() {
             <div className="Timeline-banner">
                 <img className='Timeline-logo' src="Logo_new.png" alt="STEM"></img>
                 <a className="Timeline-banner-text">StemSpace</a>
-                <button className="Create-post-button"
+                <button className="Notification-button"
                         onClick={(e) => {
                             e.preventDefault();
-                            window.location.href='/Timeline';}}
-                ><b><img src="post_button.png" className="Create-post-button" alt="Create-post"/></b>
+                            window.location.href='/CreatePost';}}
+                ><b><img src="post_button.png" className="Notification-logo" alt="Create-post"/></b>
                 </button>
                 <button className="Notification-button"
                 onClick={(e) => {
