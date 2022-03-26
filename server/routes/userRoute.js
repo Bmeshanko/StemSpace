@@ -6,19 +6,23 @@ const assert = require("assert");
 const sendMail = require('../mail.js');
 const { $where } = require("../models/userModel");
 const { getSystemErrorMap } = require("util");
-
+var fs = require('fs');
+const path = require('path');
 router.post("/createUser", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
     const bio = "Hello World!";
+    const imgPath='./Blank-Profile.png';
     const newUser = new User({
         username,
         password,
         email,
-        bio
+        bio,
+        img: { data: Buffer, contentType: String }
     });
-
+    newUser.img.data=fs.readFileSync(path.resolve(__dirname,imgPath));
+    newUser.img.contentType = "image/png";
     newUser.save();
     res.json(newUser)
 });

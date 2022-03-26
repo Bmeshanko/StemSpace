@@ -17,7 +17,7 @@ class Profile extends Component {
       bio: '',
       showName: false ,
       showProfile: false ,
-      image: "Blank-Profile.png"
+      image: ""
     }
   }
   componentDidMount(){
@@ -30,6 +30,10 @@ class Profile extends Component {
             alert("Profile not Found")
         } else {
             this.setState({bio: res.data.bio});
+            var base64Flag = 'data:image/jpeg;base64,';
+            var imageStr = this.arrayBufferToBase64(res.data.img.data.data);
+            this.setState({image: base64Flag + imageStr});
+            console.log(this.state.image);
         }
     }).catch(function (error) {
         console.log("Error Detected")
@@ -67,6 +71,12 @@ class Profile extends Component {
       reader.readAsDataURL(event.target.files[0]);
     }
   }
+  arrayBufferToBase64(buffer) {
+    var binary = '';
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => binary += String.fromCharCode(b));
+    return window.btoa(binary);
+  };
    render(){
       return (  
       <body>
@@ -79,7 +89,6 @@ class Profile extends Component {
              <img className='Profile-picture' src={this.state.image}></img>
              <span className="Profile-info">
                <p class="username">@{this.state.username}</p>
-               {}
                <div>
                   <form onSubmit={this.handleSubmit}>
                     <label>Bio:</label>
