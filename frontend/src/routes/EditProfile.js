@@ -34,7 +34,6 @@ function EditProfile() {
             axios.post('/createUser', newUser).then(res => {
                 if (res.data != null) {
                     console.log(res.data);
-                    window.location.href = '/Login';
                 }
             })
         } else {
@@ -62,12 +61,17 @@ function EditProfile() {
             <input className="Edit-profile-birthday" type="date" id="birthday" name="birthday" value={input.birthday}/>
             <div className="space"></div>
             <p className="topic-text">Profile Picture:</p>
-            <input type="file" className="Edit-profile-picture" id="picture" value={input.picture}/>
+
+            <label className="Edit-profile-picture">
+                <input type="file" id="picture" value={input.picture}/>
+                <b className="Edit-profile-upload">Upload Here</b>
+            </label>
             <div className="space"></div>
             <button className="Signup-button2"
                     onClick={(e) => {
                         e.preventDefault();
                         handleClick();
+                        window.location.href = '/Profile';
                     }}><b>Submit Changes</b>
             </button>
 

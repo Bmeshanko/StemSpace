@@ -53,3 +53,23 @@
     border-color: #1F1F1F;
     border-width: 1px;
 }
+
+.Edit-profile-picture {
+    font-family: Consolas;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border-color: #1F1F1F;
+    border-width: 1px;
+}
+
+.Edit-profile-upload {
+    display: inline;
+    border-color: #1F1F1F;
+    border-width: 1px;
+    border-radius: 8px;
+}
+
+input[type="file"] {
+    display: none;
+}
