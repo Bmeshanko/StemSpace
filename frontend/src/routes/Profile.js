@@ -67,8 +67,15 @@ class Profile extends Component {
       let reader = new FileReader();
       reader.onload = (e) => {
         this.setState({image: e.target.result});
+        axios.post("/editImage", {
+          image: this.state.image,
+          username: this.state.username
+          }).then(res => {
+            console.log(res.data);
+          })
       };
       reader.readAsDataURL(event.target.files[0]);
+      //console.log(event.target.files[0])
     }
   }
   arrayBufferToBase64(buffer) {
@@ -87,6 +94,10 @@ class Profile extends Component {
          </p>
          <header className="Profile-bio">
              <img className='Profile-picture' src={this.state.image}></img>
+             <div> 
+                <label for="image">Upload Image</label> 
+                <input type="file" onChange={this.onImageChange} id="image" name="image" value="" required/> 
+            </div> 
              <span className="Profile-info">
                <p class="username">@{this.state.username}</p>
                <div>
@@ -98,8 +109,6 @@ class Profile extends Component {
 
                     {this.state.showName && <button type="button" onClick={this.handleBioClose}>Close</button>}
                     {<p>{this.state.bio}</p>}
-
-                    <input type="file" onChange={this.onImageChange} className="filetype" id="group_image" />
                   </form>
               </div>
              </span>
