@@ -6,11 +6,11 @@ import axios from "axios";
 function EditProfile() {
 
     const [input, setInput] = useState({
-        username: '',
-        email: '',
-        password: '',
-        confirmEmail: '',
-        confirmPassword: ''
+        firstname: '',
+        lastname: '',
+        bio: '',
+        birthday: '',
+        picture: ''
     })
 
     function handleChange(event) {
@@ -44,34 +44,33 @@ function EditProfile() {
 
     return (
         <body>
-        <header className="Create-post-header">
-            <textarea onChange={handleChange} value={input.text} id="text" name="text" placeholder="Write about yourself...">
+        <header className="Edit-profile-header">
+            <label for="firstname">
+                <input onChange={handleChange} value={input.firstname} className="Edit-profile-first" type="text"
+                       id="firstname" name="firstname"
+                       placeholder="First Name"/>
+            </label>
+            <label for="lastname">
+                <input onChange={handleChange} value={input.lastname} className="Edit-profile-last" type="text"
+                       id="lastname" name="lastname"
+                       placeholder="Last Name"/>
+            </label>
+            <div className="Edit-profile-space"></div>
+            <textarea className="Biography" onChange={handleChange} value={input.bio} id="bio" name="bio" placeholder="Write about yourself...">
             </textarea>
+            <p className="topic-text">Birthday: </p>
+            <input className="Edit-profile-birthday" type="date" id="birthday" name="birthday" value={input.birthday}/>
             <div className="space"></div>
-            <label htmlFor="topic"><p className="topic-text">Topic: </p></label>
-            <select className="topic" name="topic" id="topic" value={input.topic} onChange={handleChange}>
-                <option value="Art">Art</option>
-                <option value="Biology">Biology</option>
-                <option value="Blogs">Blogs</option>
-                <option value="ComSci">ComSci</option>
-                <option value="Earth">Earth</option>
-                <option value="Engineering">Engineering</option>
-                <option value="Fitness">Fitness</option>
-                <option value="Funny">Funny</option>
-                <option value="Gaming">Gaming</option>
-                <option value="Health">Health</option>
-                <option value="Math">Math</option>
-                <option value="Music">Music</option>
-                <option value="Psychology">Psychology</option>
-                <option value="Sports">Sports</option>
-            </select>
+            <p className="topic-text">Profile Picture:</p>
+            <input type="file" className="Edit-profile-picture" id="picture" value={input.picture}/>
             <div className="space"></div>
             <button className="Signup-button2"
                     onClick={(e) => {
                         e.preventDefault();
                         handleClick();
-                    }}><b>Submit Post</b>
+                    }}><b>Submit Changes</b>
             </button>
+
         </header>
         </body>
     );
