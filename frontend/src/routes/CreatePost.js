@@ -24,7 +24,7 @@ function CreatePost() {
     }
 
     function handleClick(event) {
-        const newUser = {
+        const newPost = {
             text: input.text,
             topic: input.topic
         }

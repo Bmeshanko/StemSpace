@@ -1,6 +1,6 @@
 import './Profile.css';
 import {Component} from 'react';
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 let location

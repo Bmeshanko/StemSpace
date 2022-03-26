@@ -2,6 +2,7 @@ import './EditProfile.css';
 import Sha1 from './Sha1.js';
 import React, {useState} from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 function EditProfile() {
 
@@ -24,21 +25,10 @@ function EditProfile() {
         })
     }
 
+    const navigate = useNavigate();
+
     function handleClick(event) {
-        const newUser = {
-            username: input.username,
-            password: Sha1.hash(input.password),
-            email: input.email
-        }
-        if (input.confirmEmail === input.email && input.password === input.confirmPassword) {
-            axios.post('/createUser', newUser).then(res => {
-                if (res.data != null) {
-                    console.log(res.data);
-                }
-            })
-        } else {
-            console.log("Error, confirm email/password must be equal.");
-        }
+        //navigate("/Profile", {state:{username:user.username}});
     }
 
     return (
@@ -71,7 +61,6 @@ function EditProfile() {
                     onClick={(e) => {
                         e.preventDefault();
                         handleClick();
-                        window.location.href = '/Profile';
                     }}><b>Submit Changes</b>
             </button>
 
