@@ -63,7 +63,7 @@ router.post("/forgotPassword", (req, res) => {
             if (info == null) {
                 res.json(null)
             } else {
-                sendMail(info.email, code)
+                sendMail(info.email, code, info._id)
                 res.json(code)
             }
         }, {collection: 'users'})
