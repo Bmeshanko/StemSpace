@@ -1,6 +1,6 @@
 import './Profile.css';
 import {Component} from 'react';
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 let location
@@ -17,7 +17,7 @@ class Profile extends Component {
       bio: '',
       showName: false ,
       showProfile: false ,
-      image: "Blank-Profile.png"
+      image: ""
     }
   }
   componentDidMount(){
@@ -30,6 +30,10 @@ class Profile extends Component {
             alert("Profile not Found")
         } else {
             this.setState({bio: res.data.bio});
+            var base64Flag = 'data:image/jpeg;base64,';
+            var imageStr = this.arrayBufferToBase64(res.data.img.data.data);
+            this.setState({image: base64Flag + imageStr});
+            console.log(this.state.image);
         }
     }).catch(function (error) {
         console.log("Error Detected")
@@ -63,10 +67,23 @@ class Profile extends Component {
       let reader = new FileReader();
       reader.onload = (e) => {
         this.setState({image: e.target.result});
+        axios.post("/editImage", {
+          image: this.state.image,
+          username: this.state.username
+          }).then(res => {
+            console.log(res.data);
+          })
       };
       reader.readAsDataURL(event.target.files[0]);
+      //console.log(event.target.files[0])
     }
   }
+  arrayBufferToBase64(buffer) {
+    var binary = '';
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => binary += String.fromCharCode(b));
+    return window.btoa(binary);
+  };
    render(){
       return (  
       <body>
@@ -77,9 +94,12 @@ class Profile extends Component {
          </p>
          <header className="Profile-bio">
              <img className='Profile-picture' src={this.state.image}></img>
+             <div> 
+                <label for="image">Upload Image</label> 
+                <input type="file" onChange={this.onImageChange} id="image" name="image" value="" required/> 
+            </div> 
              <span className="Profile-info">
                <p class="username">@{this.state.username}</p>
-               {}
                <div>
                   <form onSubmit={this.handleSubmit}>
                     <label>Bio:</label>
@@ -89,8 +109,6 @@ class Profile extends Component {
 
                     {this.state.showName && <button type="button" onClick={this.handleBioClose}>Close</button>}
                     {<p>{this.state.bio}</p>}
-
-                    <input type="file" onChange={this.onImageChange} className="filetype" id="group_image" />
                   </form>
               </div>
              </span>

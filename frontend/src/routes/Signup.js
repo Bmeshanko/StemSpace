@@ -2,7 +2,6 @@ import './Signup.css';
 import Sha1 from './Sha1.js';
 import React, {useState} from "react";
 import axios from "axios";
-import {wait} from "@testing-library/user-event/dist/utils";
 
 function Signup() {
 

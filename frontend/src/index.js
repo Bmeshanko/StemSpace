@@ -12,11 +12,12 @@ import Timeline from "./routes/Timeline";
 import Front from './routes/Front';
 import DeleteAccount from "./routes/DeleteAccount";
 import CreatePost from "./routes/CreatePost";
+import EditProfile from "./routes/EditProfile";
 ReactDOM.render(
   <React.StrictMode>
       <BrowserRouter>
           <Routes>
-              <Route path="/" element={<Login />} />
+              <Route path="/" element={<Front />} />
               <Route path="/Login" element={<Login />} />
               <Route path="/Signup" element={<Signup />} />
               <Route path="/ForgotPassword" element={<ForgotPassword />} />
@@ -26,6 +27,7 @@ ReactDOM.render(
               <Route path="/Front" element={<Front />} />
               <Route path="/DeleteAccount" element={<DeleteAccount />} />
               <Route path="/CreatePost" element={<CreatePost />} />
+              <Route path="/EditProfile" element={<EditProfile />} />
           </Routes>
       </BrowserRouter>
   </React.StrictMode>,

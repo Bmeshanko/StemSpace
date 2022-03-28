@@ -1,80 +1,75 @@
-.Signup-header {
+.Edit-profile-header {
     text-align: center;
     margin-top: 50px;
-    margin-left: calc(50% - 250px);
+    margin-left: 370px;
     padding: 50px;
     background-color: #DDDDDD;
-    width: 350px;
+    width: 500px;
     border-radius: 20px;
 }
 
-.Signup-username-field {
+.Edit-profile-first {
     font-family: Consolas;
     padding: 10px;
     font-size: 16px;
-    width: 300px;
+    width: 200px;
+    margin-right: 2px;
     border-radius: 8px;
     border-color: #1F1F1F;
     border-width: 1px;
 }
-.Signup-password-field {
+
+.Edit-profile-last {
     font-family: Consolas;
     padding: 10px;
     font-size: 16px;
-    width: 300px;
+    width: 200px;
     border-radius: 8px;
     border-color: #1F1F1F;
     border-width: 1px;
 }
 
-.Signup-email-field {
+.Biography {
     font-family: Consolas;
     padding: 10px;
     font-size: 16px;
-    width: 300px;
+    width: 424px;
+    height: 150px;
     border-radius: 8px;
     border-color: #1F1F1F;
     border-width: 1px;
+    resize: none;
 }
 
-.Signup-text {
-    font-family: Consolas;
-    margin-top: 0px;
-    font-size: 18px;
-    text-align: left;
+.Edit-profile-space {
+    margin-top: 2px;
 }
 
-.Signup-confirm-password-field {
-    font-family: Consolas;
-    padding: 10px;
-    font-size: 16px;
-    width: 300px;
-    border-radius: 8px;
-    border-color: #1F1F1F;
-    border-width: 1px;
-}
-
-.Signup-confirm-email-field {
+.Edit-profile-birthday {
     font-family: Consolas;
     padding: 10px;
     font-size: 16px;
-    width: 300px;
     border-radius: 8px;
     border-color: #1F1F1F;
     border-width: 1px;
 }
 
-.Signup-button2 {
+.Edit-profile-picture {
     font-family: Consolas;
-    font-size: 20px;
-    padding: 12px;
-    width: 240px;
-    background-color: #5FAA4B;
+    padding: 10px;
+    font-size: 16px;
     border-radius: 8px;
     border-color: #1F1F1F;
     border-width: 1px;
 }
 
-.space {
-    margin-top: 20px;
+.Edit-profile-upload {
+    display: inline;
+    border-color: #1F1F1F;
+    border-width: 1px;
+    border-radius: 8px;
+}
+
+input[type="file"] {
+    display: none;
 }
