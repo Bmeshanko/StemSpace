@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const User = require("./userModel");
 
 const postSchema = {
-    text: String,
+    contents: String,
+    topic: String,
     author: User
 }
 

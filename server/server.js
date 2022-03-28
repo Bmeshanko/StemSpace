@@ -7,7 +7,7 @@ var port = process.env.PORT || 5000;
 var db = mongoose.connection;
 app.use(cors());
 app.use(express.json());
-mongoose.connect("mongodb+srv://mern:Password@merndemo.i6veu.mongodb.net/StemSpace")
+mongoose.connect("mongodb+srv://mern:Password@merndemo.i6veu.mongodb.net/StemSpace", {autoIndex: false})
 
 app.use(require("./routes/record"));
 app.use("/", require("./routes/userRoute"));

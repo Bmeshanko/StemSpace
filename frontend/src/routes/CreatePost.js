@@ -6,11 +6,9 @@ function CreatePost() {
 
     const [input, setInput] = useState({
         topic: '',
-        text: '',
-        password: '',
-        confirmEmail: '',
-        confirmPassword: ''
-    })
+        contents: '',
+        username: ''
+    });
 
     function handleChange(event) {
         const {name, value} = event.target;
@@ -24,17 +22,18 @@ function CreatePost() {
     }
 
     function handleClick(event) {
-        const newPost = {
-            text: input.text,
-            topic: input.topic
-        }
+        axios.post("/createPost", {
+            contents: input.contents,
+            topic: input.topic,
+            username: input.username
+        });
     }
 
     return (
         <body>
         <header className="Create-post-header">
             <p className="Create-post-text">Create Post:</p>
-            <textarea onChange={handleChange} value={input.text} id="text" name="text" placeholder="Write something..">
+            <textarea onChange={handleChange} value={input.contents} id="contents" name="contents" placeholder="Write something..">
             </textarea>
             <div className="space"></div>
             <label for="topic"><p className="topic-text">Topic: </p> </label>

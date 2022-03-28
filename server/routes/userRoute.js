@@ -8,6 +8,8 @@ const { $where } = require("../models/userModel");
 const { getSystemErrorMap } = require("util");
 var fs = require('fs');
 const path = require('path');
+const Post = require("../models/postModel");
+
 router.post("/createUser", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -92,12 +94,12 @@ router.post("/createPost", (req, res) => {
         res.json(users)
     }, {collection: 'users'});
 
-    const text = req.body.text;
-    const likes = 0;
+    const contents = req.body.contents;
+    const topic = req.body.topic;
     const newPost = new Post({
-        text,
-        Author,
-        likes
+        contents,
+        topic,
+        user
     });
 
     newPost.save();
