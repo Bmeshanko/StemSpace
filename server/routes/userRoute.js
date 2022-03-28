@@ -6,6 +6,7 @@ const assert = require("assert");
 const sendMail = require('../mail.js');
 const { $where } = require("../models/userModel");
 const { getSystemErrorMap } = require("util");
+const { Buffer } = require("buffer");
 
 router.post("/createUser", (req, res) => {
     const username = req.body.username;
@@ -116,6 +117,29 @@ router.post("/likePost", (req, res) => {
 
     if (postInUsers != null && postInUsers == post) {
         
+    }
+});
+
+
+router.post("/editImage", (req, res) => {
+    try {
+        const newImage = req.body.image;
+        var picdata=newImage.substring(23);
+        //console.log(req.body.image);
+        const username = req.body.username;
+        let criteria = {username: username};
+        var imagedata= {
+            img: { data: Buffer, contentType: String }
+        }
+        var buf=Buffer.from(picdata,'base64')
+        imagedata.data=buf;
+        imagedata.contentType = "image/png";
+        let update= {img: imagedata};
+        const user = User.findOneAndUpdate(criteria, update, function(err, users) {
+            res.json(users)
+        }, {collection: 'users'});
+    } catch (e) {
+        console.log(e);
     }
 });
 
