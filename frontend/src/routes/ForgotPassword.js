@@ -2,6 +2,7 @@ import './ForgotPassword.css';
 import axios from "axios";
 import {useState} from "react";
 import {wait} from "@testing-library/user-event/dist/utils";
+import {waitFor} from "@testing-library/react";
 
 function ForgotPassword() {
 
@@ -12,7 +13,7 @@ function ForgotPassword() {
             email: email
         }).then(res => {
             if (res.data != null) {
-                console.log(res.data);
+                window.location.href='/Login'
             }
         }).catch(function (error) {
             console.log("Error")
@@ -37,8 +38,8 @@ function ForgotPassword() {
                 <button className="Recover-account-button"
                         onClick={(e) => {
                             e.preventDefault();
-                            sendEmail()
 
+                            sendEmail()
 
 
                         }}><b>Recover Account</b>

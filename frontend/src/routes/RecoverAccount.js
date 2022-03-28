@@ -1,18 +1,27 @@
 import './RecoverAccount.css';
-import React from "react";
+import React, {useState} from "react";
 import {useParams} from "react-router-dom";
+import axios from "axios";
 
 function RecoverAccount() {
 
     const {id} = useParams();
-    console.log(id)
     const queryString = '?' + id;
-    console.log(queryString)
     const urlParams = new URLSearchParams(queryString);
-    const email = urlParams.get('email')
-    console.log(email)
+    const email = urlParams.get('id')
+
+
+    const [password, setName] = useState('')
+
 
     function handleClick() {
+        axios.post("/changePassword", {
+            id: email,
+            password: password
+        }).then(res => {
+            window.location.href='/Login'
+        });
+
     }
 
     return (
@@ -28,22 +37,17 @@ function RecoverAccount() {
                        name="recover-account-password"
                        placeholder="New Password" />
                 <div className="space"></div>
-                <input className="Recover-account-confirm-password-field"
+                <input
+                    onChange={e => setName(e.target.value)}
+                    className="Recover-account-confirm-password-field"
                        type="password"
                        id="recover-account-confirm-password"
                        name="recover-account-confirm-password"
                        placeholder="Confirm Password" />
                 <div className="space"></div>
-                <input className="Recover-account-code-field"
-                       type="text"
-                       id="recover-account-code"
-                       name="recover-account-code"
-                       placeholder="Recovery Code" />
-                <div className="space"></div>
                 <button className="Change-password-button"
                         onClick={(e) => {
-                            e.preventDefault();
-                            window.location.href='/Login';
+                            handleClick()
                         }}><b>Change Password</b>
                 </button>
             </label>
