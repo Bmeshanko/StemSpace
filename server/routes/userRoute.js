@@ -24,6 +24,19 @@ router.post("/createUser", (req, res) => {
     res.json(newUser)
 });
 
+router.post("/changePassword", (req, res) => {
+    var ObjectId = require("mongodb").ObjectId;
+    console.log(req.body.password)
+    const update = {password: req.body.password};
+    const id = new ObjectId(req.body.id);
+    let criteria = {_id: id};
+    console.log(id);
+    const user2 = User.findOneAndUpdate(criteria, update, function(err, users) {
+        console.log(users)
+        res.json(users)
+    }, {collection: 'users'})
+})
+
 router.post("/getUsers", (req, res) => {
     try {
         const request = req.body.username;
@@ -45,7 +58,7 @@ router.post("/forgotPassword", (req, res) => {
             if (info == null) {
                 res.json(null)
             } else {
-                sendMail(info.email, code)
+                sendMail(info.email, code, info._id)
                 res.json(code)
             }
         }, {collection: 'users'})
