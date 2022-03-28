@@ -5,7 +5,7 @@ const User = require("./userModel");
 const postSchema = {
     contents: String,
     topic: String,
-    author: User
+    author: String
 }
 
 const Post = mongoose.model("Post", postSchema);

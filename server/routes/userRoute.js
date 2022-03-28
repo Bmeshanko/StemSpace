@@ -101,18 +101,15 @@ router.post("/deleteUser", (req, res) => {
 });
 
 router.post("/createPost", (req, res) => {
-    const username = req.body.username;
-    let criteria = {username: username};
-    const user = User.findOne(criteria, function(err, users) {
-        res.json(users)
-    }, {collection: 'users'});
+    const author = req.body.username;
+    console.log(author);
 
     const contents = req.body.contents;
     const topic = req.body.topic;
     const newPost = new Post({
         contents,
         topic,
-        user
+        author
     });
 
     newPost.save();

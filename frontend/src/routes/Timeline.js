@@ -9,8 +9,6 @@ function Timeline() {
         username: ''
     })
 
-    console.log("Username: " + input.username)
-
     function handleChange(event) {
         const {name, value} = event.target;
 
