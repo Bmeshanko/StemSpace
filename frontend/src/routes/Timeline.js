@@ -1,22 +1,42 @@
 import './Timeline.css';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import React, {useState} from "react";
 
 function Timeline() {
+    const navigate = useNavigate();
+
+    const [input, setInput] = useState({
+        username: ''
+    })
+
+    console.log("Username: " + input.username)
+
+    function handleChange(event) {
+        const {name, value} = event.target;
+
+        setInput(prevInput=> {
+            return {
+                ...prevInput,
+                [name]: value
+            }
+        })
+    }
+
+    function handleClick(event) {
+        navigate("/CreatePost", {state:{username:input.username}});
+    }
+
     return(
         <body className="wrapper">
             <div className="Timeline-banner">
                 <img className='Timeline-logo' src="Logo_new.png" alt="STEM"></img>
                 <a className="Timeline-banner-text">StemSpace</a>
                 <button className="Notification-button"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            window.location.href='/CreatePost';}}
+                        onClick={handleClick}
                 ><b><img src="post_button.png" className="Notification-logo" alt="Create-post"/></b>
                 </button>
                 <button className="Notification-button"
-                onClick={(e) => {
-                    e.preventDefault();
-                    window.location.href='/Timeline';}}
+                onClick={handleClick}
                         ><b><img src="Notification.png" className="Notification-logo" alt="Notification"/></b>
                 </button>
             </div>

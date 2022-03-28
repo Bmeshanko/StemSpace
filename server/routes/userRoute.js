@@ -6,36 +6,28 @@ const assert = require("assert");
 const sendMail = require('../mail.js');
 const { $where } = require("../models/userModel");
 const { getSystemErrorMap } = require("util");
-const { Buffer } = require("buffer");
+var fs = require('fs');
+const path = require('path');
+const Post = require("../models/postModel");
 
 router.post("/createUser", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
     const bio = "Hello World!";
+    const imgPath='./Blank-Profile.png';
     const newUser = new User({
         username,
         password,
         email,
-        bio
+        bio,
+        img: { data: Buffer, contentType: String }
     });
-
+    newUser.img.data=fs.readFileSync(path.resolve(__dirname,imgPath));
+    newUser.img.contentType = "image/png";
     newUser.save();
     res.json(newUser)
 });
-
-router.post("/changePassword", (req, res) => {
-    var ObjectId = require("mongodb").ObjectId;
-    console.log(req.body.password)
-    const update = {password: req.body.password};
-    const id = new ObjectId(req.body.id);
-    let criteria = {_id: id};
-    console.log(id);
-    const user2 = User.findOneAndUpdate(criteria, update, function(err, users) {
-        console.log(users)
-        res.json(users)
-    }, {collection: 'users'})
-})
 
 router.post("/getUsers", (req, res) => {
     try {
@@ -58,7 +50,7 @@ router.post("/forgotPassword", (req, res) => {
             if (info == null) {
                 res.json(null)
             } else {
-                sendMail(info.email, code, info._id)
+                sendMail(info.email, code)
                 res.json(code)
             }
         }, {collection: 'users'})
@@ -102,12 +94,12 @@ router.post("/createPost", (req, res) => {
         res.json(users)
     }, {collection: 'users'});
 
-    const text = req.body.text;
-    const likes = 0;
+    const contents = req.body.contents;
+    const topic = req.body.topic;
     const newPost = new Post({
-        text,
-        Author,
-        likes
+        contents,
+        topic,
+        user
     });
 
     newPost.save();
@@ -130,29 +122,6 @@ router.post("/likePost", (req, res) => {
 
     if (postInUsers != null && postInUsers == post) {
         
-    }
-});
-
-
-router.post("/editImage", (req, res) => {
-    try {
-        const newImage = req.body.image;
-        var picdata=newImage.substring(23);
-        //console.log(req.body.image);
-        const username = req.body.username;
-        let criteria = {username: username};
-        var imagedata= {
-            img: { data: Buffer, contentType: String }
-        }
-        var buf=Buffer.from(picdata,'base64')
-        imagedata.data=buf;
-        imagedata.contentType = "image/png";
-        let update= {img: imagedata};
-        const user = User.findOneAndUpdate(criteria, update, function(err, users) {
-            res.json(users)
-        }, {collection: 'users'});
-    } catch (e) {
-        console.log(e);
     }
 });
 
