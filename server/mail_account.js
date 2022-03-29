@@ -19,14 +19,14 @@ const transporter = nodemailer.createTransport({
 });
 
 
-function sendMail(email, code, id) {
+function sendMailAcc(email, code, id) {
 
 
     const mailConfigurations = {
         from: 'stemspacecompany@gmail.com',
         to: email,
         subject: 'Sending Email using Node.js',
-        text: 'The recovery url for your account is ' + `http://localhost:3000/RecoverAccount/id=${id}&code=${code}\n\n` + '.'
+        text: `Activation code ${code} code to activate your account.`
     };
 
     transporter.sendMail(mailConfigurations, function (err, info) {
@@ -35,4 +35,4 @@ function sendMail(email, code, id) {
     });
 }
 
-module.exports = sendMail;
+module.exports = sendMailAcc;

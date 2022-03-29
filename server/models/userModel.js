@@ -9,7 +9,9 @@ const userSchema = {
     password: String,
     email: String,
     bio: String,
-    img: { data: Buffer, contentType: String }
+    img: { data: Buffer, contentType: String },
+    code: String,
+    verification: Boolean
 }
 
 const User = mongoose.model("User", userSchema);

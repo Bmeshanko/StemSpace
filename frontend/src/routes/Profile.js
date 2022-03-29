@@ -22,6 +22,7 @@ class Profile extends Component {
   }
   componentDidMount(){
     this.setState({username:location.state.username})
+      console.log(location.password)
     axios.post("/getUsers", {
         username: location.state.username
     }).then(res => {
