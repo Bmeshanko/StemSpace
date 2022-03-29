@@ -4,6 +4,7 @@ const User = require("../models/userModel");
 const mongoose = require("mongoose");
 const assert = require("assert");
 const sendMail = require('../mail.js');
+const sendMailAcc = require('../mail_account');
 const { $where } = require("../models/userModel");
 const { getSystemErrorMap } = require("util");
 var fs = require('fs');
@@ -11,6 +12,7 @@ const path = require('path');
 const Post = require("../models/postModel");
 
 router.post("/createUser", (req, res) => {
+    const code = Math.floor(1000 + Math.random() * 9000);
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
@@ -21,10 +23,13 @@ router.post("/createUser", (req, res) => {
         password,
         email,
         bio,
-        img: { data: Buffer, contentType: String }
+        img: { data: Buffer, contentType: String},
+        code,
+        verification: false
     });
     newUser.img.data=fs.readFileSync(path.resolve(__dirname,imgPath));
     newUser.img.contentType = "image/png";
+    sendMailAcc(email, code)
     newUser.save();
     res.json(newUser)
 });
@@ -38,6 +43,25 @@ router.post("/getUsers", (req, res) => {
         }, {collection: 'users'})
     } catch(e) {
         console.log("Error Detected");
+    }
+});
+
+router.post("/emailVerification", (req, res) => {
+    console.log(req.body.email)
+    console.log(req.body.code)
+    try {
+        const user = User.findOne({email: req.body.email}, function(err, users) {
+            console.log(users.code)
+            if(users.code === req.body.code) {
+                const update = {code: null, verification: true};
+                const user2 = User.findOneAndUpdate({email:req.body.email}, update, function(err, users) {
+                    console.log(users)
+                }, {collection: 'users'})
+                res.json(users)
+            }
+        }, {collection: 'users'});
+    } catch (e) {
+        console.log(e);
     }
 });
 

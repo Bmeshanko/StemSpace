@@ -2,9 +2,11 @@ import './Signup.css';
 import Sha1 from './Sha1.js';
 import React, {useState} from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 function Signup() {
 
+    const navigate = useNavigate();
     const [input, setInput] = useState({
         username: '',
         email: '',
@@ -34,7 +36,7 @@ function Signup() {
             axios.post('/createUser', newUser).then(res => {
                 if (res.data != null) {
                     console.log(res.data);
-                    window.location.href = '/Login';
+                    navigate("/Code", {state:{email:input.email}}).then(window.location.href = '/Code');
                 }
             })
         } else {
