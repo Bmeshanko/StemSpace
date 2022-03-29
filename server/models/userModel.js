@@ -11,7 +11,9 @@ const userSchema = {
     bio: String,
     img: { data: Buffer, contentType: String },
     code: String,
-    verification: Boolean
+    verification: Boolean,
+    following: Array,
+    followers: Array
 }
 
 const User = mongoose.model("User", userSchema);
