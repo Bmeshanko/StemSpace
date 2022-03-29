@@ -13,7 +13,12 @@ const userSchema = {
     code: String,
     verification: Boolean,
     following: Array,
-    followers: Array
+    followers: Array,
+    expireAt: {
+        type: Date,
+        default: Date.now,
+        expireAfterSeconds: 6000
+    }
 }
 
 const User = mongoose.model("User", userSchema);

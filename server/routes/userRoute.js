@@ -53,7 +53,7 @@ router.post("/emailVerification", (req, res) => {
         const user = User.findOne({email: req.body.email}, function(err, users) {
             console.log(users.code)
             if(users.code === req.body.code) {
-                const update = {code: null, verification: true};
+                const update = {code: null, verification: true, expire_at: null};
                 const user2 = User.findOneAndUpdate({email:req.body.email}, update, function(err, users) {
                     console.log(users)
                 }, {collection: 'users'})
