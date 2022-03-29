@@ -1,6 +1,7 @@
 import './DeleteAccount.css';
 import React, {useState, useEffect} from "react";
 import axios from "axios";
+import Sha1 from "./Sha1";
 
 function DeleteAccount() {
     const [user, setUser] = useState({
@@ -25,8 +26,15 @@ function DeleteAccount() {
             axios.post("/deleteUser", {
                 username: user.username,
                 password: user.password
-            });
-            window.location.href='/';
+            }).then(res => {
+                if (res.data == null || res.data.password !== Sha1.hash(user.password) || !res.data.verification) {
+                    alert("Incorrect Username or Password")
+                } else {
+                    window.location.href='/';
+                }
+            }).catch(function (error) {
+                console.log("Error Detected")
+            })
         }
     }
 
