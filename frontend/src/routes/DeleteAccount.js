@@ -26,6 +26,7 @@ function DeleteAccount() {
                 username: user.username,
                 password: user.password
             });
+            window.location.href='/';
         }
     }
 
