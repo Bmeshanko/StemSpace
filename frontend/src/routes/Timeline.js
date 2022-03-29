@@ -1,12 +1,13 @@
 import './Timeline.css';
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import React, {useState} from "react";
 
 function Timeline() {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [input, setInput] = useState({
-        username: ''
+        username: location.state.username
     })
 
     function handleChange(event) {

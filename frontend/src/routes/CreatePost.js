@@ -1,13 +1,16 @@
 import './CreatePost.css';
 import React, {useState} from "react";
 import axios from "axios";
+import {useLocation, useNavigate} from "react-router-dom";
 
 function CreatePost() {
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const [input, setInput] = useState({
         topic: '',
         contents: '',
-        username: ''
+        username: location.state.username
     });
 
     function handleChange(event) {
@@ -27,6 +30,7 @@ function CreatePost() {
             topic: input.topic,
             username: input.username
         });
+        navigate("/Timeline", {state:{username:input.username}})
     }
 
     return (
