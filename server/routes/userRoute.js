@@ -38,9 +38,24 @@ router.post("/getUsers", (req, res) => {
     try {
         const request = req.body.username;
         let criteria = (request.indexOf('@') == -1) ? {username: request} : {email: request};
-        const user = User.findOne(criteria, function(err, users) {
+        User.findOne(criteria, function(err, users) {
             res.json(users)
         }, {collection: 'users'})
+    } catch(e) {
+        console.log("Error Detected");
+    }
+});
+
+router.post("/getPosts", (req, res) => {
+    try {
+        //const request = req.body.username;
+        //let criteria = 
+        //commented code above can be used to modify criteria in the future
+        let criteria = {};
+        
+        Post.find(criteria, function(err, posts) {
+            res.json(posts)
+        }, {collection: 'posts'})
     } catch(e) {
         console.log("Error Detected");
     }
