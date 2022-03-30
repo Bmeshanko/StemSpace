@@ -16,7 +16,7 @@ router.post("/createUser", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
-    const bio = "Hello World!";
+    const bio = "";
     const imgPath='./Blank-Profile.png';
     const newUser = new User({
         username,
@@ -47,12 +47,10 @@ router.post("/getUsers", (req, res) => {
 });
 
 router.post("/emailVerification", (req, res) => {
-    console.log(req.body.email)
-    console.log(req.body.code)
     try {
         const user = User.findOne({email: req.body.email}, function(err, users) {
             console.log(users.code)
-            if(users.code === req.body.code) {
+            if (users.code === req.body.code) {
                 const update = {code: null, verification: true};
                 const user2 = User.findOneAndUpdate({email:req.body.email}, update, function(err, users) {
                     console.log(users)
@@ -71,7 +69,7 @@ router.post("/changePassword", (req, res) => {
     const update = {password: req.body.password};
     const id = new ObjectId(req.body.id);
     let criteria = {_id: id};
-    console.log(id);
+    //console.log(id);
     const user2 = User.findOneAndUpdate(criteria, update, function(err, users) {
         console.log(users)
         res.json(users)
@@ -82,7 +80,7 @@ router.post("/forgotPassword", (req, res) => {
     try {
         const request = req.body.email;
         const code = Math.floor(1000 + Math.random() * 9000);
-        console.log(code);
+        //console.log(code);
         const user = User.findOne({email: request}, function (err, info) {
             if (info == null) {
                 res.json(null)
@@ -135,7 +133,7 @@ router.post("/deleteUser", (req, res) => {
         const username = req.body.username;
         const password = req.body.password;
         let criteria = {username: username, password: password};
-        console.log(criteria);
+        //console.log(criteria);
         const user = User.findOneAndDelete(criteria, function(err, users) {
             res.json(users)
         }, {collection: 'users'});
@@ -146,7 +144,7 @@ router.post("/deleteUser", (req, res) => {
 
 router.post("/createPost", (req, res) => {
     const author = req.body.username;
-    console.log(author);
+    //console.log(author);
 
     const contents = req.body.contents;
     const topic = req.body.topic;
