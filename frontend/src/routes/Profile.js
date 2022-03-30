@@ -1,5 +1,5 @@
 import './Profile.css';
-import {Component} from 'react';
+import React, {Component} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 
@@ -88,35 +88,47 @@ class Profile extends Component {
     	bytes.forEach((b) => binary += String.fromCharCode(b));
     	return window.btoa(binary);
   	};
-	handleClickPost(event,user){
-		console.log(user)
-		navigate("/CreatePost", {state:{username:user}});
-	};
-	handleClickNotification(event,user) {
-		console.log(user)
-        navigate("/Profile", {state:{username:user}});
-    }
+
+	handleClickPost(e, username) {
+		navigate("/CreatePost", {state:{username:username}});
+	}
+
+	handleClickNotification(e, username) {
+		navigate("/Profile", {state:{username:username}});
+	}
+
+	handleClickLogo(e, username) {
+		navigate("/Timeline", {state:{username:username}});
+	}
+
    	render(){
       	return (  
       	<body>
         	<UseLocation />
 			<UseNavigate />
-         	<div className="Profile-banner">
-             	<img className='Logo' src="Logo_new.png" alt="STEM"></img>
-             	<a className='Stem-text'>StemSpace</a>
-				 <button className="Notification-button"
-                     onClick={(e) => {
-						this.handleClickPost(e, this.state.username);
-					 }}
-                    ><b><img src="post_button.png" className="Notification-logo" alt="Create-post"/></b>
-                </button>
+			<div className="Timeline-banner">
+				<button className="Timeline-logo-button"
+						onClick={(e) => {
+							this.handleClickLogo(e, this.state.username)
+						}}
+				><b><img className='Timeline-logo' src="Logo_new.png" alt="STEM"></img></b>
+				</button>
+
+				<a className="Timeline-banner-text">StemSpace</a>
 				<button className="Notification-button"
-                     onClick={(e) => {
-						this.handleClickNotification(e, this.state.username);
-					 }}
-                    ><b><img src="Notification.png" className="Notification-logo" alt="Notification"/></b>
-                </button>
-         	</div>
+						onClick={(e) => {
+							this.handleClickPost(e, this.state.username)
+						}}
+				><b><img src="post_button.png" className="Notification-logo" alt="Create-post"/></b>
+				</button>
+				<button className="Notification-button"
+						onClick={(e) => {
+							this.handleClickNotification(e, this.state.username)
+						}}
+				><b><img src="Notification.png" className="Notification-logo" alt="Notification"/></b>
+				</button>
+			</div>
+			<div className="Timeline-bar-horizontal"/>
          	<header className="Profile-bio">
              	<img className='Profile-picture' src={this.state.image}></img>
              	<span className="Profile-info">

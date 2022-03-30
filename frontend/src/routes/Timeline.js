@@ -29,10 +29,18 @@ function Timeline() {
         navigate("/Profile", {state:{username:input.username}});
     }
 
+    function handleClickLogo(event) {
+        navigate("/Timeline", {state:{username:input.username}});
+    }
+
     return(
         <body className="wrapper">
             <div className="Timeline-banner">
-                <img className='Timeline-logo' src="Logo_new.png" alt="STEM"></img>
+                <button className="Timeline-logo-button"
+                        onClick={handleClickLogo}
+                ><b><img className='Timeline-logo' src="Logo_new.png" alt="STEM"></img></b>
+                </button>
+
                 <a className="Timeline-banner-text">StemSpace</a>
                 <button className="Notification-button"
                     onClick={handleClickPost}
