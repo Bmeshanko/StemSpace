@@ -29,7 +29,7 @@ class Profile extends Component {
     	axios.post("/getUsers", {
         	username: location.state.username
 		}).then(res => {
-        	console.log(res);
+        	//console.log(res);
         	if(res.data == null) {
             	alert("Profile not Found")
         	} else {
@@ -37,7 +37,7 @@ class Profile extends Component {
             	var base64Flag = 'data:image/jpeg;base64,';
             	var imageStr = this.arrayBufferToBase64(res.data.img.data.data);
             	this.setState({image: base64Flag + imageStr});
-            	console.log(this.state.image);
+            	//console.log(this.state.image);
         	}
     	}).catch(function (error) {
         	console.log("Error Detected")
@@ -46,25 +46,6 @@ class Profile extends Component {
 	displayNameHandler = (e) => {
     	let updatedBio = e.target.value;
     	this.setState({ bio: updatedBio });
-  	}
-  	handleBioSubmit = (e) => {
-    	e.preventDefault();
-    	this.setState({
-      	showName: true
-    	});
-  	}
-  	handleBioClose = (e) => {
-    	e.preventDefault();
-    	axios.post("/editBio", {
-        	bio: this.state.bio,
-        	username: this.state.username
-    	}).then(res => {
-        	console.log(res.data);
-    	});
-
-    	this.setState({
-      	showName: false
-    	});
   	}
   	onImageChange = (event) => {
     	if (event.target.files && event.target.files[0]) {
@@ -96,6 +77,10 @@ class Profile extends Component {
 		console.log(user)
         navigate("/Profile", {state:{username:user}});
     }
+	handleEditProfile(event,user) {
+		console.log(user)
+        navigate("/EditProfile", {state:{username:user}});
+    }
    	render(){
       	return (  
       	<body>
@@ -123,12 +108,8 @@ class Profile extends Component {
                		<div>
                   		<form onSubmit={this.handleSubmit}>
 						  <p class="username">@{this.state.username}</p>
-                    		<button type="submit" onClick={this.handleBioSubmit}>Edit Bio</button>
-							<p>Bio:</p>
-                    		{this.state.showName && <input type="text" onChange={this.displayNameHandler}name="bio" value={this.state.bio} />}
-
-                    		{this.state.showName && <button type="button" onClick={this.handleBioClose}>Close</button>}
-                    		{<p>{this.state.bio}</p>}
+					 		<button type="submit" onClick={(e) => {this.handleEditProfile(e, this.state.username);}}>Edit Profile</button>
+							<p>Bio: {this.state.bio}</p>
                   		</form>
               		</div>
              	</span>

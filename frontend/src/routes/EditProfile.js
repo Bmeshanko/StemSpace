@@ -2,18 +2,14 @@ import './EditProfile.css';
 import Sha1 from './Sha1.js';
 import React, {useState} from "react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 
 function EditProfile() {
-
+    const location = useLocation();
     const [input, setInput] = useState({
-        firstname: '',
-        lastname: '',
-        bio: '',
-        birthday: '',
-        picture: ''
+        username: location.state.username,
+        bio: ''
     })
-
     function handleChange(event) {
         const {name, value} = event.target;
 
@@ -28,42 +24,30 @@ function EditProfile() {
     const navigate = useNavigate();
 
     function handleClick(event) {
-        //navigate("/Profile", {state:{username:user.username}});
+        axios.post("/editBio", {
+        	bio: input.bio,
+        	username: input.username
+    	}).then(res => {
+        	console.log(res.data);
+    	});
+        navigate("/Profile", {state:{username:input.username}});
     }
 
     return (
         <body>
         <header className="Edit-profile-header">
-            <label for="firstname">
-                <input onChange={handleChange} value={input.firstname} className="Edit-profile-first" type="text"
-                       id="firstname" name="firstname"
-                       placeholder="First Name"/>
-            </label>
-            <label for="lastname">
-                <input onChange={handleChange} value={input.lastname} className="Edit-profile-last" type="text"
-                       id="lastname" name="lastname"
-                       placeholder="Last Name"/>
-            </label>
             <div className="Edit-profile-space"></div>
             <textarea className="Biography" onChange={handleChange} value={input.bio} id="bio" name="bio" placeholder="Write about yourself...">
             </textarea>
-            <p className="topic-text">Birthday: </p>
-            <input className="Edit-profile-birthday" type="date" id="birthday" name="birthday" value={input.birthday}/>
+            
             <div className="space"></div>
-            <p className="topic-text">Profile Picture:</p>
-
-            <label className="Edit-profile-picture">
-                <input type="file" id="picture" value={input.picture}/>
-                <b className="Edit-profile-upload">Upload Here</b>
-            </label>
             <div className="space"></div>
             <button className="Signup-button2"
                     onClick={(e) => {
                         e.preventDefault();
                         handleClick();
-                    }}><b>Submit Changes</b>
+                    }} type="submit"><b>Submit Changes</b>
             </button>
-
         </header>
         </body>
     );
