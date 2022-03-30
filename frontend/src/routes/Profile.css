@@ -59,7 +59,19 @@
     overflow-y: scroll;
     scrollbar-width: thin;
 }
-.filetype{
+
+.Edit-profile-button {
+    font-family: Consolas;
+    font-size: 20px;
+    padding: 12px;
+    width: 160px;
+    background-color: #5FAA4B;
+    border-radius: 8px;
+    border-color: #1F1F1F;
+    border-width: 1px;
+}
+
+.filetype {
     position: absolute;
     width: 99.9%;
     height: calc(100vh - 280px);
