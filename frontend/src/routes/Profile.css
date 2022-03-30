@@ -1,49 +1,51 @@
 .Profile-banner {
-    font-family: Consolas;
-    font-size: 48px;
-    text-align: left;
     margin-top: 0px;
     margin-left: 0px;
     margin-bottom: 0px;
     background-color: #5FAA4B;
-    padding: 12px;
+    padding-top: 10px;
+    padding-left: 12px;
+    padding-right: 5px;
+    padding-bottom: 6px;
+    width: 98.75%;
+    height: 40px;
+    display: inline-block;
 }
-
+.Stem-text{
+    font-family: Consolas;
+    font-size: 38px;
+    vertical-align: text-bottom;
+}
 .Logo {
-    display: flex;
-    width:50px;
-    vertical-align: top;
+    float: left;
+    display: inline;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
     background-color: #DDDDDD;
     border-radius: 20px;
-    margin-top: 5px;
-    margin-bottom: -5px;
-    margin-left: 5px;
   }
-
 .Profile-picture {
+    float: left;
     display: inline-grid;
     height: 200px;
     width: 200px;
+    object-fit:cover;
+    border-radius:50%;
   } 
-
-.Stem-text{
-    font-size: 50px;
-    position: absolute; 
-	top: -35px; 
-	left: 75px;
-    color:#EEEEEE;
-    font-family: consolas;
-}
-
+.Profile-Picture-Button {
+    padding: 3px;
+    box-shadow: 3px 3px 5px grey;
+    font-size: 14px;
+    font-weight: 600;
+    width: 190px;
+} 
 .Profile-info {
-    display: inline-grid;
-    vertical-align: top;
-    height: 200px;
-    width: calc(100vw - 210px);
+    display: flex;
     font-family: Consolas;
     font-size: 24px;
-    padding-left: 10px;
     background-color: #DDDDDD;
+    width: 75%;
 }
 .Profile-bio {
     font-size: 14px;

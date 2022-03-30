@@ -87,23 +87,18 @@ class Profile extends Component {
       	return (  
       	<body>
         	<UseLocation />
-         	<p className="Profile-banner">
+         	<div className="Profile-banner">
              	<img className='Logo' src="Logo_new.png" alt="STEM"></img>
-             	<p className='Stem-text'>StemSpace</p>
-         	</p>
+             	<a className='Stem-text'>StemSpace</a>
+         	</div>
          	<header className="Profile-bio">
              	<img className='Profile-picture' src={this.state.image}></img>
-            	<div> 
-                	<label for="image">Upload Image</label> 
-                	<input type="file" onChange={this.onImageChange} id="image" name="image" value="" required/> 
-            	</div> 
              	<span className="Profile-info">
-               		<p class="username">@{this.state.username}</p>
                		<div>
                   		<form onSubmit={this.handleSubmit}>
-                    		<label>Bio:</label>
+						  <p class="username">@{this.state.username}</p>
                     		<button type="submit" onClick={this.handleBioSubmit}>Edit Bio</button>
-                    
+							<p>Bio:</p>
                     		{this.state.showName && <input type="text" onChange={this.displayNameHandler}name="bio" value={this.state.bio} />}
 
                     		{this.state.showName && <button type="button" onClick={this.handleBioClose}>Close</button>}
@@ -112,6 +107,10 @@ class Profile extends Component {
               		</div>
              	</span>
          	</header>
+			 <div class="Profile-Picture-Button"> 
+                	<label for="image">Update Profile Picture</label> 
+                	<input type="file" onChange={this.onImageChange} id="image" name="image" value="" required/> 
+            </div> 
          	<section class="Post-history">
             	<p>Post history</p>
          	</section>
