@@ -140,30 +140,27 @@ class Profile extends Component {
 				<header className="Profile-bio">
 					<img className='Profile-picture' src={this.state.image}></img>
 					<span className="Profile-info">
-               		<div>
-						<div className="space"/>
-						<button className="Edit-profile-button"
-								onClick={(e) => {
-									this.handleClickEdit(e, this.state.username)
-								}}><b>Edit Profile</b>
-							</button>
+						<div>
+							<div className="space"/>
 							<button className="Edit-profile-button"
 									onClick={(e) => {
-										this.handleCLickLogout(e)
-									}}><b>Log Out</b>
-							</button>
-						<p className="username">@{this.state.username}</p>
-						<p>{this.state.bio}</p>
-              		</div>
-             	</span>
+										this.handleClickEdit(e, this.state.username)
+									}}><b>Edit Profile</b>
+								</button>
+								<button className="Edit-profile-button"
+										onClick={(e) => {
+											this.handleCLickLogout(e)
+										}}><b>Log Out</b>
+								</button>
+								<button className="Profile-Picture-Button">
+									<label htmlFor="image"><b>Change Picture</b></label>
+									<input type="file" onChange={this.onImageChange} id="image" name="image" value="" required/>
+								</button>
+							<p className="username">@{this.state.username}</p>
+							<p>{this.state.bio}</p>
+						</div>
+             		</span>
 				</header>
-				<div class="Profile-Picture-Button">
-					<label for="image">Update Profile Picture</label>
-					<input type="file" onChange={this.onImageChange} id="image" name="image" value="" required/>
-				</div>
-				<section class="Post-history">
-					<p>Post history</p>
-				</section>
 			</body>
 		);
 	}
