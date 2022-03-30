@@ -10,15 +10,15 @@ const UseLocation = () => {
 }
 class Profile extends Component {
   	constructor() {
-    super();
-    this.state = {
-		username:'',
-      	bio: '',
-      	showName: false ,
-      	showProfile: false ,
-      	image: ""
+    	super();
+    	this.state = {
+			username:'',
+      		bio: '',
+      		showName: false ,
+      		showProfile: false ,
+      		image: ""
+		}
 	}
-}
 	componentDidMount(){
     	this.setState({username:location.state.username})
     	axios.post("/getUsers", {

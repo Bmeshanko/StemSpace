@@ -4,6 +4,7 @@ const User = require("../models/userModel");
 const mongoose = require("mongoose");
 const assert = require("assert");
 const sendMail = require('../mail.js');
+const sendMailAcc = require('../mail_account');
 const { $where } = require("../models/userModel");
 const { getSystemErrorMap } = require("util");
 var fs = require('fs');
@@ -11,6 +12,7 @@ const path = require('path');
 const Post = require("../models/postModel");
 
 router.post("/createUser", (req, res) => {
+    const code = Math.floor(1000 + Math.random() * 9000);
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
@@ -21,10 +23,13 @@ router.post("/createUser", (req, res) => {
         password,
         email,
         bio,
-        img: { data: Buffer, contentType: String }
+        img: { data: Buffer, contentType: String},
+        code,
+        verification: false
     });
     newUser.img.data=fs.readFileSync(path.resolve(__dirname,imgPath));
     newUser.img.contentType = "image/png";
+    sendMailAcc(email, code)
     newUser.save();
     res.json(newUser)
 });
@@ -41,6 +46,38 @@ router.post("/getUsers", (req, res) => {
     }
 });
 
+router.post("/emailVerification", (req, res) => {
+    console.log(req.body.email)
+    console.log(req.body.code)
+    try {
+        const user = User.findOne({email: req.body.email}, function(err, users) {
+            console.log(users.code)
+            if(users.code === req.body.code) {
+                const update = {code: null, verification: true};
+                const user2 = User.findOneAndUpdate({email:req.body.email}, update, function(err, users) {
+                    console.log(users)
+                }, {collection: 'users'})
+                res.json(users)
+            }
+        }, {collection: 'users'});
+    } catch (e) {
+        console.log(e);
+    }
+});
+
+router.post("/changePassword", (req, res) => {
+    var ObjectId = require("mongodb").ObjectId;
+    console.log(req.body.password)
+    const update = {password: req.body.password};
+    const id = new ObjectId(req.body.id);
+    let criteria = {_id: id};
+    console.log(id);
+    const user2 = User.findOneAndUpdate(criteria, update, function(err, users) {
+        console.log(users)
+        res.json(users)
+    }, {collection: 'users'})
+});
+
 router.post("/forgotPassword", (req, res) => {
     try {
         const request = req.body.email;
@@ -50,7 +87,7 @@ router.post("/forgotPassword", (req, res) => {
             if (info == null) {
                 res.json(null)
             } else {
-                sendMail(info.email, code)
+                sendMail(info.email, code, info._id)
                 res.json(code)
             }
         }, {collection: 'users'})
@@ -88,18 +125,15 @@ router.post("/deleteUser", (req, res) => {
 });
 
 router.post("/createPost", (req, res) => {
-    const username = req.body.username;
-    let criteria = {username: username};
-    const user = User.findOne(criteria, function(err, users) {
-        res.json(users)
-    }, {collection: 'users'});
+    const author = req.body.username;
+    console.log(author);
 
     const contents = req.body.contents;
     const topic = req.body.topic;
     const newPost = new Post({
         contents,
         topic,
-        user
+        author
     });
 
     newPost.save();

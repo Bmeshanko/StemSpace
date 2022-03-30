@@ -1,15 +1,14 @@
 import './Timeline.css';
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import React, {useState} from "react";
 
 function Timeline() {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [input, setInput] = useState({
-        username: ''
+        username: location.state.username
     })
-
-    console.log("Username: " + input.username)
 
     function handleChange(event) {
         const {name, value} = event.target;
@@ -22,8 +21,12 @@ function Timeline() {
         })
     }
 
-    function handleClick(event) {
+    function handleClickPost(event) {
         navigate("/CreatePost", {state:{username:input.username}});
+    }
+
+    function handleClickNotification(event) {
+        navigate("/Profile", {state:{username:input.username}});
     }
 
     return(
@@ -32,12 +35,12 @@ function Timeline() {
                 <img className='Timeline-logo' src="Logo_new.png" alt="STEM"></img>
                 <a className="Timeline-banner-text">StemSpace</a>
                 <button className="Notification-button"
-                        onClick={handleClick}
-                ><b><img src="post_button.png" className="Notification-logo" alt="Create-post"/></b>
+                    onClick={handleClickPost}
+                    ><b><img src="post_button.png" className="Notification-logo" alt="Create-post"/></b>
                 </button>
                 <button className="Notification-button"
-                onClick={handleClick}
-                        ><b><img src="Notification.png" className="Notification-logo" alt="Notification"/></b>
+                    onClick={handleClickNotification}
+                    ><b><img src="Notification.png" className="Notification-logo" alt="Notification"/></b>
                 </button>
             </div>
             <div className="Timeline-bar-horizontal"/>

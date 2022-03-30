@@ -2,6 +2,7 @@ import './RecoverAccount.css';
 import React, {useState} from "react";
 import {useParams} from "react-router-dom";
 import axios from "axios";
+import Sha1 from "./Sha1";
 
 function RecoverAccount() {
 
@@ -17,7 +18,7 @@ function RecoverAccount() {
     function handleClick() {
         axios.post("/changePassword", {
             id: email,
-            password: password
+            password: Sha1.hash(password)
         }).then(res => {
             window.location.href='/Login'
         });

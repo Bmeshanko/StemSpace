@@ -13,6 +13,7 @@ import Front from './routes/Front';
 import DeleteAccount from "./routes/DeleteAccount";
 import CreatePost from "./routes/CreatePost";
 import EditProfile from "./routes/EditProfile";
+import Code from "./routes/Code";
 ReactDOM.render(
   <React.StrictMode>
       <BrowserRouter>
@@ -28,6 +29,7 @@ ReactDOM.render(
               <Route path="/DeleteAccount" element={<DeleteAccount />} />
               <Route path="/CreatePost" element={<CreatePost />} />
               <Route path="/EditProfile" element={<EditProfile />} />
+              <Route path="/Code" element={<Code />} />
           </Routes>
       </BrowserRouter>
   </React.StrictMode>,
