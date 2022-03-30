@@ -105,6 +105,10 @@ class Profile extends Component {
 		navigate("/EditProfile", {state:{username:username}});
 	}
 
+	handleCLickLogout(e) {
+		navigate("/");
+	}
+
 	render(){
 		return (
 			<body>
@@ -137,16 +141,19 @@ class Profile extends Component {
 					<img className='Profile-picture' src={this.state.image}></img>
 					<span className="Profile-info">
                		<div>
+						<div className="space"/>
+						<button className="Edit-profile-button"
+								onClick={(e) => {
+									this.handleClickEdit(e, this.state.username)
+								}}><b>Edit Profile</b>
+							</button>
+							<button className="Edit-profile-button"
+									onClick={(e) => {
+										this.handleCLickLogout(e)
+									}}><b>Log Out</b>
+							</button>
 						<p className="username">@{this.state.username}</p>
 						<p>{this.state.bio}</p>
-                  		<form onSubmit={this.handleSubmit}>
-					 		<button className="Edit-profile-button"
-									onClick={(e) => {
-										this.handleClickEdit(e, this.state.username)
-									}}><b>Edit Profile</b>
-							</button>
-
-                  		</form>
               		</div>
              	</span>
 				</header>
