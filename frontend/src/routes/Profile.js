@@ -9,7 +9,7 @@ const UseLocation = () => {
 	return null;
 }
 let navigate
-const UseNavigate= ()=>{
+const UseNavigate= () =>{
 	navigate=useNavigate()
 	return null;
 }
@@ -17,10 +17,8 @@ class Profile extends Component {
 	constructor() {
 		super();
 		this.state = {
-			username:'',
+			username: '',
 			bio: '',
-			showName: false ,
-			showProfile: false ,
 			image: ""
 		}
 	}
@@ -28,44 +26,20 @@ class Profile extends Component {
 		this.setState({username:location.state.username})
 		axios.post("/getUsers", {
 			username: location.state.username
-		}).then(res => {
-			console.log(res);
-			if(res.data == null) {
+		}).then (res => {
+			if (res.data == null) {
 				alert("Profile not Found")
 			} else {
 				this.setState({bio: res.data.bio});
-				var base64Flag = 'data:image/jpeg;base64,';
-				var imageStr = this.arrayBufferToBase64(res.data.img.data.data);
+				let base64Flag = 'data:image/jpeg;base64,';
+				let imageStr = this.arrayBufferToBase64(res.data.img.data.data);
 				this.setState({image: base64Flag + imageStr});
-				console.log(this.state.image);
 			}
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
 	}
-	displayNameHandler = (e) => {
-		let updatedBio = e.target.value;
-		this.setState({ bio: updatedBio });
-	}
-	handleBioSubmit = (e) => {
-		e.preventDefault();
-		this.setState({
-			showName: true
-		});
-	}
-	handleBioClose = (e) => {
-		e.preventDefault();
-		axios.post("/editBio", {
-			bio: this.state.bio,
-			username: this.state.username
-		}).then(res => {
-			console.log(res.data);
-		});
 
-		this.setState({
-			showName: false
-		});
-	}
 	onImageChange = (event) => {
 		if (event.target.files && event.target.files[0]) {
 			let reader = new FileReader();
@@ -83,8 +57,8 @@ class Profile extends Component {
 		}
 	}
 	arrayBufferToBase64(buffer) {
-		var binary = '';
-		var bytes = [].slice.call(new Uint8Array(buffer));
+		let binary = '';
+		let bytes = [].slice.call(new Uint8Array(buffer));
 		bytes.forEach((b) => binary += String.fromCharCode(b));
 		return window.btoa(binary);
 	};

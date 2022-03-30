@@ -6,7 +6,8 @@
     object-fit: cover;
     border-radius:50%;
     margin: 4px 4px 4px 4px;
-  } 
+}
+
 .Profile-Picture-Button {
     font-family: Consolas;
     font-size: 20px;
