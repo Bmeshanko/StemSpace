@@ -115,7 +115,6 @@ class Profile extends Component {
 					<img className='Profile-picture' src={this.state.image}></img>
 					<span className="Profile-info">
 						<div>
-							<div className="space"/>
 							<button className="Edit-profile-button"
 									onClick={(e) => {
 										this.handleClickEdit(e, this.state.username)
