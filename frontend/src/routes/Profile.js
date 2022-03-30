@@ -8,6 +8,11 @@ const UseLocation = () => {
 	location = useLocation()
 	return null;
 }
+let navigate
+const UseNavigate= ()=>{
+	navigate=useNavigate()
+	return null;
+}
 class Profile extends Component {
   	constructor() {
     	super();
@@ -83,13 +88,34 @@ class Profile extends Component {
     	bytes.forEach((b) => binary += String.fromCharCode(b));
     	return window.btoa(binary);
   	};
+	handleClickPost(event,user){
+		console.log(user)
+		navigate("/CreatePost", {state:{username:user}});
+	};
+	handleClickNotification(event,user) {
+		console.log(user)
+        navigate("/Profile", {state:{username:user}});
+    }
    	render(){
       	return (  
       	<body>
         	<UseLocation />
+			<UseNavigate />
          	<div className="Profile-banner">
              	<img className='Logo' src="Logo_new.png" alt="STEM"></img>
              	<a className='Stem-text'>StemSpace</a>
+				 <button className="Notification-button"
+                     onClick={(e) => {
+						this.handleClickPost(e, this.state.username);
+					 }}
+                    ><b><img src="post_button.png" className="Notification-logo" alt="Create-post"/></b>
+                </button>
+				<button className="Notification-button"
+                     onClick={(e) => {
+						this.handleClickNotification(e, this.state.username);
+					 }}
+                    ><b><img src="Notification.png" className="Notification-logo" alt="Notification"/></b>
+                </button>
          	</div>
          	<header className="Profile-bio">
              	<img className='Profile-picture' src={this.state.image}></img>
