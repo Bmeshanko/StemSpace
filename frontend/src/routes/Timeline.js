@@ -34,6 +34,11 @@ function Timeline() {
     function handleClickLogo(event) {
         navigate("/Timeline", {state:{username:input.username}});
     }
+
+    function handleClickName(event, name) {
+        navigate(`/Profile/${name}`, {state:{username:input.username}});
+    }
+
     function deletePost(event,id) {
         axios.post("/deletePost", {
 			id: id
@@ -95,7 +100,10 @@ function Timeline() {
                 <ol>
                     {input.posts.map((post)=>(
                         <div className="Post">
-                        <p className="Post">@{post.post.author}</p>
+                        <button className="Post" onClick={(event) => {;
+                            handleClickName(event, post.post.author)}}>
+                            @{post.post.author}
+                        </button>
                         <p>Topic: {post.post.topic}</p>
                         <p>{post.post.contents}</p>
                         {post.post.author===input.username && <button className="Delete-Post-Button"

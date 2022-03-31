@@ -5,23 +5,30 @@ import axios from "axios";
 function Profile() {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const [state, setState] = useState({
-		username: location.state.username,
-		bio: '',
-		image: "",
-		following: false
-	});
+	console.log(location)
+	let followbutton;
+	if(location.state == null || location.state == "") {
+		followbutton = false;
+		location.state = "";
+	} else {
+		followbutton = true;
+	}
 	const {userid} = useParams();
 	console.log(userid)
-	if(userid === state.username) {
-
-	}
+	console.log(location)
+	const [state, setState] = useState({
+		username: userid,
+		bio: '',
+		image: "",
+		following: false,
+		followers: 0,
+		following_number: 0
+	});
 	console.log(location.state.username);
 	useEffect(() => {
 		axios.post("/getUsers", {
-			username: location.state.username
+			username: userid
 		}).then(res => {
-			console.log(res.data)
 			if (res.data == null) {
 				alert("Profile not Found")
 			} else {
@@ -29,7 +36,9 @@ function Profile() {
 				let base64Flag = 'data:image/jpeg;base64,';
 				let imageStr = arrayBufferToBase64(res.data.img.data.data);
 				setState( prevState => ({ ...prevState, image: base64Flag + imageStr}));
-				setState(prevState => ({ ...prevState,following:res.data.following.includes(userid)}))
+				setState(prevState => ({ ...prevState,following:res.data.followers.includes(location.state.username)}));
+				setState(prevState => ({...prevState, followers: res.data.followers.length}))
+				setState(prevState => ({...prevState, following_number: res.data.following.length}))
 			}
 		}).catch(function (error) {
 			console.log("Error Detected")
@@ -63,19 +72,31 @@ function Profile() {
 	};
 
 	function handleClickPost(e, username) {
-		navigate("/CreatePost", {state: {username: username}});
+		if (!followbutton) {
+			navigate("/Front");
+		} else {
+			navigate("/CreatePost", {state: {username: location.state.username}});
+		}
 	}
 
 	function handleClickNotification(e, username) {
-		navigate("/Profile", {state: {username: username}});
+		if (!followbutton) {
+			navigate("/Front");
+		} else {
+			navigate("/Profile", {state: {username: location.state.username}});
+		}
 	}
 
 	function handleClickLogo(e, username) {
-		navigate("/Timeline", {state: {username: username}});
+		if (!followbutton) {
+			navigate("/Front");
+		} else {
+			navigate("/Timeline", {state: {username: location.state.username}});
+		}
 	}
 
 	function handleClickEdit(e, username) {
-		navigate("/EditProfile", {state: {username: username}});
+			navigate("/EditProfile", {state: {username: location.state.username}});
 	}
 
 	function handleCLickLogout(e) {
@@ -84,26 +105,28 @@ function Profile() {
 
 	function handleClickFollow(){
 		axios.post("/follow",{
-			user: state.username,
+			user: location.state.username,
 			followed_user: userid
 		}).then(res =>{
 			console.log(res)
 			setState(prevState => ({ ...prevState, following: true}))
+			setState((prevState => ({ ...prevState, followers: (state.followers + 1)})))
 		})
 	}
 
 	function handleClickUnfollow(){
 		axios.post("/Unfollow",{
-			user: state.username,
+			user: location.state.username,
 			followed_user: userid
 		}).then(res =>{
 			console.log(res)
 			setState(prevState => ({ ...prevState, following: false}))
+			setState((prevState => ({ ...prevState, followers: (state.followers - 1)})))
 		})
 	}
 
 	function FollowButton(){
-		if(state.username != userid) {
+		if(location.state.username !== userid && followbutton) {
 			if(state.following == false) {
 				return (
 					<button className="Edit-profile-button" onClick={(e) => {
@@ -127,7 +150,7 @@ function Profile() {
 		}
 
 		function UserPermissionsEditProfile() {
-			if(userid == state.username) {
+			if(userid == location.state.username) {
 				return(<button className="Edit-profile-button"
 						onClick={(e) => {
 							handleClickEdit(e, state.username)
@@ -138,7 +161,7 @@ function Profile() {
 		}
 
 	function UserPermissionsLogout() {
-		if(userid == state.username) {
+		if(userid == location.state.username) {
 			return(	<button className="Edit-profile-button" onClick={(e) => {
 				handleCLickLogout(e)
 			}}><b>Log Out</b>
@@ -148,7 +171,7 @@ function Profile() {
 	}
 
 	function UserPermissionsProfilePic() {
-		if(userid == state.username) {
+		if(userid == location.state.username) {
 			return(	<button className="Profile-Picture-Button">
 					<label htmlFor="image"><b>Change Picture</b></label>
 					<input type="file" onChange={onImageChange} id="image" name="image" value="" required/>
@@ -192,6 +215,8 @@ function Profile() {
 							<UserPermissionsEditProfile />
 							<UserPermissionsLogout />
 							<UserPermissionsProfilePic />
+							<h6>{state.followers} followers</h6>
+                       		<h6>{state.following_number} following</h6>
 							<p className="username">@{state.username}</p>
 							<p>{state.bio}</p>
 							<FollowButton />
