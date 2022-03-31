@@ -170,7 +170,7 @@ function Profile() {
 										handleClickEdit(e, state.username)
 									}}><b>Edit Profile</b>
 								</button>
-								<button className="Edit-profile-button"
+								<button className="logout-button"
 										onClick={(e) => {
 											handleCLickLogout(e)
 										}}><b>Log Out</b>
