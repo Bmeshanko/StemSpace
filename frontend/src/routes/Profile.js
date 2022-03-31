@@ -54,7 +54,6 @@ function Profile() {
 				console.log(state.image)
 				axios.post("/editImage", {
 					image: e.target.result,
-					username: state.username
 				}).then(res => {
 					console.log(res.data);
 				})
@@ -84,7 +83,7 @@ function Profile() {
 		if (!followbutton) {
 			navigate("/Front");
 		} else {
-			navigate("/Profile", {state: {username: location.state.username}});
+			navigate("/DeleteAccount");
 		}
 	}
 
