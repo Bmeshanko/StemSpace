@@ -159,6 +159,7 @@ router.post("/editBio", (req, res) => {
         console.log(e);
     }
 });
+
 router.post("/editImage", (req, res) => {
     try {
         const newImage = req.body.image;
@@ -180,26 +181,28 @@ router.post("/editImage", (req, res) => {
         console.log(e);
     }
 });
+
 router.post("/deleteUser", (req, res) => {
     try {
         const username = req.body.username;
-        const password = req.body.password;
-        let criteria = {username: username, password: password};
-        //console.log(criteria);
-        const user = User.findOneAndDelete(criteria, function(err, users) {
+        let criteria = {username: username};
+        User.findOneAndDelete(criteria, function(err, users) {
             res.json(users)
         }, {collection: 'users'});
     } catch (e) {
         console.log(e);
     }
 });
+
 router.post("/deletePost", (req, res) => {
     try {
         const id = req.body.id;
         let criteria = {_id: id};
+        console.log(criteria);
         //console.log(criteria);
         const user = Post.findOneAndDelete(criteria, function(err, users) {
             res.json(users)
+            console.log(users)
         }, {collection: 'post'});
     } catch (e) {
         console.log(e);
@@ -212,10 +215,12 @@ router.post("/createPost", (req, res) => {
 
     const contents = req.body.contents;
     const topic = req.body.topic;
+    const likers = [];
     const newPost = new Post({
         contents,
         topic,
-        author
+        author,
+        likers
     });
 
     newPost.save();
@@ -223,21 +228,39 @@ router.post("/createPost", (req, res) => {
 
 router.post("/likePost", (req, res) => {
     const username = req.body.username;
-    let criteria = {username: username};
-    const user = User.findOne(criteria, function(err, users) {
-        res.json(users)
-    }, {collection: 'users'});
-
     const id = req.body.id;
-    criteria = {_id: id};
-    const post = Post.findOne(criteria, function(err, posts) {
-        res.json(posts)
+    const criteria = {_id: id}
+    const update = {$push: {likers: username}}
+    console.log(criteria);
+    Post.findOneAndUpdate(criteria, update, function(err, posts) {
+        console.log(posts)
     }, {collection: 'posts'});
 
-    const postInUser = user.posts.findOne(criteria);
+    res.json(username + "liked: " + id)
+});
 
-    if (postInUsers != null && postInUsers == post) {
-        
+router.post("/unlikePost", (req, res) => {
+    const username = req.body.username;
+    const id = req.body.id;
+    const criteria = {_id: id}
+    const update = {$pull: {likers: username}}
+    Post.findOneAndUpdate(criteria, update, function(err, posts) {
+        console.log(posts)
+    }, {collection: 'posts'});
+
+    res.json(username + "unliked: " + id)
+});
+
+router.post("/getPost", (req, res) => {
+    try {
+        const id = req.body.id;
+        let criteria = {_id: id};
+        //console.log(criteria);
+        Post.findOne(criteria, function(err, posts) {
+            res.json(posts)
+        }, {collection: 'posts'});
+    } catch (e) {
+        console.log(e);
     }
 });
 

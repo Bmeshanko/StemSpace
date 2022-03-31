@@ -79,6 +79,7 @@ function Profile() {
 		}
 	}
 
+
 	function handleClickNotification(e, username) {
 		if (!followbutton) {
 			navigate("/Front");
@@ -202,7 +203,7 @@ function Profile() {
 				</button>
 				<button className="Notification-button"
 						onClick={(e) => {
-							handleClickEdit(e, state.username)
+							handleClickNotification(e)
 						}}
 				><b><img src="/Notification.png" className="Notification-logo" alt="Notification"/></b>
 				</button>
