@@ -1,5 +1,5 @@
 import './DeleteAccount.css';
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import Sha1 from "./Sha1";
 
@@ -27,7 +27,7 @@ function DeleteAccount() {
                 username: user.username,
                 password: user.password
             }).then(res => {
-                if (res.data == null || res.data.password !== Sha1.hash(user.password) || !res.data.verification) {
+                if (res.data == null || res.data.password !== Sha1.hash(user.password)) {
                     alert("Incorrect Username or Password")
                 } else {
                     window.location.href='/';
@@ -76,7 +76,7 @@ function DeleteAccount() {
             <div className="space"></div>
             <button className="Delete-account-button"
                     onClick={pressButton}
-                    ><b>Delete Account</b>
+            ><b>Delete Account</b>
             </button>
         </header>
         </body>
@@ -84,5 +84,3 @@ function DeleteAccount() {
 }
 
 export default DeleteAccount;
-
-
