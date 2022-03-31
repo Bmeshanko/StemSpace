@@ -43,6 +43,49 @@ function Timeline() {
 			console.log("Error Detected")
 		})
     }
+
+    function handleLike(event, username, id){
+        console.log("here")
+        axios.post("/getPost", {
+            id: id
+        }).then( res => {
+            console.log(res.data);
+            console.log(res.data.likers);
+            console.log(res.data.likers.length);
+            for(let i = 0; i < res.data.likers.length; i++){
+                if(username === res.data.likers[i]){
+                    unlikePost(event, username, id);
+                    return;
+                } 
+            }
+            console.log("entering likePost");
+            likePost(event, username, id);
+        }).catch(function(error){
+            console.log("error")
+        })
+    }
+
+    function likePost(event, username, id){
+        axios.post("/likePost", {
+            username: username,
+            id: id
+        }).then( res => {
+            //whatever
+        }).catch(function(error){
+            console.log("Error Detected")
+        })
+    }
+
+    function unlikePost(event, username, id){
+        axios.post("/unlikePost", {
+            username: username,
+            id: id
+        }).then( res => {
+            //whatever
+        }).catch(function(error){
+            console.log("Error Detected")
+        })
+    }
     
     //function getPosts(){
     useEffect(()=>{
@@ -53,7 +96,7 @@ function Timeline() {
             //put in console all the posts
             let temp=[];
             for(let i = 0; i < res.data.length; i++){
-                temp[i] = {post:{author:res.data[i].author, contents:res.data[i].contents, topic:res.data[i].topic, id:res.data[i]._id}};
+                temp[i] = {post:{author:res.data[i].author, contents:res.data[i].contents, topic:res.data[i].topic, id:res.data[i]._id, likers:res.data[i].likers}};
             }
             setInput({username: location.state.username, posts: temp});
 
@@ -103,6 +146,11 @@ function Timeline() {
 										deletePost(e, post.post.id)
 									}}><b>Delete Post</b>
 								</button>}
+                                <button className="Delete-Post-Button"
+									onClick={(e) => {
+										handleLike(e, input.username, post.post.id)
+									}}><b>Likes: {post.post.likers.length}</b>
+								</button>
                         </div>
                     ))}
                 </ol>
