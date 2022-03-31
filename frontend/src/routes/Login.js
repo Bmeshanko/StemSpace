@@ -24,7 +24,9 @@ function Login() {
             }
         })
     }
+
     const navigate = useNavigate();
+
     function checkUserName() {
         axios.post("/getUsers", {
             username: user.username,

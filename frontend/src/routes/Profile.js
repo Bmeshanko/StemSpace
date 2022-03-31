@@ -66,8 +66,8 @@ function Profile() {
 		navigate("/CreatePost", {state: {username: username}});
 	}
 
-	function handleClickNotification(e, username) {
-		navigate("/Profile", {state: {username: username}});
+	function handleClickNotification(e) {
+		navigate("/DeleteAccount");
 	}
 
 	function handleClickLogo(e, username) {
@@ -179,7 +179,7 @@ function Profile() {
 				</button>
 				<button className="Notification-button"
 						onClick={(e) => {
-							handleClickEdit(e, state.username)
+							handleClickNotification(e)
 						}}
 				><b><img src="/Notification.png" className="Notification-logo" alt="Notification"/></b>
 				</button>
