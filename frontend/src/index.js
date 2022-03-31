@@ -23,7 +23,7 @@ ReactDOM.render(
               <Route path="/Signup" element={<Signup />} />
               <Route path="/ForgotPassword" element={<ForgotPassword />} />
               <Route path="/RecoverAccount/:id" element={<RecoverAccount />} />
-              <Route path="/Profile/:user" element={<Profile />} />
+              <Route path="/Profile" element={<Profile />} />
               <Route path="/Timeline" element={<Timeline />} />
               <Route path="/Front" element={<Front />} />
               <Route path="/DeleteAccount" element={<DeleteAccount />} />

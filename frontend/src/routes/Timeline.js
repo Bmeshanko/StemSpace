@@ -45,7 +45,7 @@ function Timeline() {
             //put in console all the posts
             input.num_posts = res.data.length;
             let temp=[];
-            for(let i = 0; i < res.data.length; i++){
+            for (let i = 0; i < res.data.length; i++){
                 temp[i] = {post:{author:res.data[i].author, contents:res.data[i].contents}};
             }
             setInput({username: location.state.username, posts: temp});
