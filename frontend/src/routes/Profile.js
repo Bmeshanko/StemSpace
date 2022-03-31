@@ -126,6 +126,39 @@ function Profile() {
 		)
 		}
 
+		function UserPermissionsEditProfile() {
+			if(userid == state.username) {
+				return(<button className="Edit-profile-button"
+						onClick={(e) => {
+							handleClickEdit(e, state.username)
+						}}><b>Edit Profile</b>
+				</button>)
+			}
+			return (<p></p>)
+		}
+
+	function UserPermissionsLogout() {
+		if(userid == state.username) {
+			return(	<button className="Edit-profile-button" onClick={(e) => {
+				handleCLickLogout(e)
+			}}><b>Log Out</b>
+			</button>)
+		}
+		return (<p></p>)
+	}
+
+	function UserPermissionsProfilePic() {
+		if(userid == state.username) {
+			return(	<button className="Profile-Picture-Button">
+					<label htmlFor="image"><b>Change Picture</b></label>
+					<input type="file" onChange={onImageChange} id="image" name="image" value="" required/>
+			</button>
+			)
+		}
+		return (<p></p>)
+	}
+
+
 
 		return (
 			<body>
@@ -156,21 +189,9 @@ function Profile() {
 				<img className='Profile-picture' src={state.image}></img>
 				<span className="Profile-info">
 						<div>
-							<button className="Edit-profile-button"
-									onClick={(e) => {
-										handleClickEdit(e, state.username)
-									}}><b>Edit Profile</b>
-								</button>
-								<button className="Edit-profile-button"
-										onClick={(e) => {
-											handleCLickLogout(e)
-										}}><b>Log Out</b>
-								</button>
-								<button className="Profile-Picture-Button">
-									<label htmlFor="image"><b>Change Picture</b></label>
-									<input type="file" onChange={onImageChange} id="image" name="image" value=""
-										   required/>
-								</button>
+							<UserPermissionsEditProfile />
+							<UserPermissionsLogout />
+							<UserPermissionsProfilePic />
 							<p className="username">@{state.username}</p>
 							<p>{state.bio}</p>
 							<FollowButton />
