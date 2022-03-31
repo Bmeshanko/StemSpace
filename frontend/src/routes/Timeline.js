@@ -46,7 +46,7 @@ function Timeline() {
             input.num_posts = res.data.length;
             let temp=[];
             for(let i = 0; i < res.data.length; i++){
-                temp[i] = {post:{author:res.data[i].author, contents:res.data[i].contents}};
+                temp[i] = {post:{author:res.data[i].author, contents:res.data[i].contents, topic:res.data[i].topic}};
             }
             setInput({username: location.state.username, posts: temp});
 
@@ -87,9 +87,10 @@ function Timeline() {
             <span class="Timeline-posts">
                 <ol>
                     {input.posts.map((post)=>(
-                        <div>
-                        <p className="green"><strong>{post.post.author}</strong></p>
-                        <p className="green">{post.post.contents}</p>
+                        <div className="Post">
+                        <p className="Post"><strong>@{post.post.author}</strong></p>
+                        <p>Topic: {post.post.topic}</p>
+                        <p>{post.post.contents}</p>
                         </div>
                     ))}
                 </ol>
