@@ -1,6 +1,6 @@
 import './Profile.css';
 import React, {Component} from 'react';
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 let location
@@ -8,12 +8,12 @@ const UseLocation = () => {
 	location = useLocation()
 	return null;
 }
+
 let navigate
-const UseNavigate= () =>{
-	navigate=useNavigate()
+const UseNavigate = () => {
+	navigate = useNavigate()
 	return null;
 }
-//const {id} = useParams();
 
 class Profile extends Component {
 	constructor() {
@@ -21,15 +21,11 @@ class Profile extends Component {
 		this.state = {
 			username: '',
 			bio: '',
-			image: "",
-			following: false
+			image: ""
 		}
 	}
 
-
-
-
-	componentDidMount(){
+	componentDidMount() {
 		this.setState({username:location.state.username})
 		axios.post("/getUsers", {
 			username: location.state.username
@@ -41,15 +37,10 @@ class Profile extends Component {
 				let base64Flag = 'data:image/jpeg;base64,';
 				let imageStr = this.arrayBufferToBase64(res.data.img.data.data);
 				this.setState({image: base64Flag + imageStr});
-				if(res.data.following.find())
-				this.setState()
 			}
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
-
-
-
 	}
 
 	onImageChange = (event) => {
@@ -99,34 +90,34 @@ class Profile extends Component {
 	render(){
 		return (
 			<body>
-				<UseLocation />
-				<UseNavigate />
-				<div className="Timeline-banner">
-					<button className="Timeline-logo-button"
-							onClick={(e) => {
-								this.handleClickLogo(e, this.state.username)
-							}}
-					><b><img className='Timeline-logo' src="Logo_new.png" alt="STEM"></img></b>
-					</button>
+			<UseLocation />
+			<UseNavigate />
+			<div className="Timeline-banner">
+				<button className="Timeline-logo-button"
+						onClick={(e) => {
+							this.handleClickLogo(e, this.state.username)
+						}}
+				><b><img className='Timeline-logo' src="Logo_new.png" alt="STEM"></img></b>
+				</button>
 
-					<a className="Timeline-banner-text">StemSpace</a>
-					<button className="Notification-button"
-							onClick={(e) => {
-								this.handleClickPost(e, this.state.username)
-							}}
-					><b><img src="post_button.png" className="Notification-logo" alt="Create-post"/></b>
-					</button>
-					<button className="Notification-button"
-							onClick={(e) => {
-								this.handleClickEdit(e, this.state.username)
-							}}
-					><b><img src="Notification.png" className="Notification-logo" alt="Notification"/></b>
-					</button>
-				</div>
-				<div className="Timeline-bar-horizontal"/>
-				<header className="Profile-bio">
-					<img className='Profile-picture' src={this.state.image}></img>
-					<span className="Profile-info">
+				<a className="Timeline-banner-text">StemSpace</a>
+				<button className="Notification-button"
+						onClick={(e) => {
+							this.handleClickPost(e, this.state.username)
+						}}
+				><b><img src="post_button.png" className="Notification-logo" alt="Create-post"/></b>
+				</button>
+				<button className="Notification-button"
+						onClick={(e) => {
+							this.handleClickEdit(e, this.state.username)
+						}}
+				><b><img src="Notification.png" className="Notification-logo" alt="Notification"/></b>
+				</button>
+			</div>
+			<div className="Timeline-bar-horizontal"/>
+			<header className="Profile-bio">
+				<img className='Profile-picture' src={this.state.image}></img>
+				<span className="Profile-info">
 						<div>
 							<button className="Edit-profile-button"
 									onClick={(e) => {
@@ -146,7 +137,7 @@ class Profile extends Component {
 							<p>{this.state.bio}</p>
 						</div>
              		</span>
-				</header>
+			</header>
 			</body>
 		);
 	}
