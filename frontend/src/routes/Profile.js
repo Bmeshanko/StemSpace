@@ -60,6 +60,7 @@ function Profile() {
 				//console.log(state.image)
 				axios.post("/editImage", {
 					image: e.target.result,
+					username: state.username
 				}).then(res => {
 					console.log(res.data);
 				})
