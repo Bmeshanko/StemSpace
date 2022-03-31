@@ -46,6 +46,18 @@
     margin-right: 4px;
 }
 
+.logout-button {
+    font-family: Consolas;
+    font-size: 20px;
+    padding: 12px;
+    width: 200px;
+    background-color: #5FAA4B;
+    border-radius: 8px;
+    border-color: #1F1F1F;
+    border-width: 1px;
+    margin-right: 4px;
+}
+
 .space {
     margin-top: 10px;
 }

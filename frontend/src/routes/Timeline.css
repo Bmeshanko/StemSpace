@@ -129,3 +129,11 @@
     font-size: 24px;
     margin-left: 45%;
 }
+
+.Post{
+    display: block;
+    outline-color: green;
+    outline-width: 2px;
+    outline: #5FAA4B;
+    outline-style: solid;
+}
