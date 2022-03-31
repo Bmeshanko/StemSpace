@@ -1,65 +1,51 @@
 import './Profile.css';
-import React, {Component} from 'react';
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import React, {Component, useState, useEffect} from 'react';
+import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
+function Profile() {
+	const navigate = useNavigate();
+	const location = useLocation();
+	const [state, setState] = useState({
+		username: location.state.username,
+		bio: '',
+		image: "",
+		following: false
+	});
+	const {userid} = useParams();
+	console.log(userid)
+	if(userid === state.username) {
 
-let location
-const UseLocation = () => {
-	location = useLocation()
-	return null;
-}
-let navigate
-const UseNavigate= () =>{
-	navigate=useNavigate()
-	return null;
-}
-const {id} = useParams();
-
-class Profile extends Component {
-	constructor() {
-		super();
-		this.state = {
-			username: '',
-			bio: '',
-			image: "",
-			following: false
-		}
 	}
-
-
-
-
-	componentDidMount(){
-		this.setState({username:location.state.username})
+	console.log(location.state.username);
+	useEffect(() => {
 		axios.post("/getUsers", {
 			username: location.state.username
-		}).then (res => {
+		}).then(res => {
+			console.log(res.data)
 			if (res.data == null) {
 				alert("Profile not Found")
 			} else {
-				this.setState({bio: res.data.bio});
+				setState(prevState => ({ ...prevState, bio: res.data.bio}));
 				let base64Flag = 'data:image/jpeg;base64,';
-				let imageStr = this.arrayBufferToBase64(res.data.img.data.data);
-				this.setState({image: base64Flag + imageStr});
-				if(res.data.following.find())
-				this.setState()
+				let imageStr = arrayBufferToBase64(res.data.img.data.data);
+				setState( prevState => ({ ...prevState, image: base64Flag + imageStr}));
+				setState(prevState => ({ ...prevState,following:res.data.following.includes(userid)}))
 			}
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
+	}, [])
 
-
-
-	}
-
-	onImageChange = (event) => {
+	function onImageChange(event){
 		if (event.target.files && event.target.files[0]) {
 			let reader = new FileReader();
 			reader.onload = (e) => {
-				this.setState({image: e.target.result});
+				setState(prevState => ({ ...prevState, image: e.target.result}));
+				console.log(e.target.result)
+				console.log(state.image)
 				axios.post("/editImage", {
-					image: this.state.image,
-					username: this.state.username
+					image: e.target.result,
+					username: state.username
 				}).then(res => {
 					console.log(res.data);
 				})
@@ -69,86 +55,131 @@ class Profile extends Component {
 		}
 	}
 
-	arrayBufferToBase64(buffer) {
+	function arrayBufferToBase64(buffer) {
 		let binary = '';
 		let bytes = [].slice.call(new Uint8Array(buffer));
 		bytes.forEach((b) => binary += String.fromCharCode(b));
 		return window.btoa(binary);
 	};
 
-	handleClickPost(e, username) {
-		navigate("/CreatePost", {state:{username:username}});
+	function handleClickPost(e, username) {
+		navigate("/CreatePost", {state: {username: username}});
 	}
 
-	handleClickNotification(e, username) {
-		navigate("/Profile", {state:{username:username}});
+	function handleClickNotification(e, username) {
+		navigate("/Profile", {state: {username: username}});
 	}
 
-	handleClickLogo(e, username) {
-		navigate("/Timeline", {state:{username:username}});
+	function handleClickLogo(e, username) {
+		navigate("/Timeline", {state: {username: username}});
 	}
 
-	handleClickEdit(e, username) {
-		navigate("/EditProfile", {state:{username:username}});
+	function handleClickEdit(e, username) {
+		navigate("/EditProfile", {state: {username: username}});
 	}
 
-	handleCLickLogout(e) {
+	function handleCLickLogout(e) {
 		navigate("/");
 	}
 
-	render(){
+	function handleClickFollow(){
+		axios.post("/follow",{
+			user: state.username,
+			followed_user: userid
+		}).then(res =>{
+			console.log(res)
+			setState(prevState => ({ ...prevState, following: true}))
+		})
+	}
+
+	function handleClickUnfollow(){
+		axios.post("/Unfollow",{
+			user: state.username,
+			followed_user: userid
+		}).then(res =>{
+			console.log(res)
+			setState(prevState => ({ ...prevState, following: false}))
+		})
+	}
+
+	function FollowButton(){
+		if(state.username != userid) {
+			if(state.following == false) {
+				return (
+					<button className="Edit-profile-button" onClick={(e) => {
+						handleClickFollow()}} >
+						<b>Follow</b>
+					</button>
+				);
+			} else {
+				return (
+					<button className="Edit-profile-button"
+							onClick={(e) => {
+								handleClickUnfollow()}}>
+						<b>Unfollow</b>
+					</button>
+				);
+			}
+			}
+		return(
+			<p></p>
+		)
+		}
+
+
 		return (
 			<body>
-				<UseLocation />
-				<UseNavigate />
-				<div className="Timeline-banner">
-					<button className="Timeline-logo-button"
-							onClick={(e) => {
-								this.handleClickLogo(e, this.state.username)
-							}}
-					><b><img className='Timeline-logo' src="Logo_new.png" alt="STEM"></img></b>
-					</button>
+			<div className="Timeline-banner">
+				<button className="Timeline-logo-button"
+						onClick={(e) => {
+							handleClickLogo(e, state.username)
+						}}
+				><b><img className='Timeline-logo' src="/Logo_new.png" alt="STEM"></img></b>
+				</button>
 
-					<a className="Timeline-banner-text">StemSpace</a>
-					<button className="Notification-button"
-							onClick={(e) => {
-								this.handleClickPost(e, this.state.username)
-							}}
-					><b><img src="post_button.png" className="Notification-logo" alt="Create-post"/></b>
-					</button>
-					<button className="Notification-button"
-							onClick={(e) => {
-								this.handleClickEdit(e, this.state.username)
-							}}
-					><b><img src="Notification.png" className="Notification-logo" alt="Notification"/></b>
-					</button>
-				</div>
-				<div className="Timeline-bar-horizontal"/>
-				<header className="Profile-bio">
-					<img className='Profile-picture' src={this.state.image}></img>
-					<span className="Profile-info">
+				<a className="Timeline-banner-text">StemSpace</a>
+				<button className="Notification-button"
+						onClick={(e) => {
+							handleClickPost(e, state.username)
+						}}
+				><b><img src="/post_button.png" className="Notification-logo" alt="Create-post"/></b>
+				</button>
+				<button className="Notification-button"
+						onClick={(e) => {
+							handleClickEdit(e, state.username)
+						}}
+				><b><img src="/Notification.png" className="Notification-logo" alt="Notification"/></b>
+				</button>
+			</div>
+			<div className="Timeline-bar-horizontal"/>
+			<header className="Profile-bio">
+				<img className='Profile-picture' src={state.image}></img>
+				<span className="Profile-info">
 						<div>
 							<button className="Edit-profile-button"
 									onClick={(e) => {
-										this.handleClickEdit(e, this.state.username)
+										handleClickEdit(e, state.username)
 									}}><b>Edit Profile</b>
 								</button>
 								<button className="Edit-profile-button"
 										onClick={(e) => {
-											this.handleCLickLogout(e)
+											handleCLickLogout(e)
 										}}><b>Log Out</b>
 								</button>
 								<button className="Profile-Picture-Button">
 									<label htmlFor="image"><b>Change Picture</b></label>
-									<input type="file" onChange={this.onImageChange} id="image" name="image" value="" required/>
+									<input type="file" onChange={onImageChange} id="image" name="image" value=""
+										   required/>
 								</button>
-							<p className="username">@{this.state.username}</p>
-							<p>{this.state.bio}</p>
+							<p className="username">@{state.username}</p>
+							<p>{state.bio}</p>
+							<FollowButton />
 						</div>
+
              		</span>
-				</header>
+
+			</header>
 			</body>
 		);
-	}
 }
 export default Profile;
