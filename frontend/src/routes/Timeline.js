@@ -1,6 +1,6 @@
 import './Timeline.css';
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 
 function Timeline() {
@@ -8,7 +8,8 @@ function Timeline() {
     const location = useLocation();
 
     const [input, setInput] = useState({
-        username: location.state.username
+        username: location.state.username,
+        posts: []
     })
 
     function handleChange(event) {
@@ -33,23 +34,36 @@ function Timeline() {
     function handleClickLogo(event) {
         navigate("/Timeline", {state:{username:input.username}});
     }
-
-    function getPosts(){
-        axios.post("/getPosts", {
-			//criteria would go here
+    function deletePost(event,id) {
+        axios.post("/deletePost", {
+			id: id
 		}).then (res => {
             //put in console all the posts
-            console.log(res.data);
-            
-            //res.data has all the posts
-            //its an array of length res.data.length 
-            //content accesseable by res.data[i].contents
+            alert("Post Deleted");
 
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
     }
+    
+    //function getPosts(){
+    useEffect(()=>{
 
+        axios.post("/getPosts", {
+			//criteria would go here
+		}).then (res => {
+            //put in console all the posts
+            let temp=[];
+            for(let i = 0; i < res.data.length; i++){
+                temp[i] = {post:{author:res.data[i].author, contents:res.data[i].contents, topic:res.data[i].topic, id:res.data[i]._id}};
+            }
+            setInput({username: location.state.username, posts: temp});
+
+		}).catch(function (error) {
+			console.log("Error Detected")
+		})
+    },[input.posts]);
+    //}
 
     return(
         <body className="wrapper">
@@ -80,47 +94,25 @@ function Timeline() {
 
             </header>
             <span class="Timeline-posts">
-                <p>
-                </p>
+                <ol>
+                    {input.posts.map((post)=>(
+                        <div className="Post">
+                        <p className="Post"><strong>@{post.post.author}</strong></p>
+                        <p>Topic: {post.post.topic}</p>
+                        <p>{post.post.contents}</p>
+                        {post.post.author===input.username && <button className="Delete-Post-Button"
+									onClick={(e) => {
+										deletePost(e, post.post.id)
+									}}><b>Delete Post</b>
+								</button>}
+                        </div>
+                    ))}
+                </ol>
+                
             </span>
             <span class="Timeline-DMs">
                     <p className="DM-header">Chats</p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-                      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui offici
-                       a deserunt mollit anim id est laborum.</p>
-                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-                      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui offici
-                       a deserunt mollit anim id est laborum.</p>
-                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-                      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui offici
-                       a deserunt mollit anim id est laborum.</p>
-                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-                      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui offici
-                       a deserunt mollit anim id est laborum.</p>
-                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-                      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui offici
-                       a deserunt mollit anim id est laborum.</p>
-                       var                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
                       nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
