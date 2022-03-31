@@ -159,6 +159,7 @@ router.post("/editBio", (req, res) => {
         console.log(e);
     }
 });
+
 router.post("/editImage", (req, res) => {
     try {
         const newImage = req.body.image;
@@ -180,19 +181,19 @@ router.post("/editImage", (req, res) => {
         console.log(e);
     }
 });
+
 router.post("/deleteUser", (req, res) => {
     try {
         const username = req.body.username;
-        const password = req.body.password;
-        let criteria = {username: username, password: password};
-        //console.log(criteria);
-        const user = User.findOneAndDelete(criteria, function(err, users) {
+        let criteria = {username: username};
+        User.findOneAndDelete(criteria, function(err, users) {
             res.json(users)
         }, {collection: 'users'});
     } catch (e) {
         console.log(e);
     }
 });
+
 router.post("/deletePost", (req, res) => {
     try {
         const id = req.body.id;

@@ -28,7 +28,7 @@ function DeleteAccount() {
                 password: user.password
             }).then(res => {
                 if (res.data == null || res.data.password !== Sha1.hash(user.password)) {
-                    alert("Incorrect Username or Password")
+                    console.log(res.data);
                 } else {
                     window.location.href='/';
                 }
