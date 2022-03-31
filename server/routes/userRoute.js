@@ -49,10 +49,10 @@ router.post("/getUsers", (req, res) => {
 router.post("/getPosts", (req, res) => {
     try {
         //const request = req.body.username;
-        //let criteria = 
+        //let criteria =
         //commented code above can be used to modify criteria in the future
         let criteria = {};
-        
+
         Post.find(criteria, function(err, posts) {
             res.json(posts)
         }, {collection: 'posts'})
