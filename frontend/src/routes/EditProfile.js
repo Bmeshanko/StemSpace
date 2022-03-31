@@ -30,7 +30,7 @@ function EditProfile() {
     	}).then(res => {
         	console.log(res.data);
     	});
-        navigate("/Profile", {state:{username:input.username}});
+        navigate(`/Profile/${input.username}`, {state:{username:input.username}});
     }
 
     return (

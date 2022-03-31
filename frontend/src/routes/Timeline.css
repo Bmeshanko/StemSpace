@@ -29,13 +29,13 @@
   }
 
 .Timeline-bar-horizontal {
-    background-color:#1F1F1F;
+    background-color: #1F1F1F;
     height: 1px;
     margin-top: 0px;
 }
 
 .Timeline-bar-vertical {
-    background-color:#1F1F1F;
+    background-color: #1F1F1F;
     width: 1px;
     height: 64px;
     display: inline-grid;
@@ -102,7 +102,6 @@
 
 .Timeline-posts {
     position: absolute;
-    left: 0;
     display: inline-block;
     width: 59.5%;
     height: calc(100vh - 135px);
@@ -124,16 +123,15 @@
     scrollbar-width: thin;
 }
 
-.DM-header{
+.DM-header {
     font-family: Consolas;
     font-size: 24px;
     margin-left: 45%;
 }
 
-.Post{
+.Post {
+    font-family: Consolas;
     display: block;
-    outline-color: green;
-    outline-width: 2px;
-    outline: #5FAA4B;
-    outline-style: solid;
+    background-color: #5FAA4B;
+    outline: 1px solid #1F1F1F;
 }

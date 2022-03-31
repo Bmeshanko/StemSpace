@@ -39,8 +39,6 @@ function Timeline() {
 			id: id
 		}).then (res => {
             //put in console all the posts
-            alert("Post Deleted");
-
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
@@ -97,7 +95,7 @@ function Timeline() {
                 <ol>
                     {input.posts.map((post)=>(
                         <div className="Post">
-                        <p className="Post"><strong>@{post.post.author}</strong></p>
+                        <p className="Post">@{post.post.author}</p>
                         <p>Topic: {post.post.topic}</p>
                         <p>{post.post.contents}</p>
                         {post.post.author===input.username && <button className="Delete-Post-Button"
