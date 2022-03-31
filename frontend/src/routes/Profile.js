@@ -56,6 +56,7 @@ class Profile extends Component {
 			//console.log(event.target.files[0])
 		}
 	}
+
 	arrayBufferToBase64(buffer) {
 		let binary = '';
 		let bytes = [].slice.call(new Uint8Array(buffer));
