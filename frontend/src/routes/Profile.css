@@ -1,63 +1,56 @@
-.Profile-banner {
-    font-family: Consolas;
-    font-size: 48px;
-    text-align: left;
-    margin-top: 0px;
-    margin-left: 0px;
-    margin-bottom: 0px;
-    background-color: #5FAA4B;
-    padding: 12px;
-}
-
-.Logo {
-    display: flex;
-    width:50px;
-    vertical-align: top;
-    background-color: #DDDDDD;
-    border-radius: 20px;
-    margin-top: 5px;
-    margin-bottom: -5px;
-    margin-left: 5px;
-  }
-
 .Profile-picture {
+    float: left;
     display: inline-grid;
     height: 200px;
     width: 200px;
-  } 
+    object-fit: cover;
+    border-radius:50%;
+    margin: 4px 4px 4px 4px;
+}
 
-.Stem-text{
-    font-size: 50px;
-    position: absolute; 
-	top: -35px; 
-	left: 75px;
-    color:#EEEEEE;
-    font-family: consolas;
+.Profile-Picture-Button {
+    font-family: Consolas;
+    font-size: 20px;
+    padding: 12px;
+    width: 200px;
+    background-color: #5FAA4B;
+    border-radius: 8px;
+    border-color: #1F1F1F;
+    border-width: 1px;
+    margin-right: 4px;
+    display: inline;
 }
 
 .Profile-info {
-    display: inline-grid;
-    vertical-align: top;
-    height: 200px;
-    width: calc(100vw - 210px);
+    display: flex;
     font-family: Consolas;
     font-size: 24px;
-    padding-left: 10px;
     background-color: #DDDDDD;
+    width: 1138px;
+    padding: 10px;
 }
+
 .Profile-bio {
     font-size: 14px;
 }
 
-.Post-history {
-    position: absolute;
-    display: inline-block;
-    width: 99.9%;
-    height: calc(100vh - 280px);
-    overflow-y: scroll;
-    scrollbar-width: thin;
+.Edit-profile-button {
+    font-family: Consolas;
+    font-size: 20px;
+    padding: 12px;
+    width: 200px;
+    background-color: #5FAA4B;
+    border-radius: 8px;
+    border-color: #1F1F1F;
+    border-width: 1px;
+    margin-right: 4px;
 }
-.filetype{
+
+.space {
+    margin-top: 10px;
+}
+
+.filetype {
     position: absolute;
     width: 99.9%;
     height: calc(100vh - 280px);

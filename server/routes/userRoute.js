@@ -16,7 +16,7 @@ router.post("/createUser", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const email = req.body.email;
-    const bio = "Hello World!";
+    const bio = "";
     const imgPath='./Blank-Profile.png';
     const newUser = new User({
         username,
@@ -38,7 +38,7 @@ router.post("/getUsers", (req, res) => {
     try {
         const request = req.body.username;
         let criteria = (request.indexOf('@') == -1) ? {username: request} : {email: request};
-        const user = User.findOne(criteria, function(err, users) {
+        User.findOne(criteria, function(err, users) {
             res.json(users)
         }, {collection: 'users'})
     } catch(e) {
@@ -46,14 +46,27 @@ router.post("/getUsers", (req, res) => {
     }
 });
 
+router.post("/getPosts", (req, res) => {
+    try {
+        //const request = req.body.username;
+        //let criteria = 
+        //commented code above can be used to modify criteria in the future
+        let criteria = {};
+        
+        Post.find(criteria, function(err, posts) {
+            res.json(posts)
+        }, {collection: 'posts'})
+    } catch(e) {
+        console.log("Error Detected");
+    }
+});
+
 router.post("/emailVerification", (req, res) => {
-    console.log(req.body.email)
-    console.log(req.body.code)
     try {
         const user = User.findOne({email: req.body.email}, function(err, users) {
             console.log(users.code)
-            if(users.code === req.body.code) {
-                const update = {code: null, verification: true, expire_at: null};
+            if (users.code === req.body.code) {
+                const update = {code: null, verification: true};
                 const user2 = User.findOneAndUpdate({email:req.body.email}, update, function(err, users) {
                     console.log(users)
                 }, {collection: 'users'})
@@ -71,7 +84,7 @@ router.post("/changePassword", (req, res) => {
     const update = {password: req.body.password};
     const id = new ObjectId(req.body.id);
     let criteria = {_id: id};
-    console.log(id);
+    //console.log(id);
     const user2 = User.findOneAndUpdate(criteria, update, function(err, users) {
         console.log(users)
         res.json(users)
@@ -82,7 +95,7 @@ router.post("/forgotPassword", (req, res) => {
     try {
         const request = req.body.email;
         const code = Math.floor(1000 + Math.random() * 9000);
-        console.log(code);
+        //console.log(code);
         const user = User.findOne({email: request}, function (err, info) {
             if (info == null) {
                 res.json(null)
@@ -109,13 +122,33 @@ router.post("/editBio", (req, res) => {
         console.log(e);
     }
 });
-
+router.post("/editImage", (req, res) => {
+    try {
+        const newImage = req.body.image;
+        var picdata=newImage.substring(23);
+        //console.log(req.body.image);
+        const username = req.body.username;
+        let criteria = {username: username};
+        var imagedata= {
+            img: { data: Buffer, contentType: String }
+        }
+        var buf=Buffer.from(picdata,'base64')
+        imagedata.data=buf;
+        imagedata.contentType = "image/png";
+        let update= {img: imagedata};
+        const user = User.findOneAndUpdate(criteria, update, function(err, users) {
+            res.json(users)
+        }, {collection: 'users'});
+    } catch (e) {
+        console.log(e);
+    }
+});
 router.post("/deleteUser", (req, res) => {
     try {
         const username = req.body.username;
         const password = req.body.password;
         let criteria = {username: username, password: password};
-        console.log(criteria);
+        //console.log(criteria);
         const user = User.findOneAndDelete(criteria, function(err, users) {
             res.json(users)
         }, {collection: 'users'});
@@ -126,7 +159,7 @@ router.post("/deleteUser", (req, res) => {
 
 router.post("/createPost", (req, res) => {
     const author = req.body.username;
-    console.log(author);
+    //console.log(author);
 
     const contents = req.body.contents;
     const topic = req.body.topic;
