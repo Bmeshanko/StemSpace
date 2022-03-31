@@ -11,6 +11,23 @@ var fs = require('fs');
 const path = require('path');
 const Post = require("../models/postModel");
 
+router.post("/follow", (req, res) => {
+    const user = req.body.user;
+    const followed_user = req.body.followed_user;
+    const criteria = {username: user}
+    const criteria_followed = {username: followed_user}
+    const update = {$push: {following: followed_user}}
+    const update_followed = {$push: {followers: user}}
+    User.findOneAndUpdate(criteria, update, function(err, users) {
+        console.log(users)
+    }, {collection: 'users'});
+
+    User.findOneAndUpdate(criteria_followed, update_followed, function(err, users) {
+        console.log(users)
+    }, {collection: 'users'});
+
+})
+
 router.post("/createUser", (req, res) => {
     const code = Math.floor(1000 + Math.random() * 9000);
     const username = req.body.username;
