@@ -193,6 +193,18 @@ router.post("/deleteUser", (req, res) => {
         console.log(e);
     }
 });
+router.post("/deletePost", (req, res) => {
+    try {
+        const id = req.body.id;
+        let criteria = {_id: id};
+        //console.log(criteria);
+        const user = Post.findOneAndDelete(criteria, function(err, users) {
+            res.json(users)
+        }, {collection: 'post'});
+    } catch (e) {
+        console.log(e);
+    }
+});
 
 router.post("/createPost", (req, res) => {
     const author = req.body.username;

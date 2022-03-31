@@ -9,8 +9,7 @@ function Timeline() {
 
     const [input, setInput] = useState({
         username: location.state.username,
-        posts: [],
-        num_posts: 0
+        posts: []
     })
 
     function handleChange(event) {
@@ -35,6 +34,17 @@ function Timeline() {
     function handleClickLogo(event) {
         navigate("/Timeline", {state:{username:input.username}});
     }
+    function deletePost(event,id) {
+        axios.post("/deletePost", {
+			id: id
+		}).then (res => {
+            //put in console all the posts
+            alert("Post Deleted");
+
+		}).catch(function (error) {
+			console.log("Error Detected")
+		})
+    }
     
     //function getPosts(){
     useEffect(()=>{
@@ -43,10 +53,9 @@ function Timeline() {
 			//criteria would go here
 		}).then (res => {
             //put in console all the posts
-            input.num_posts = res.data.length;
             let temp=[];
             for(let i = 0; i < res.data.length; i++){
-                temp[i] = {post:{author:res.data[i].author, contents:res.data[i].contents, topic:res.data[i].topic}};
+                temp[i] = {post:{author:res.data[i].author, contents:res.data[i].contents, topic:res.data[i].topic, id:res.data[i]._id}};
             }
             setInput({username: location.state.username, posts: temp});
 
@@ -91,6 +100,11 @@ function Timeline() {
                         <p className="Post"><strong>@{post.post.author}</strong></p>
                         <p>Topic: {post.post.topic}</p>
                         <p>{post.post.contents}</p>
+                        {post.post.author===input.username && <button className="Delete-Post-Button"
+									onClick={(e) => {
+										deletePost(e, post.post.id)
+									}}><b>Delete Post</b>
+								</button>}
                         </div>
                     ))}
                 </ol>
