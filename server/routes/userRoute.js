@@ -26,7 +26,27 @@ router.post("/follow", (req, res) => {
         console.log(users)
     }, {collection: 'users'});
 
+    res.json("Followed: " + followed_user)
 })
+
+router.post("/unfollow", (req, res) => {
+    const user = req.body.user;
+    const followed_user = req.body.followed_user;
+    const criteria = {username: user}
+    const criteria_followed = {username: followed_user}
+    const update = {$unset: {following: followed_user}}
+    const update_followed = {$unset: {followers: user}}
+    User.findOneAndUpdate(criteria, update, function(err, users) {
+        console.log(users)
+    }, {collection: 'users'});
+
+    User.findOneAndUpdate(criteria_followed, update_followed, function(err, users) {
+        console.log(users)
+    }, {collection: 'users'});
+
+    res.json("Unfollowed: " + followed_user)
+})
+
 
 router.post("/createUser", (req, res) => {
     const code = Math.floor(1000 + Math.random() * 9000);
