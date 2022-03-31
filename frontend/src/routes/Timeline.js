@@ -1,6 +1,6 @@
 import './Timeline.css';
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 
 function Timeline() {
@@ -8,7 +8,9 @@ function Timeline() {
     const location = useLocation();
 
     const [input, setInput] = useState({
-        username: location.state.username
+        username: location.state.username,
+        posts: [],
+        num_posts: 0
     })
 
     function handleChange(event) {
@@ -33,23 +35,26 @@ function Timeline() {
     function handleClickLogo(event) {
         navigate("/Timeline", {state:{username:input.username}});
     }
+    
+    //function getPosts(){
+    useEffect(()=>{
 
-    function getPosts(){
         axios.post("/getPosts", {
 			//criteria would go here
 		}).then (res => {
             //put in console all the posts
-            console.log(res.data);
-            
-            //res.data has all the posts
-            //its an array of length res.data.length 
-            //content accesseable by res.data[i].contents
+            input.num_posts = res.data.length;
+            let temp=[];
+            for(let i = 0; i < res.data.length; i++){
+                temp[i] = {post:{author:res.data[i].author, contents:res.data[i].contents}};
+            }
+            setInput({username: location.state.username, posts: temp});
 
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
-    }
-
+    },[input.posts]);
+    //}
 
     return(
         <body className="wrapper">
@@ -80,47 +85,19 @@ function Timeline() {
 
             </header>
             <span class="Timeline-posts">
-                <p>
-                </p>
+                <ol>
+                    {input.posts.map((post)=>(
+                        <div>
+                        <p className="green"><strong>{post.post.author}</strong></p>
+                        <p className="green">{post.post.contents}</p>
+                        </div>
+                    ))}
+                </ol>
+                
             </span>
             <span class="Timeline-DMs">
                     <p className="DM-header">Chats</p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-                      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui offici
-                       a deserunt mollit anim id est laborum.</p>
-                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-                      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui offici
-                       a deserunt mollit anim id est laborum.</p>
-                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-                      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui offici
-                       a deserunt mollit anim id est laborum.</p>
-                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-                      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui offici
-                       a deserunt mollit anim id est laborum.</p>
-                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-                      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui offici
-                       a deserunt mollit anim id est laborum.</p>
-                       var                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
                       nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
