@@ -28,7 +28,7 @@ function Timeline() {
     }
 
     function handleClickNotification(event) {
-        navigate("/Profile", {state:{username:input.username}});
+        navigate(`/Profile/${input.username}`, {state:{username:input.username}});
     }
 
     function handleClickLogo(event) {

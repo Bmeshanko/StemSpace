@@ -34,8 +34,8 @@ router.post("/unfollow", (req, res) => {
     const followed_user = req.body.followed_user;
     const criteria = {username: user}
     const criteria_followed = {username: followed_user}
-    const update = {$unset: {following: followed_user}}
-    const update_followed = {$unset: {followers: user}}
+    const update = {$pull: {following: followed_user}}
+    const update_followed = {$pull: {followers: user}}
     User.findOneAndUpdate(criteria, update, function(err, users) {
         console.log(users)
     }, {collection: 'users'});
