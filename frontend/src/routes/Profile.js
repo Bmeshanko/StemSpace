@@ -1,5 +1,4 @@
 import './Profile.css';
-
 import React, {Component, useState, useEffect} from 'react';
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
@@ -15,7 +14,6 @@ function Profile() {
 	const {userid} = useParams();
 	console.log(userid)
 	if(userid === state.username) {
-
 
 	}
 	console.log(location.state.username);
@@ -39,7 +37,6 @@ function Profile() {
 	}, [])
 
 	function onImageChange(event){
-
 		if (event.target.files && event.target.files[0]) {
 			let reader = new FileReader();
 			reader.onload = (e) => {
@@ -85,7 +82,6 @@ function Profile() {
 		navigate("/");
 	}
 
-
 	function handleClickFollow(){
 		axios.post("/follow",{
 			user: state.username,
@@ -130,6 +126,39 @@ function Profile() {
 		)
 		}
 
+		function UserPermissionsEditProfile() {
+			if(userid == state.username) {
+				return(<button className="Edit-profile-button"
+						onClick={(e) => {
+							handleClickEdit(e, state.username)
+						}}><b>Edit Profile</b>
+				</button>)
+			}
+			return (<p></p>)
+		}
+
+	function UserPermissionsLogout() {
+		if(userid == state.username) {
+			return(	<button className="Edit-profile-button" onClick={(e) => {
+				handleCLickLogout(e)
+			}}><b>Log Out</b>
+			</button>)
+		}
+		return (<p></p>)
+	}
+
+	function UserPermissionsProfilePic() {
+		if(userid == state.username) {
+			return(	<button className="Profile-Picture-Button">
+					<label htmlFor="image"><b>Change Picture</b></label>
+					<input type="file" onChange={onImageChange} id="image" name="image" value="" required/>
+			</button>
+			)
+		}
+		return (<p></p>)
+	}
+
+
 
 		return (
 			<body>
@@ -139,13 +168,11 @@ function Profile() {
 							handleClickLogo(e, state.username)
 						}}
 				><b><img className='Timeline-logo' src="/Logo_new.png" alt="STEM"></img></b>
-
 				</button>
 
 				<a className="Timeline-banner-text">StemSpace</a>
 				<button className="Notification-button"
 						onClick={(e) => {
-
 							handleClickPost(e, state.username)
 						}}
 				><b><img src="/post_button.png" className="Notification-logo" alt="Create-post"/></b>
@@ -155,38 +182,22 @@ function Profile() {
 							handleClickEdit(e, state.username)
 						}}
 				><b><img src="/Notification.png" className="Notification-logo" alt="Notification"/></b>
-
 				</button>
 			</div>
 			<div className="Timeline-bar-horizontal"/>
 			<header className="Profile-bio">
-
 				<img className='Profile-picture' src={state.image}></img>
-
 				<span className="Profile-info">
 						<div>
-							<button className="Edit-profile-button"
-									onClick={(e) => {
-										handleClickEdit(e, state.username)
-									}}><b>Edit Profile</b>
-								</button>
-								<button className="logout-button"
-										onClick={(e) => {
-											handleCLickLogout(e)
-										}}><b>Log Out</b>
-								</button>
-								<button className="Profile-Picture-Button">
-									<label htmlFor="image"><b>Change Picture</b></label>
-									<input type="file" onChange={onImageChange} id="image" name="image" value=""
-										   required/>
-								</button>
+							<UserPermissionsEditProfile />
+							<UserPermissionsLogout />
+							<UserPermissionsProfilePic />
 							<p className="username">@{state.username}</p>
 							<p>{state.bio}</p>
 							<FollowButton />
 						</div>
 
              		</span>
-
 
 			</header>
 			</body>
