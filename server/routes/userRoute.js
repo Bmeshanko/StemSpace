@@ -11,6 +11,43 @@ var fs = require('fs');
 const path = require('path');
 const Post = require("../models/postModel");
 
+router.post("/follow", (req, res) => {
+    const user = req.body.user;
+    const followed_user = req.body.followed_user;
+    const criteria = {username: user}
+    const criteria_followed = {username: followed_user}
+    const update = {$push: {following: followed_user}}
+    const update_followed = {$push: {followers: user}}
+    User.findOneAndUpdate(criteria, update, function(err, users) {
+        console.log(users)
+    }, {collection: 'users'});
+
+    User.findOneAndUpdate(criteria_followed, update_followed, function(err, users) {
+        console.log(users)
+    }, {collection: 'users'});
+
+    res.json("Followed: " + followed_user)
+})
+
+router.post("/unfollow", (req, res) => {
+    const user = req.body.user;
+    const followed_user = req.body.followed_user;
+    const criteria = {username: user}
+    const criteria_followed = {username: followed_user}
+    const update = {$unset: {following: followed_user}}
+    const update_followed = {$unset: {followers: user}}
+    User.findOneAndUpdate(criteria, update, function(err, users) {
+        console.log(users)
+    }, {collection: 'users'});
+
+    User.findOneAndUpdate(criteria_followed, update_followed, function(err, users) {
+        console.log(users)
+    }, {collection: 'users'});
+
+    res.json("Unfollowed: " + followed_user)
+})
+
+
 router.post("/createUser", (req, res) => {
     const code = Math.floor(1000 + Math.random() * 9000);
     const username = req.body.username;
@@ -49,10 +86,10 @@ router.post("/getUsers", (req, res) => {
 router.post("/getPosts", (req, res) => {
     try {
         //const request = req.body.username;
-        //let criteria = 
+        //let criteria =
         //commented code above can be used to modify criteria in the future
         let criteria = {};
-        
+
         Post.find(criteria, function(err, posts) {
             res.json(posts)
         }, {collection: 'posts'})

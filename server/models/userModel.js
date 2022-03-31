@@ -11,7 +11,14 @@ const userSchema = {
     bio: String,
     img: { data: Buffer, contentType: String },
     code: String,
-    verification: Boolean
+    verification: Boolean,
+    following: Array,
+    followers: Array,
+    expireAt: {
+        type: Date,
+        default: Date.now,
+        expireAfterSeconds: 6000
+    }
 }
 
 const User = mongoose.model("User", userSchema);

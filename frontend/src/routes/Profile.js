@@ -1,6 +1,6 @@
 import './Profile.css';
 import React, {Component} from 'react';
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 
 let location
@@ -13,15 +13,22 @@ const UseNavigate= () =>{
 	navigate=useNavigate()
 	return null;
 }
+const {id} = useParams();
+
 class Profile extends Component {
 	constructor() {
 		super();
 		this.state = {
 			username: '',
 			bio: '',
-			image: ""
+			image: "",
+			following: false
 		}
 	}
+
+
+
+
 	componentDidMount(){
 		this.setState({username:location.state.username})
 		axios.post("/getUsers", {
@@ -34,10 +41,15 @@ class Profile extends Component {
 				let base64Flag = 'data:image/jpeg;base64,';
 				let imageStr = this.arrayBufferToBase64(res.data.img.data.data);
 				this.setState({image: base64Flag + imageStr});
+				if(res.data.following.find())
+				this.setState()
 			}
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
+
+
+
 	}
 
 	onImageChange = (event) => {
@@ -56,6 +68,7 @@ class Profile extends Component {
 			//console.log(event.target.files[0])
 		}
 	}
+
 	arrayBufferToBase64(buffer) {
 		let binary = '';
 		let bytes = [].slice.call(new Uint8Array(buffer));
