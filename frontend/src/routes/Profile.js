@@ -13,7 +13,7 @@ const UseNavigate= () =>{
 	navigate=useNavigate()
 	return null;
 }
-const {id} = useParams();
+//const {id} = useParams();
 
 class Profile extends Component {
 	constructor() {

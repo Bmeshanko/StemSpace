@@ -130,6 +130,10 @@
     margin-left: 45%;
 }
 
-.green{
-    color: green;
+.Post{
+    display: block;
+    outline-color: green;
+    outline-width: 2px;
+    outline: #5FAA4B;
+    outline-style: solid;
 }
