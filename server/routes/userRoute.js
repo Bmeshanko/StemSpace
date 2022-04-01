@@ -23,12 +23,10 @@ router.post("/follow", (req, res) => {
 
     //add "followed_user" to "user"s following
     User.findOneAndUpdate(criteria, update, function(err, users) {
-        console.log(user + "now follows" + followed_user)
     }, {collection: 'users'});
 
     //add "user" to "followed_user"s followed
     User.findOneAndUpdate(criteria_followed, update_followed, function(err, users) {
-        console.log(followed_user + "now followed by" + user)
     }, {collection: 'users'});
 
    
@@ -47,12 +45,10 @@ router.post("/unfollow", (req, res) => {
 
     //remove "followed_user" to "user"s following
     User.findOneAndUpdate(criteria, update, function(err, users) {
-        console.log(user + "no longer follows" + followed_user)
     }, {collection: 'users'});
 
     //remove "user" to "followed_user"s followed
     User.findOneAndUpdate(criteria_followed, update_followed, function(err, users) {
-        console.log(followed_user + "no longer followed by" + user)
     }, {collection: 'users'});
 
     
@@ -122,13 +118,11 @@ router.post("/emailVerification", (req, res) => {
     try {
         //find user profile from email
         User.findOne({email: req.body.email}, function(err, users) {
-            console.log("Sent confirmation code: " + users.code) 
             if (users.code === req.body.code) { //if user enters correct code
 
                 //update to set user.verification to true; remove confirmation code from db
                 const update = {code: null, verification: true}; 
                 User.findOneAndUpdate({email:req.body.email}, update, function(err, users) {
-                    console.log(users)
                 }, {collection: 'users'})
                 
                 res.json(users) //return user object
@@ -274,7 +268,6 @@ router.post("/likePost", (req, res) => {
 
     //find post and add add user to likers 
     Post.findOneAndUpdate(criteria, update, function(err, posts) {
-        console.log(username + "liked: " + id)
         res.json(posts) //return post
     }, {collection: 'posts'});
 
@@ -289,7 +282,6 @@ router.post("/unlikePost", (req, res) => {
 
     //find post and remove user from likers
     Post.findOneAndUpdate(criteria, update, function(err, posts) {
-        console.log(username + "unliked: " + id)
         res.json(posts) //return post
     }, {collection: 'posts'});
 
@@ -304,7 +296,7 @@ router.post("/getPost", (req, res) => {
         Post.findOne(criteria, function(err, posts) {
             res.json(posts)
         }, {collection: 'posts'});
-        
+
     } catch (e) {
         console.log(e);
     }

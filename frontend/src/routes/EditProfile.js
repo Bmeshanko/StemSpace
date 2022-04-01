@@ -28,7 +28,6 @@ function EditProfile() {
         	bio: input.bio,
         	username: input.username
     	}).then(res => {
-        	console.log(res.data);
     	});
         navigate(`/Profile/${input.username}`, {state:{username:input.username}});
     }
