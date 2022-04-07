@@ -49,11 +49,6 @@ function Profile() {
 		if (event.target.files && event.target.files[0]) {
 			let reader = new FileReader();
 			const size=event.target.files[0].size;
-			console.log(size);
-			if(size>16000)
-			{
-				alert("File too large, will not be saved!")
-			}
 			reader.onload = (e) => {
 				setState(prevState => ({ ...prevState, image: e.target.result}));
 				//console.log(e.target.result)
@@ -187,8 +182,6 @@ function Profile() {
 		}
 		return (<p></p>)
 	}
-
-
 
 		return (
 			<body>

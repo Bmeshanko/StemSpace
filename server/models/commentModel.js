@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+const Post = require("./postModel");
 
-const postSchema = {
+const commentSchema = {
+    Post: Post,
     contents: String,
-    topic: String,
     author: String,
     likers: [String]
 }
