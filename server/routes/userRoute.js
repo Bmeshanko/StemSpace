@@ -64,23 +64,38 @@ router.post("/createUser", (req, res) => {
     const bio = "";  //make empty bio
     const imgPath='./Blank-Profile.png'; //set default profile picture path
 
-    const newUser = new User({ //create new user object
-        username,
-        password,
-        email,
-        bio,
-        img: { data: Buffer, contentType: String},
-        code,
-        verification: false
-    });
+    let userCriteria = {username: username};
+    let emailCriteria = {email: email};
 
-    newUser.img.data=fs.readFileSync(path.resolve(__dirname,imgPath)); //set profile picture from path
-    newUser.img.contentType = "image/png";
-    
-    sendMailAcc(email, code) //set confirmation email
+    let userUser = User.findOne(userCriteria);
+    let emailUser = User.findOne(emailCriteria);
 
-    newUser.save(); //save new user to database
-    res.json(newUser) //return new user
+    console.log(userUser);
+    console.log(emailUser);
+
+    if (userUser.username != null) {
+        res.json("That username is taken!");
+    } else if (emailUser.email != null) {
+        res.json("That email is taken!");
+    } else {
+        const newUser = new User({ //create new user object
+            username,
+            password,
+            email,
+            bio,
+            img: { data: Buffer, contentType: String},
+            code,
+            verification: false
+        });
+
+        newUser.img.data=fs.readFileSync(path.resolve(__dirname,imgPath)); //set profile picture from path
+        newUser.img.contentType = "image/png";
+        
+        sendMailAcc(email, code) //set confirmation email
+
+        newUser.save(); //save new user to database
+        res.json("Success!");
+    }
 });
 
 router.post("/getUsers", (req, res) => {

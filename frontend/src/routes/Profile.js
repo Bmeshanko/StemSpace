@@ -45,13 +45,10 @@ function Profile() {
 		if (event.target.files && event.target.files[0]) {
 			let reader = new FileReader();
 			const size=event.target.files[0].size;
-<<<<<<< HEAD
-=======
 			if(size>16000)
 			{
 				alert("File too large, will not be saved!")
 			}
->>>>>>> 602eb59e6fdb3623ffbb698e9bf8e2febb1d6684
 			reader.onload = (e) => {
 				setState(prevState => ({ ...prevState, image: e.target.result}));
 				axios.post("/editImage", {
