@@ -5,7 +5,6 @@ import axios from "axios";
 function Profile() {
 	const navigate = useNavigate();
 	const location = useLocation();
-	console.log(location)
 	let followbutton;
 	if(location.state == null || location.state == "") {
 		followbutton = false;
@@ -14,8 +13,6 @@ function Profile() {
 		followbutton = true;
 	}
 	const {userid} = useParams();
-	console.log(userid)
-	console.log(location)
 	const [state, setState] = useState({
 		username: userid,
 		bio: '',
@@ -24,7 +21,6 @@ function Profile() {
 		followers: 0,
 		following_number: 0
 	});
-	console.log(location.state.username);
 	useEffect(() => {
 		axios.post("/getUsers", {
 			username: userid
@@ -49,19 +45,22 @@ function Profile() {
 		if (event.target.files && event.target.files[0]) {
 			let reader = new FileReader();
 			const size=event.target.files[0].size;
+<<<<<<< HEAD
+=======
+			if(size>16000)
+			{
+				alert("File too large, will not be saved!")
+			}
+>>>>>>> 602eb59e6fdb3623ffbb698e9bf8e2febb1d6684
 			reader.onload = (e) => {
 				setState(prevState => ({ ...prevState, image: e.target.result}));
-				//console.log(e.target.result)
-				//console.log(state.image)
 				axios.post("/editImage", {
 					image: e.target.result,
 					username: state.username
 				}).then(res => {
-					console.log(res.data);
 				})
 			};
 			reader.readAsDataURL(event.target.files[0]);
-			//console.log(event.target.files[0])
 		}
 	}
 
@@ -110,7 +109,6 @@ function Profile() {
 			user: location.state.username,
 			followed_user: userid
 		}).then(res =>{
-			console.log(res)
 			setState(prevState => ({ ...prevState, following: true}))
 			setState((prevState => ({ ...prevState, followers: (state.followers + 1)})))
 		})
@@ -121,7 +119,6 @@ function Profile() {
 			user: location.state.username,
 			followed_user: userid
 		}).then(res =>{
-			console.log(res)
 			setState(prevState => ({ ...prevState, following: false}))
 			setState((prevState => ({ ...prevState, followers: (state.followers - 1)})))
 		})

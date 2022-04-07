@@ -12,50 +12,59 @@ const path = require('path');
 const Post = require("../models/postModel");
 
 router.post("/follow", (req, res) => {
-    const user = req.body.user;
-    const followed_user = req.body.followed_user;
-    const criteria = {username: user}
-    const criteria_followed = {username: followed_user}
-    const update = {$push: {following: followed_user}}
-    const update_followed = {$push: {followers: user}}
+    const user = req.body.user; //get current user
+    const followed_user = req.body.followed_user; //get user who is getting followed
+    
+    const criteria = {username: user} //criteria to search for "user"
+    const criteria_followed = {username: followed_user} //criteria to search for "followed_user"
+    
+    const update = {$push: {following: followed_user}} //update to add "followed_user" to "user"s following  
+    const update_followed = {$push: {followers: user}} //update to add "user" to "followed_user"s followed
+
+    //add "followed_user" to "user"s following
     User.findOneAndUpdate(criteria, update, function(err, users) {
-        console.log(users)
     }, {collection: 'users'});
 
+    //add "user" to "followed_user"s followed
     User.findOneAndUpdate(criteria_followed, update_followed, function(err, users) {
-        console.log(users)
     }, {collection: 'users'});
 
-    res.json("Followed: " + followed_user)
+   
+    res.json(followed_user + "followed") //return "user followed"
 })
 
 router.post("/unfollow", (req, res) => {
-    const user = req.body.user;
-    const followed_user = req.body.followed_user;
-    const criteria = {username: user}
-    const criteria_followed = {username: followed_user}
-    const update = {$pull: {following: followed_user}}
-    const update_followed = {$pull: {followers: user}}
+    const user = req.body.user; //get current user
+    const followed_user = req.body.followed_user; //get user who is getting followed
+    
+    const criteria = {username: user} //criteria to search for "user"
+    const criteria_followed = {username: followed_user} //criteria to search for "followed_user"
+    
+    const update = {$pull: {following: followed_user}} //update to remove "followed_user" to "user"s following
+    const update_followed = {$pull: {followers: user}} //update to remove "user" to "followed_user"s followed
+
+    //remove "followed_user" to "user"s following
     User.findOneAndUpdate(criteria, update, function(err, users) {
-        console.log(users)
     }, {collection: 'users'});
 
+    //remove "user" to "followed_user"s followed
     User.findOneAndUpdate(criteria_followed, update_followed, function(err, users) {
-        console.log(users)
     }, {collection: 'users'});
 
-    res.json("Unfollowed: " + followed_user)
+    
+    res.json(followed_user + "unfollowed") //return "user unfollowed"
 })
 
 
 router.post("/createUser", (req, res) => {
-    const code = Math.floor(1000 + Math.random() * 9000);
-    const username = req.body.username;
-    const password = req.body.password;
-    const email = req.body.email;
-    const bio = "";
-    const imgPath='./Blank-Profile.png';
-    const newUser = new User({
+    const code = Math.floor(1000 + Math.random() * 9000); //create random confirmation code
+    const username = req.body.username; //get username
+    const password = req.body.password; //get password
+    const email = req.body.email; //get email
+    const bio = "";  //make empty bio
+    const imgPath='./Blank-Profile.png'; //set default profile picture path
+
+    const newUser = new User({ //create new user object
         username,
         password,
         email,
@@ -64,52 +73,62 @@ router.post("/createUser", (req, res) => {
         code,
         verification: false
     });
-    newUser.img.data=fs.readFileSync(path.resolve(__dirname,imgPath));
+
+    newUser.img.data=fs.readFileSync(path.resolve(__dirname,imgPath)); //set profile picture from path
     newUser.img.contentType = "image/png";
-    sendMailAcc(email, code)
-    newUser.save();
-    res.json(newUser)
+    
+    sendMailAcc(email, code) //set confirmation email
+
+    newUser.save(); //save new user to database
+    res.json(newUser) //return new user
 });
 
 router.post("/getUsers", (req, res) => {
     try {
-        const request = req.body.username;
-        let criteria = (request.indexOf('@') == -1) ? {username: request} : {email: request};
+        const request = req.body.username; //get username/email
+        let criteria = (request.indexOf('@') == -1) ? {username: request} : {email: request}; //criteria to search for user
+
+        //find user
+        //return user
         User.findOne(criteria, function(err, users) {
             res.json(users)
         }, {collection: 'users'})
+
     } catch(e) {
-        console.log("Error Detected");
+        console.log("Error Detected in /getUsers");
     }
 });
 
 router.post("/getPosts", (req, res) => {
     try {
-        //const request = req.body.username;
-        //let criteria =
-        //commented code above can be used to modify criteria in the future
-        let criteria = {};
+        let criteria = {}; //no criteria yet - show all posts
 
+        //find all posts
+        //return all posts
         Post.find(criteria, function(err, posts) {
             res.json(posts)
         }, {collection: 'posts'})
+
     } catch(e) {
-        console.log("Error Detected");
+        console.log("Error Detected in /getPosts");
     }
 });
 
 router.post("/emailVerification", (req, res) => {
     try {
-        const user = User.findOne({email: req.body.email}, function(err, users) {
-            console.log(users.code)
-            if (users.code === req.body.code) {
-                const update = {code: null, verification: true};
-                const user2 = User.findOneAndUpdate({email:req.body.email}, update, function(err, users) {
-                    console.log(users)
+        //find user profile from email
+        User.findOne({email: req.body.email}, function(err, users) {
+            if (users.code === req.body.code) { //if user enters correct code
+
+                //update to set user.verification to true; remove confirmation code from db
+                const update = {code: null, verification: true}; 
+                User.findOneAndUpdate({email:req.body.email}, update, function(err, users) {
                 }, {collection: 'users'})
-                res.json(users)
+                
+                res.json(users) //return user object
             }
         }, {collection: 'users'});
+
     } catch (e) {
         console.log(e);
     }
@@ -117,30 +136,36 @@ router.post("/emailVerification", (req, res) => {
 
 router.post("/changePassword", (req, res) => {
     var ObjectId = require("mongodb").ObjectId;
-    console.log(req.body.password)
-    const update = {password: req.body.password};
-    const id = new ObjectId(req.body.id);
-    let criteria = {_id: id};
-    //console.log(id);
-    const user2 = User.findOneAndUpdate(criteria, update, function(err, users) {
-        console.log(users)
+
+    const update = {password: req.body.password}; //update password
+    const id = new ObjectId(req.body.id); //get object id
+
+    let criteria = {_id: id}; //criteria to find user
+
+    //update user with new password; return user
+    User.findOneAndUpdate(criteria, update, function(err, users) {
         res.json(users)
     }, {collection: 'users'})
+
 });
 
 router.post("/forgotPassword", (req, res) => {
     try {
-        const request = req.body.email;
-        const code = Math.floor(1000 + Math.random() * 9000);
-        //console.log(code);
-        const user = User.findOne({email: request}, function (err, info) {
+        const email = req.body.email; //get email
+        let criteria = {email: email}; //criteria to find user
+        const code = Math.floor(1000 + Math.random() * 9000); //generate confirmation code
+        
+        //find user from email
+        User.findOne(criteria, function (err, info) {
+            //if no user found - return null
             if (info == null) {
                 res.json(null)
-            } else {
+            } else { //if user found, send confirmation email
                 sendMail(info.email, code, info._id)
-                res.json(code)
+                res.json(code) //return confirmation code
             }
         }, {collection: 'users'})
+
     } catch (e) {
         console.log(e);
     }
@@ -148,13 +173,16 @@ router.post("/forgotPassword", (req, res) => {
 
 router.post("/editBio", (req, res) => {
     try {
-        const newBio = req.body.bio;
-        const username = req.body.username;
-        let criteria = {username: username};
-        let update = {bio: newBio};
-        const user = User.findOneAndUpdate(criteria, update, function(err, users) {
+        const newBio = req.body.bio; //get new bio
+        const username = req.body.username; //get username
+        let criteria = {username: username}; //criteria to find user
+        let update = {bio: newBio}; //update to change bio
+
+        //update user bio; return user
+        User.findOneAndUpdate(criteria, update, function(err, users) {
             res.json(users)
         }, {collection: 'users'});
+
     } catch (e) {
         console.log(e);
     }
@@ -162,21 +190,24 @@ router.post("/editBio", (req, res) => {
 
 router.post("/editImage", (req, res) => {
     try {
-        const newImage = req.body.image;
-        var picdata=newImage.substring(23);
-        //console.log(req.body.image);
-        const username = req.body.username;
-        let criteria = {username: username};
-        var imagedata= {
+        const newImage = req.body.image; //get new image
+        var picdata=newImage.substring(23); //get new image data
+        const username = req.body.username; //get username
+        let criteria = {username: username}; //criteria to find user
+        var imagedata= { //new image object
             img: { data: Buffer, contentType: String }
         }
-        var buf=Buffer.from(picdata,'base64')
+        //make new image object
+        var buf=Buffer.from(picdata,'base64') 
         imagedata.data=buf;
         imagedata.contentType = "image/png";
-        let update= {img: imagedata};
-        const user = User.findOneAndUpdate(criteria, update, function(err, users) {
+        let update= {img: imagedata}; //update for new image
+
+        //update with user with new image and return user
+        User.findOneAndUpdate(criteria, update, function(err, users) {
             res.json(users)
         }, {collection: 'users'});
+
     } catch (e) {
         console.log(e);
     }
@@ -184,11 +215,14 @@ router.post("/editImage", (req, res) => {
 
 router.post("/deleteUser", (req, res) => {
     try {
-        const username = req.body.username;
-        let criteria = {username: username};
+        const username = req.body.username; //get username
+        let criteria = {username: username}; //criteria to get username
+
+        //delete and return user
         User.findOneAndDelete(criteria, function(err, users) {
             res.json(users)
         }, {collection: 'users'});
+
     } catch (e) {
         console.log(e);
     }
@@ -196,26 +230,26 @@ router.post("/deleteUser", (req, res) => {
 
 router.post("/deletePost", (req, res) => {
     try {
-        const id = req.body.id;
-        let criteria = {_id: id};
-        console.log(criteria);
-        //console.log(criteria);
-        const user = Post.findOneAndDelete(criteria, function(err, users) {
+        const id = req.body.id; //get post id
+        let criteria = {_id: id}; //criteria to find post
+
+        //delete and return user
+        Post.findOneAndDelete(criteria, function(err, users) {
             res.json(users)
-            console.log(users)
         }, {collection: 'post'});
+
     } catch (e) {
         console.log(e);
     }
 });
 
 router.post("/createPost", (req, res) => {
-    const author = req.body.username;
-    //console.log(author);
+    const author = req.body.username; //get username
+    const contents = req.body.contents; //get post contents
+    const topic = req.body.topic; //get post topic
+    const likers = []; //empty likers array - no likes yet 
 
-    const contents = req.body.contents;
-    const topic = req.body.topic;
-    const likers = [];
+    //create new post object
     const newPost = new Post({
         contents,
         topic,
@@ -223,42 +257,46 @@ router.post("/createPost", (req, res) => {
         likers
     });
 
-    newPost.save();
+    newPost.save(); //save new post in db
 });
 
 router.post("/likePost", (req, res) => {
-    const username = req.body.username;
-    const id = req.body.id;
-    const criteria = {_id: id}
-    const update = {$push: {likers: username}}
-    console.log(criteria);
+    const username = req.body.username; //get username
+    const id = req.body.id; //get id
+    const criteria = {_id: id} //criteria to find post
+    const update = {$push: {likers: username}} //update to add user to likers 
+
+    //find post and add add user to likers 
     Post.findOneAndUpdate(criteria, update, function(err, posts) {
-        console.log(posts)
+        res.json(posts) //return post
     }, {collection: 'posts'});
 
-    res.json(username + "liked: " + id)
+    
 });
 
 router.post("/unlikePost", (req, res) => {
-    const username = req.body.username;
-    const id = req.body.id;
-    const criteria = {_id: id}
-    const update = {$pull: {likers: username}}
+    const username = req.body.username; //get username
+    const id = req.body.id; //get id
+    const criteria = {_id: id}; //criteria to find post
+    const update = {$pull: {likers: username}} //updat to remove user from likers
+
+    //find post and remove user from likers
     Post.findOneAndUpdate(criteria, update, function(err, posts) {
-        console.log(posts)
+        res.json(posts) //return post
     }, {collection: 'posts'});
 
-    res.json(username + "unliked: " + id)
 });
 
 router.post("/getPost", (req, res) => {
     try {
-        const id = req.body.id;
-        let criteria = {_id: id};
-        //console.log(criteria);
+        const id = req.body.id; //get id
+        let criteria = {_id: id}; //get criteria to find post
+
+        //find and return post
         Post.findOne(criteria, function(err, posts) {
             res.json(posts)
         }, {collection: 'posts'});
+
     } catch (e) {
         console.log(e);
     }

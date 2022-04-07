@@ -7,7 +7,6 @@ import {useLocation} from "react-router-dom";
 function Code() {
 
     const location = useLocation();
-    console.log(location.state.email)
 
     const [input, setInput] = useState({
         code: ""
@@ -19,9 +18,7 @@ function Code() {
             email: location.state.email
         }
             axios.post('/emailVerification', newUser).then(res => {
-                console.log(newUser);
                 if (res.data != null) {
-                    console.log(res.data);
                     window.location.href = '/Login';
                 } else {
                     console.log("incorrect code")

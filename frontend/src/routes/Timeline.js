@@ -50,20 +50,15 @@ function Timeline() {
     }
 
     function handleLike(event, username, id){
-        console.log("here")
         axios.post("/getPost", {
             id: id
         }).then( res => {
-            console.log(res.data);
-            console.log(res.data.likers);
-            console.log(res.data.likers.length);
             for(let i = 0; i < res.data.likers.length; i++){
                 if(username === res.data.likers[i]){
                     unlikePost(event, username, id);
                     return;
                 } 
             }
-            console.log("entering likePost");
             likePost(event, username, id);
         }).catch(function(error){
             console.log("error")
