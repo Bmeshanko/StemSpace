@@ -14,6 +14,7 @@ import DeleteAccount from "./routes/DeleteAccount";
 import CreatePost from "./routes/CreatePost";
 import EditProfile from "./routes/EditProfile";
 import Code from "./routes/Code";
+import Post from "./routes/Post";
 ReactDOM.render(
   <React.StrictMode>
       <BrowserRouter>
@@ -30,6 +31,7 @@ ReactDOM.render(
               <Route path="/CreatePost" element={<CreatePost />} />
               <Route path="/EditProfile" element={<EditProfile />} />
               <Route path="/Code" element={<Code />} />
+              <Route path="/Post" element={<Post />} />
           </Routes>
       </BrowserRouter>
   </React.StrictMode>,
