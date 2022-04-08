@@ -6,6 +6,8 @@ function Profile() {
 	const navigate = useNavigate();
 	const location = useLocation();
 	let followbutton;
+	const FOLLOWERS = Symbol("followers");
+	const FOLLOWING = Symbol("following");
 	if(location.state == null || location.state == "") {
 		followbutton = false;
 		location.state = "";
@@ -45,13 +47,10 @@ function Profile() {
 		if (event.target.files && event.target.files[0]) {
 			let reader = new FileReader();
 			const size=event.target.files[0].size;
-<<<<<<< HEAD
-=======
-			if(size>16000)
+			if(size>18000)
 			{
 				alert("File too large, will not be saved!")
 			}
->>>>>>> 602eb59e6fdb3623ffbb698e9bf8e2febb1d6684
 			reader.onload = (e) => {
 				setState(prevState => ({ ...prevState, image: e.target.result}));
 				axios.post("/editImage", {
@@ -122,6 +121,14 @@ function Profile() {
 			setState(prevState => ({ ...prevState, following: false}))
 			setState((prevState => ({ ...prevState, followers: (state.followers - 1)})))
 		})
+	}
+
+	function handClickShowFollowers(parameter){
+		if(parameter === FOLLOWERS) {
+			navigate(`/Followers/${userid}`, {state:{username:location.state.username, view: FOLLOWERS}});
+		} else {
+			navigate(`/Followers/${userid}`, {state:{username:location.state.username, view: FOLLOWING}});
+		}
 	}
 
 	function FollowButton(){
@@ -212,8 +219,8 @@ function Profile() {
 							<UserPermissionsEditProfile />
 							<UserPermissionsLogout />
 							<UserPermissionsProfilePic />
-							<h6>{state.followers} followers</h6>
-                       		<h6>{state.following_number} following</h6>
+							<h6>{state.followers} <button onClick={(e)=>{handClickShowFollowers(FOLLOWERS)}}>followers</button></h6>
+                       		<h6>{state.following_number} <button onClick={(e)=>{handClickShowFollowers(FOLLOWING)}}>following</button></h6>
 							<p className="username">@{state.username}</p>
 							<p>{state.bio}</p>
 							<FollowButton />
