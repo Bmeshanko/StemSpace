@@ -31,6 +31,7 @@ ReactDOM.render(
               <Route path="/CreatePost" element={<CreatePost />} />
               <Route path="/EditProfile" element={<EditProfile />} />
               <Route path="/Code" element={<Code />} />
+              <Route path="/Followers" element={<Front />} />
               <Route path="/Post" element={<Post />} />
           </Routes>
       </BrowserRouter>
