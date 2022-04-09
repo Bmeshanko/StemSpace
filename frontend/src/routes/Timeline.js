@@ -115,7 +115,7 @@ function Timeline() {
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
-    });
+    },[input.posts]);
     //}
 
     return(
