@@ -86,24 +86,36 @@ function Timeline() {
             console.log("Error Detected")
         })
     }
+    function arrayBufferToBase64(buffer) {
+		let binary = '';
+		let bytes = [].slice.call(new Uint8Array(buffer));
+		bytes.forEach((b) => binary += String.fromCharCode(b));
+		return window.btoa(binary);
+	};
     
     //function getPosts(){
     useEffect(()=>{
-
         axios.post("/getPosts", {
 			//criteria would go here
 		}).then (res => {
             //put in console all the posts
             let temp=[];
+            let promises=[];
             for(let i = 0; i < res.data.length; i++){
-                temp[i] = {post:{author:res.data[i].author, contents:res.data[i].contents, topic:res.data[i].topic, id:res.data[i]._id, likers:res.data[i].likers}};
+                promises.push(axios.post("/getUsers", {
+                    username: res.data[i].author
+                }).then (response=> {
+                    let base64Flag = 'data:image/jpeg;base64,';
+                    let imageStr = arrayBufferToBase64(response.data.img.data.data);
+                    let picture=base64Flag+imageStr;
+                    temp[i] = {post:{author:res.data[i].author, contents:res.data[i].contents, topic:res.data[i].topic, id:res.data[i]._id, likers:res.data[i].likers, image: picture}};
+                }))
             }
-            setInput({username: location.state.username, posts: temp});
-
+            Promise.all(promises).then(()=>setInput({username: location.state.username, posts: temp}));
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
-    },[input.posts]);
+    });
     //}
 
     return(
@@ -142,6 +154,7 @@ function Timeline() {
                             handleClickName(event, post.post.author)}}>
                             @{post.post.author}
                         </button>
+                        <img className='Post-picture' src={post.post.image}></img>
                         <p>Topic: {post.post.topic}</p>
                         <p>{post.post.contents}</p>
                         {post.post.author===input.username && <button className="Delete-Post-Button"
