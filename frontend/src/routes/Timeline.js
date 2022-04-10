@@ -11,6 +11,7 @@ function Timeline() {
         username: location.state.username,
         posts: []
     })
+    const [isShown, setIsShown] = useState(false);
 
     function handleChange(event) {
         const {name, value} = event.target;
@@ -86,6 +87,17 @@ function Timeline() {
             console.log("Error Detected")
         })
     }
+
+    function showLikers(id){
+        axios.post("/getPost", {
+            id: id
+        }).then( res => {
+        }).catch(function(error){
+            console.log("error")
+        })
+    }
+
+
     function arrayBufferToBase64(buffer) {
 		let binary = '';
 		let bytes = [].slice.call(new Uint8Array(buffer));
@@ -163,10 +175,19 @@ function Timeline() {
 									}}><b>Delete Post</b>
 								</button>}
                                 <button className="Delete-Post-Button"
+                                    onMouseEnter={() => setIsShown(true)}
+                                    onMouseLeave={() => setIsShown(false)}
 									onClick={(e) => {
 										handleLike(e, input.username, post.post.id)
 									}}><b>Likes: {post.post.likers.length}</b>
 								</button>
+                                {isShown && (
+                                    post.post.likers.map((likers)=>(
+                                        <span>
+                                             | {likers} |
+                                        </span>
+                                    ))
+                                )}
                         </div>
                     ))}
                 </ol>
