@@ -173,14 +173,21 @@ function Timeline() {
 									onClick={(e) => {
 										deletePost(e, post.post.id)
 									}}><b>Delete Post</b>
-								</button>}
-                                <button className="Delete-Post-Button"
-                                    onMouseEnter={() => setIsShown(true)}
-                                    onMouseLeave={() => setIsShown(false)}
-									onClick={(e) => {
-										handleLike(e, input.username, post.post.id)
-									}}><b>Likes: {post.post.likers.length}</b>
-								</button>
+							</button>}
+                        {post.post.likers.includes(input.username) && <button className="Delete-Post-Button"
+                                onMouseEnter={() => setIsShown(true)}
+                                onMouseLeave={() => setIsShown(false)}
+                                onClick={(e) => {
+                                    unlikePost(e, input.username, post.post.id)
+                                }}><b>{post.post.likers.length}|UNLIKE</b>
+							</button>}
+                        {!post.post.likers.includes(input.username) && <button className="Delete-Post-Button"
+                                onMouseEnter={() => setIsShown(true)}
+                                onMouseLeave={() => setIsShown(false)}
+                                onClick={(e) => {
+                                    likePost(e, input.username, post.post.id)
+                                }}><b>{post.post.likers.length}|LIKE</b>
+                            </button>}
                                 {isShown && (
                                     post.post.likers.map((likers)=>(
                                         <span>
