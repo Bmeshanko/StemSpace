@@ -125,9 +125,9 @@ function Profile() {
 
 	function handClickShowFollowers(parameter){
 		if(parameter === FOLLOWERS) {
-			navigate(`/Followers/${userid}`, {state:{username:location.state.username, view: FOLLOWERS}});
+			navigate(`/Followers/${userid}`, {state: {username:location.state.username, view: "followers"}});
 		} else {
-			navigate(`/Followers/${userid}`, {state:{username:location.state.username, view: FOLLOWING}});
+			navigate(`/Followers/${userid}`, {state: {username: location.state.username, view: "following"}});
 		}
 	}
 
