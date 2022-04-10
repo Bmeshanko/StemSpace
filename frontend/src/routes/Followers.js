@@ -4,6 +4,7 @@ import axios from "axios";
 import './Timeline.css';
 
 function Followers(){
+    const navigate = useNavigate();
     const location = useLocation();
     console.log(location.state.username)
     const {userid} = useParams();
@@ -17,7 +18,6 @@ function Followers(){
         axios.post("/followPage", {username: userid, view: location.state.view}).then(res=>{
             let temp = [];
             if (location.state.view === "following") {
-                console.log(res.data)
                 setInput(({username: userid, size: res.data.following.length, users: res.data.following}))
             }else {
                 setInput(({username: userid, size: res.data.followers.length, users: res.data.followers}))
@@ -25,14 +25,18 @@ function Followers(){
         })
     },[])
 
-    console.log(input.users)
+    function handleClickName(event, name) {
+        navigate(`/Profile/${name}`, {state:{username:location.state.username}});
+    }
+
     return(
         <body>
         <span>
                 <ol>
                     {input.users.map((user) => (
                         <div>
-                            <button>
+                            <button onClick={(e) => {
+                                handleClickName(e,user)}}>
                                 @{user}
                             </button>
                         </div>
