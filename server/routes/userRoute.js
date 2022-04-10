@@ -257,7 +257,23 @@ router.post("/deletePost", (req, res) => {
         console.log(e);
     }
 });
+router.post("/followPage", (req, res) => {
+    const view = req.body.view; //followers or following
 
+    const userid = req.body.username;
+    const criteria = {username: userid};
+    let status;
+    if (view === "following") {
+        status = {following: 1}
+    } else {
+        status = {followers: 1}
+    }
+    User.findOne(criteria, status, function (err, users) {
+        console.log(users)
+        res.json(users)
+    }, {collection: "users"});
+
+})
 router.post("/createPost", (req, res) => {
     const author = req.body.username; //get username
     const contents = req.body.contents; //get post contents
