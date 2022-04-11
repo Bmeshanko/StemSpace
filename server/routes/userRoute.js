@@ -295,11 +295,12 @@ router.post("/likePost", (req, res) => {
     const username = req.body.username; //get username
     const id = req.body.id; //get id
     const criteria = {_id: id} //criteria to find post
-    const update = {$push: {likers: username}} //update to add user to likers 
+    const update = {$addToSet: {likers: username}} //update to add user to likers 
 
     //find post and add add user to likers 
     Post.findOneAndUpdate(criteria, update, function(err, posts) {
         res.json(posts) //return post
+        
     }, {collection: 'posts'});
 
     
