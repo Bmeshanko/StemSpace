@@ -11,18 +11,6 @@ function Timeline() {
         username: location.state.username,
         posts: []
     })
-    const [isShown, setIsShown] = useState(false);
-
-    function handleChange(event) {
-        const {name, value} = event.target;
-
-        setInput(prevInput=> {
-            return {
-                ...prevInput,
-                [name]: value
-            }
-        })
-    }
 
     function handleClickPost(event) {
         navigate("/CreatePost", {state:{username:input.username}});
@@ -49,23 +37,6 @@ function Timeline() {
 			console.log("Error Detected")
 		})
     }
-
-    function handleLike(event, username, id){
-        axios.post("/getPost", {
-            id: id
-        }).then( res => {
-            for(let i = 0; i < res.data.likers.length; i++){
-                if(username === res.data.likers[i]){
-                    unlikePost(event, username, id);
-                    return;
-                } 
-            }
-            likePost(event, username, id);
-        }).catch(function(error){
-            console.log("error")
-        })
-    }
-
     function likePost(event, username, id){
         axios.post("/likePost", {
             username: username,
@@ -87,16 +58,6 @@ function Timeline() {
             console.log("Error Detected")
         })
     }
-
-    function showLikers(id){
-        axios.post("/getPost", {
-            id: id
-        }).then( res => {
-        }).catch(function(error){
-            console.log("error")
-        })
-    }
-
 
     function arrayBufferToBase64(buffer) {
 		let binary = '';
@@ -196,13 +157,6 @@ function Timeline() {
             </span>
             <span class="Timeline-DMs">
                     <p className="DM-header">Chats</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                     Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-                      reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui offici
-                       a deserunt mollit anim id est laborum.</p>
             </span>
         </body>
     );
