@@ -158,6 +158,20 @@
     padding-right: 2px;
   }
 
+  .hide:hover{
+      display: block;
+  }
+
+  .GreenButton{
+      display: block;
+      background-color: #5FAA4B;
+      border-style: none;
+  }
+
+  .GreenButton:hover{
+    filter: brightness(90%);
+  }
+
 .Like:hover + .hide {
     display: block;
   }

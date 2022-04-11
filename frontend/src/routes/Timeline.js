@@ -146,9 +146,10 @@ function Timeline() {
                                 }}><b>{post.post.likers.length}|LIKE</b>
                             </button>}
                             <div className="hide">{post.post.likers.map((liker)=>(
-                                <p>
-                                    {liker}{"   "}
-                                </p>
+                                <button className="GreenButton" onClick={(event) => {;
+                                    handleClickName(event, liker)}}>
+                                   <b>@{liker}{"   "}</b> 
+                                </button>
                             ))}</div>
                         </div>
                     ))}
