@@ -169,32 +169,22 @@ function Timeline() {
                         <img className='Post-picture' src={post.post.image}></img>
                         <p>Topic: {post.post.topic}</p>
                         <p>{post.post.contents}</p>
-                        {post.post.author===input.username && <button className="Delete-Post-Button"
+                        {post.post.author===input.username && <button 
 									onClick={(e) => {
 										deletePost(e, post.post.id)
 									}}><b>Delete Post</b>
 							</button>}
-                        {post.post.likers.includes(input.username) && <button className="Delete-Post-Button"
-                                onMouseEnter={() => setIsShown(true)}
-                                onMouseLeave={() => setIsShown(false)}
+                        {post.post.likers.includes(input.username) && <button className="Like"
                                 onClick={(e) => {
                                     unlikePost(e, input.username, post.post.id)
                                 }}><b>{post.post.likers.length}|UNLIKE</b>
 							</button>}
-                        {!post.post.likers.includes(input.username) && <button className="Delete-Post-Button"
-                                onMouseEnter={() => setIsShown(true)}
-                                onMouseLeave={() => setIsShown(false)}
+                        {!post.post.likers.includes(input.username) && <button className="Like"
                                 onClick={(e) => {
                                     likePost(e, input.username, post.post.id)
                                 }}><b>{post.post.likers.length}|LIKE</b>
                             </button>}
-                                {isShown && (
-                                    post.post.likers.map((likers)=>(
-                                        <span>
-                                             | {likers} |
-                                        </span>
-                                    ))
-                                )}
+                            <span className="hide">{post.post.likers}</span>
                         </div>
                     ))}
                 </ol>
