@@ -148,7 +148,14 @@
 
 .hide {
     display: none;
-    position: relative;
+    position: absolute;
+    z-index: 1;
+    background-color: #5FAA4B;
+    border-color: #1F1F1F;  
+    border-radius: 10px;
+    border-style: solid;
+    padding-left: 2px;
+    padding-right: 2px;
   }
 
 .Like:hover + .hide {

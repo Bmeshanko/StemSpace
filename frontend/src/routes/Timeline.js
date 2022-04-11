@@ -186,9 +186,9 @@ function Timeline() {
                             </button>}
                             <div className="hide">{post.post.likers.map((liker)=>(
                                 <p>
-                                    {liker}
+                                    {liker}{"   "}
                                 </p>
-                                                         ))}</div>
+                            ))}</div>
                         </div>
                     ))}
                 </ol>
