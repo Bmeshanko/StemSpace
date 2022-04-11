@@ -148,6 +148,7 @@
 
 .hide {
     display: none;
+    position: relative;
   }
 
 .Like:hover + .hide {

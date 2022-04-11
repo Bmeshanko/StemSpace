@@ -184,7 +184,11 @@ function Timeline() {
                                     likePost(e, input.username, post.post.id)
                                 }}><b>{post.post.likers.length}|LIKE</b>
                             </button>}
-                            <span className="hide">{post.post.likers}</span>
+                            <div className="hide">{post.post.likers.map((liker)=>(
+                                <p>
+                                    {liker}
+                                </p>
+                                                         ))}</div>
                         </div>
                     ))}
                 </ol>
