@@ -119,6 +119,17 @@
     margin: 4px 4px 4px 4px;
 }
 
+.SmallerPost-picture {
+    display: inline-grid;
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius:50%;
+    margin: 4px 4px 4px 4px;
+}
+
+
+
 .Timeline-DMs {
     position: absolute;
     display: inline-block;
