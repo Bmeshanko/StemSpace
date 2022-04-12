@@ -12,7 +12,7 @@ function Profile() {
 		followbutton = false;
 		location.state = "";
 	} else {
-		followbutton = true;
+		followbutton = true;	
 	}
 	const {userid} = useParams();
 	const [state, setState] = useState({

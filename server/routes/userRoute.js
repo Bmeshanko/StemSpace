@@ -10,6 +10,7 @@ const { getSystemErrorMap } = require("util");
 var fs = require('fs');
 const path = require('path');
 const Post = require("../models/postModel");
+const Comment = require("../models/commentModel");
 
 router.post("/follow", (req, res) => {
     const user = req.body.user; //get current user
@@ -343,5 +344,66 @@ router.post("/getPost", (req, res) => {
         console.log(e);
     }
 });
+
+router.post("/createComment", (req, res) => {
+    const author = req.body.username; //get username
+    const contents = req.body.contents; //get post contents
+    const post = req.body.postid; //get post topic
+    const likers = []; //empty likers array - no likes yet 
+
+    //create new post object
+    const newComment = new Comment({
+        contents,
+        post,
+        author,
+        likers
+    });
+
+    newComment.save(); //save new post in db
+});
+
+router.post("/getComments", (req, res) => {
+    try {
+        let criteria = {Post: id}; 
+
+        //find all posts
+        //return all posts
+        Post.find(criteria, function(err, comments) {
+            res.json(comments)
+        }, {collection: 'comments'})
+
+    } catch(e) {
+        console.log("Error Detected in /getComments");
+    }
+});
+
+router.post("/likeComment", (req, res) => {
+    const username = req.body.username; //get username
+    const id = req.body.id; //get id
+    const criteria = {_id: id} //criteria to find post
+    const update = {$addToSet: {likers: username}} //update to add user to likers 
+
+    //find post and add add user to likers 
+    Post.findOneAndUpdate(criteria, update, function(err, comment) {
+        res.json(comment) //return post
+        
+    }, {collection: 'comments'});
+
+    
+});
+
+router.post("/unlikeComment", (req, res) => {
+    const username = req.body.username; //get username
+    const id = req.body.id; //get id
+    const criteria = {_id: id}; //criteria to find post
+    const update = {$pull: {likers: username}} //updat to remove user from likers
+
+    //find post and remove user from likers
+    Post.findOneAndUpdate(criteria, update, function(err, comment) {
+        res.json(comment) //return post
+    }, {collection: 'comments'});
+
+});
+
 
 module.exports = router;
