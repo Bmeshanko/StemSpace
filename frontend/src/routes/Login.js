@@ -35,7 +35,7 @@ function Login() {
             if (res.data == null || res.data.password !== Sha1.hash(user.password) || !res.data.verification) {
                 alert("Incorrect Username or Password")
             } else {
-                navigate("/Timeline", {state:{username:user.username}});
+                navigate("/Timeline", {state:{username:res.data.username}});
             }
         }).catch(function (error) {
             console.log("Error Detected")
