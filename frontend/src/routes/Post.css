@@ -1,0 +1,205 @@
+.Profile-picture {
+    float: left;
+    display: inline-grid;
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+    border-radius:50%;
+    margin: 4px 4px 4px 4px;
+}
+
+.Profile-Picture-Button {
+    font-family: Consolas;
+    font-size: 20px;
+    padding: 12px;
+    width: 200px;
+    background-color: #5FAA4B;
+    border-radius: 8px;
+    border-color: #1F1F1F;
+    border-width: 1px;
+    margin-right: 4px;
+    display: inline;
+}
+
+.Profile-info {
+    display: flex;
+    font-family: Consolas;
+    font-size: 24px;
+    background-color: #DDDDDD;
+    width: calc(99vw - 230px);
+    padding: 10px;
+}
+
+.Profile-bio {
+    font-size: 14px;
+}
+
+.Edit-profile-button {
+    font-family: Consolas;
+    font-size: 20px;
+    padding: 12px;
+    width: 200px;
+    background-color: #5FAA4B;
+    border-radius: 8px;
+    border-color: #1F1F1F;
+    border-width: 1px;
+    margin-right: 4px;
+}
+
+.logout-button {
+    font-family: Consolas;
+    font-size: 20px;
+    padding: 12px;
+    width: 200px;
+    background-color: #5FAA4B;
+    border-radius: 8px;
+    border-color: #1F1F1F;
+    border-width: 1px;
+    margin-right: 4px;
+}
+
+.space {
+    margin-top: 10px;
+}
+
+.filetype {
+    position: absolute;
+    width: 99.9%;
+    height: calc(100vh - 280px);
+}
+
+.Banner{
+    height: 40px;
+    display: block;
+    background-color: #5FAA4B;
+    padding-top: 10px;
+    padding-left: 12px;
+    padding-right: 5px;
+    padding-bottom: 6px;
+}
+
+.Timeline-banner-text {
+    font-family: Consolas;
+    font-size: 38px;
+    vertical-align: text-bottom;
+}
+
+.Timeline-logo {
+    float: left;
+    display: inline;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    background-color: #DDDDDD;
+    border-radius: 20px;
+  }
+
+.Timeline-bar-horizontal {
+    background-color: #1F1F1F;
+    height: 1px;
+    margin-top: 0px;
+}
+
+.Notification-button {
+    float: right;
+    background: #5FAA4B;
+    border-width: 0px;
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.Timeline-logo-button {
+    background: #5FAA4B;
+    border-width: 0px;
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.Create-post-button {
+    float: right;
+    background: #5FAA4B;
+    border-width: 0px;
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.Notification-logo {
+    float: right;
+    display: inline-grid;
+    width: 40px;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.Posts{
+    display: block;
+    
+    overflow-y: scroll;
+    /*scrollbar-color: ;*/
+    scrollbar-width: thin;
+    padding: 5px;
+}
+
+.Post-picture {
+    display: inline-grid;
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    border-radius:50%;
+    margin: 4px 4px 4px 4px;
+}
+
+.SmallerPost-picture {
+    display: inline-grid;
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius:50%;
+    margin: 4px 4px 4px 4px;
+}
+
+.Post {
+    font-family: Consolas;
+    display: block;
+    background-color: #5FAA4B;
+    outline: 1px solid #1F1F1F;
+    border-radius: 5px;
+    margin-bottom: 4px;
+}
+
+.hide {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: #5FAA4B;
+    border-color: #1F1F1F;  
+    border-radius: 10px;
+    border-style: solid;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+
+  .hide:hover{
+      display: block;
+  }
+
+  .GreenButton{
+      display: block;
+      background-color: #5FAA4B;
+      border-style: none;
+  }
+
+  .GreenButton:hover{
+    filter: brightness(90%);
+  }
+
+.Like:hover + .hide {
+    display: block;
+  }

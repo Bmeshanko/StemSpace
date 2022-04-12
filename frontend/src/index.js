@@ -33,7 +33,7 @@ ReactDOM.render(
               <Route path="/EditProfile" element={<EditProfile />} />
               <Route path="/Code" element={<Code />} />
               <Route path="/Followers/:userid" element={<Followers />} />
-              <Route path="/Post" element={<Post />} />
+              <Route path="/Post/:postid" element={<Post />} />
           </Routes>
       </BrowserRouter>
   </React.StrictMode>,

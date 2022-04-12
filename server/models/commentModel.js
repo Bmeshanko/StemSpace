@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 const Post = require("./postModel");
 
 const commentSchema = {
-    Post: Post,
+    Post: String,
     contents: String,
     author: String,
-    likers: [String]
+    likers: []
 }
 
-const Post = mongoose.model("Post", postSchema);
+const Comment = mongoose.model("Comment", commentSchema);
 
-module.exports = Post;
+module.exports = Comment;
