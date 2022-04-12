@@ -31,7 +31,7 @@ function Post() {
 				setState(prevState => ({...prevState, topic: res.data.topic}))
                 setState(prevState => ({...prevState, likers: res.data.likers}))
                 axios.post("/getUsers", {
-                    username: res.data[i].author
+                    username: res.data.author
                 }).then (response=> {
                     let base64Flag = 'data:image/jpeg;base64,';
                     let imageStr = arrayBufferToBase64(response.data.img.data.data);
