@@ -278,7 +278,7 @@ function Profile() {
 
 		return (
 			<body>
-			<div className="Timeline-banner">
+			<div className="Banner">
 				<button className="Timeline-logo-button"
 						onClick={(e) => {
 							handleClickLogo(e, state.username)
@@ -318,7 +318,7 @@ function Profile() {
              		</span>
 
 			</header>
-			<div class="Timeline-posts">
+			<header class="Posts">
                 <ol>
                     {state.posts.map((post)=>(
                         <div className="Post">
@@ -355,7 +355,7 @@ function Profile() {
                     ))}
                 </ol>
                 
-            </div>
+            </header>
 			</body>
 		);
 }

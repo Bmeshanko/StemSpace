@@ -26,7 +26,7 @@
     font-family: Consolas;
     font-size: 24px;
     background-color: #DDDDDD;
-    width: 1138px;
+    width: calc(99vw - 230px);
     padding: 10px;
 }
 
@@ -68,18 +68,14 @@
     height: calc(100vh - 280px);
 }
 
-.Timeline-banner {
-    margin-top: 0px;
-    margin-left: 0px;
-    margin-bottom: 0px;
+.Banner{
+    height: 40px;
+    display: block;
     background-color: #5FAA4B;
     padding-top: 10px;
     padding-left: 12px;
     padding-right: 5px;
     padding-bottom: 6px;
-    width: 98.75%;
-    height: 40px;
-    display: inline-block;
 }
 
 .Timeline-banner-text {
@@ -102,34 +98,6 @@
     background-color: #1F1F1F;
     height: 1px;
     margin-top: 0px;
-}
-
-.Timeline-bar-vertical {
-    background-color: #1F1F1F;
-    width: 1px;
-    height: 64px;
-    display: inline-grid;
-    position: absolute;
-    margin: 0px 0px 0px 0px;
-}
-
-.Timeline-selector {
-    font-family: Consolas;
-    font-size: 20px;
-    background-color: #EEEEEE;
-    margin-right: 0px;
-}
-
-.Timeline-following {
-    display: inline-grid;
-    width: 50%;
-    text-align: center;
-}
-
-.Timeline-topics {
-    display: inline-grid;
-    width: 50%;
-    text-align: center;
 }
 
 .Notification-button {
@@ -170,16 +138,15 @@
     margin-right: 0px;
 }
 
-.Timeline-posts {
-    position: absolute;
+.Posts{
     display: block;
-    width: 90%;
-    height: calc(100vh - 135px);
+    
     overflow-y: scroll;
     /*scrollbar-color: ;*/
     scrollbar-width: thin;
     padding: 5px;
 }
+
 .Post-picture {
     display: inline-grid;
     height: 100px;
@@ -196,26 +163,6 @@
     object-fit: cover;
     border-radius:50%;
     margin: 4px 4px 4px 4px;
-}
-
-
-
-.Timeline-DMs {
-    position: absolute;
-    display: inline-block;
-    width: 39.3%;
-    height: calc(100vh - 135px);
-    padding: 5px;
-    right: 0;
-    overflow-y: scroll;
-    /*scrollbar-color: ;*/
-    scrollbar-width: thin;
-}
-
-.DM-header {
-    font-family: Consolas;
-    font-size: 24px;
-    margin-left: 45%;
 }
 
 .Post {
