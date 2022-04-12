@@ -130,11 +130,7 @@ function Timeline() {
                         <img className='Post-picture' src={post.post.image}></img>
                         <p>Topic: {post.post.topic}</p>
                         <p>{post.post.contents}</p>
-                        {post.post.author===input.username && <button 
-									onClick={(e) => {
-										deletePost(e, post.post.id)
-									}}><b>Delete Post</b>
-							</button>}
+
                         {post.post.likers.includes(input.username) && <button className="Like"
                                 onClick={(e) => {
                                     unlikePost(e, input.username, post.post.id)
@@ -151,6 +147,11 @@ function Timeline() {
                                    <b>@{liker}{"   "}</b> 
                                 </button>
                             ))}</div>
+                        {post.post.author===input.username && <button 
+									onClick={(e) => {
+										deletePost(e, post.post.id)
+									}}><b>Delete Post</b>
+							</button>}
                         </div>
                     ))}
                 </ol>

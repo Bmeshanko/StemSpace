@@ -18,8 +18,8 @@ router.post("/follow", (req, res) => {
     const criteria = {username: user} //criteria to search for "user"
     const criteria_followed = {username: followed_user} //criteria to search for "followed_user"
     
-    const update = {$push: {following: followed_user}} //update to add "followed_user" to "user"s following  
-    const update_followed = {$push: {followers: user}} //update to add "user" to "followed_user"s followed
+    const update = {$addToSet: {following: followed_user}} //update to add "followed_user" to "user"s following  
+    const update_followed = {$addToSet: {followers: user}} //update to add "user" to "followed_user"s followed
 
     //add "followed_user" to "user"s following
     User.findOneAndUpdate(criteria, update, function(err, users) {
@@ -27,10 +27,9 @@ router.post("/follow", (req, res) => {
 
     //add "user" to "followed_user"s followed
     User.findOneAndUpdate(criteria_followed, update_followed, function(err, users) {
+        res.json(users)
+        console.log(users.followers)
     }, {collection: 'users'});
-
-   
-    res.json(followed_user + "followed") //return "user followed"
 })
 
 router.post("/unfollow", (req, res) => {
@@ -49,10 +48,9 @@ router.post("/unfollow", (req, res) => {
 
     //remove "user" to "followed_user"s followed
     User.findOneAndUpdate(criteria_followed, update_followed, function(err, users) {
+        res.json(users)
+        console.log(users.followers)
     }, {collection: 'users'});
-
-    
-    res.json(followed_user + "unfollowed") //return "user unfollowed"
 })
 
 

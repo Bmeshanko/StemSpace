@@ -43,7 +43,7 @@ function Profile() {
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
-	}, [useParams(), state.following])
+	}, [useParams(), state.following, state.followers])
 
 	useEffect(() => {
 		axios.post("/getPostsFromUser", {
@@ -139,8 +139,8 @@ function Profile() {
 			user: location.state.username,
 			followed_user: userid
 		}).then(res =>{
-			setState(prevState => ({ ...prevState, following: true}))
-			setState((prevState => ({ ...prevState, followers: (state.followers + 1)})))
+			setState(prevState => ({ ...prevState, following: res.data.followers.includes(location.state.username)}))
+			setState((prevState => ({ ...prevState, followers: res.data.followers.length})))
 		})
 	}
 
@@ -149,8 +149,8 @@ function Profile() {
 			user: location.state.username,
 			followed_user: userid
 		}).then(res =>{
-			setState(prevState => ({ ...prevState, following: false}))
-			setState((prevState => ({ ...prevState, followers: (state.followers - 1)})))
+			setState(prevState => ({ ...prevState, following: res.data.followers.includes(location.state.username)}))
+			setState((prevState => ({ ...prevState, followers: res.data.followers.length})))
 		})
 	}
 
@@ -306,11 +306,7 @@ function Profile() {
                         <img className='Post-picture' src={post.post.image}></img>
                         <p>Topic: {post.post.topic}</p>
                         <p>{post.post.contents}</p>
-                        {post.post.author===location.state.username && <button 
-									onClick={(e) => {
-										deletePost(e, post.post.id)
-									}}><b>Delete Post</b>
-							</button>}
+
                         {post.post.likers.includes(location.state.username) && <button className="Like"
                                 onClick={(e) => {
                                     unlikePost(e, location.state.username, post.post.id)
@@ -325,8 +321,13 @@ function Profile() {
                                 <button className="GreenButton" onClick={(event) => {;
                                     handleClickName(event, liker)}}>
                                    <b>@{liker}{"   "}</b> 
-                                </button>
+                                </button>							
                             ))}</div>
+						 {post.post.author===location.state.username && <button 
+									onClick={(e) => {
+										deletePost(e, post.post.id)
+									}}><b>Delete Post</b>
+							</button>}
                         </div>
                     ))}
                 </ol>
