@@ -172,8 +172,8 @@
 
 .Timeline-posts {
     position: absolute;
-    display: inline-block;
-    width: 59.5%;
+    display: block;
+    width: 90%;
     height: calc(100vh - 135px);
     overflow-y: scroll;
     /*scrollbar-color: ;*/

@@ -69,7 +69,7 @@ function Profile() {
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
-	}, [])
+	}, [state.posts, state.following])
 
 	function onImageChange(event){
 		if (event.target.files && event.target.files[0]) {
@@ -181,7 +181,7 @@ function Profile() {
 		return(
 			<p></p>
 		)
-		}
+	}
 
 		function UserPermissionsEditProfile() {
 			if(userid == location.state.username) {
