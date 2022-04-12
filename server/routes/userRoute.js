@@ -28,7 +28,6 @@ router.post("/follow", (req, res) => {
     //add "user" to "followed_user"s followed
     User.findOneAndUpdate(criteria_followed, update_followed, function(err, users) {
         res.json(users)
-        console.log(users.followers)
     }, {collection: 'users'});
 })
 
@@ -49,7 +48,6 @@ router.post("/unfollow", (req, res) => {
     //remove "user" to "followed_user"s followed
     User.findOneAndUpdate(criteria_followed, update_followed, function(err, users) {
         res.json(users)
-        console.log(users.followers)
     }, {collection: 'users'});
 })
 
