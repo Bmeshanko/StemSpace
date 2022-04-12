@@ -43,6 +43,9 @@ function Profile() {
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
+	}, [useParams(), state.following])
+
+	useEffect(() => {
 		axios.post("/getPostsFromUser", {
 			username: userid
 		}).then (res => {
@@ -69,7 +72,7 @@ function Profile() {
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
-	}, [state.posts, state.following])
+	}, [state.posts])
 
 	function onImageChange(event){
 		if (event.target.files && event.target.files[0]) {
@@ -247,7 +250,7 @@ function Profile() {
     }
 
 	function handleClickName(event, name) {
-        navigate(`/Profile/${name}`, {state:{username:state.location.username}});
+        navigate(`/Profile/${name}`, {state:{username:location.state.username}});
     }
 
 		return (
@@ -284,7 +287,7 @@ function Profile() {
 							<UserPermissionsProfilePic />
 							<h6>{state.followers} <button onClick={(e)=>{handClickShowFollowers(FOLLOWERS)}}>followers</button></h6>
                        		<h6>{state.following_number} <button onClick={(e)=>{handClickShowFollowers(FOLLOWING)}}>following</button></h6>
-							<p className="username">@{state.username}</p>
+							<p className="username">@{userid}</p>
 							<p>{state.bio}</p>
 							<FollowButton />
 						</div>
