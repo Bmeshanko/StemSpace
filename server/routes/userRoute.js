@@ -129,6 +129,21 @@ router.post("/getPosts", (req, res) => {
     }
 });
 
+router.post("/getPostsFromUser", (req, res) => {
+    try {
+        let criteria = {author: req.body.username}; 
+
+        //find all posts
+        //return all posts
+        Post.find(criteria, function(err, posts) {
+            res.json(posts)
+        }, {collection: 'posts'})
+
+    } catch(e) {
+        console.log("Error Detected in /getPosts");
+    }
+});
+
 router.post("/emailVerification", (req, res) => {
     try {
         //find user profile from email

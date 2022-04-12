@@ -21,8 +21,10 @@ function Profile() {
 		image: "",
 		following: false,
 		followers: 0,
-		following_number: 0
+		following_number: 0,
+		posts: []
 	});
+
 	useEffect(() => {
 		axios.post("/getUsers", {
 			username: userid
@@ -38,6 +40,32 @@ function Profile() {
 				setState(prevState => ({...prevState, followers: res.data.followers.length}))
 				setState(prevState => ({...prevState, following_number: res.data.following.length}))
 			}
+		}).catch(function (error) {
+			console.log("Error Detected")
+		})
+		axios.post("/getPostsFromUser", {
+			username: userid
+		}).then (res => {
+            //put in console all the posts
+            let temp=[];
+            let promises=[];
+            for(let i = 0; i < res.data.length; i++){
+                promises.push(axios.post("/getUsers", {
+                    username: res.data[i].author
+                }).then (response=> {
+                    let base64Flag = 'data:image/jpeg;base64,';
+                    let imageStr = arrayBufferToBase64(response.data.img.data.data);
+                    let picture=base64Flag+imageStr;
+                    temp[i] = {
+						post:{author:res.data[i].author, 
+						contents:res.data[i].contents, 
+						topic:res.data[i].topic, 
+						id:res.data[i]._id, 
+						likers:res.data[i].likers, 
+						image: picture}};
+                }))
+            }
+            Promise.all(promises).then(()=>setState(prevState => ({...prevState, posts: temp})));
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
@@ -187,6 +215,41 @@ function Profile() {
 		return (<p></p>)
 	}
 
+	function deletePost(event,id) {
+        axios.post("/deletePost", {
+			id: id
+		}).then (res => {
+            //put in console all the posts
+		}).catch(function (error) {
+			console.log("Error Detected")
+		})
+    }
+    function likePost(event, username, id){
+        axios.post("/likePost", {
+            username: username,
+            id: id
+        }).then( res => {
+            //whatever
+        }).catch(function(error){
+            console.log("Error Detected")
+        })
+    }
+
+    function unlikePost(event, username, id){
+        axios.post("/unlikePost", {
+            username: username,
+            id: id
+        }).then( res => {
+            //whatever
+        }).catch(function(error){
+            console.log("Error Detected")
+        })
+    }
+
+	function handleClickName(event, name) {
+        navigate(`/Profile/${name}`, {state:{username:state.location.username}});
+    }
+
 		return (
 			<body>
 			<div className="Timeline-banner">
@@ -229,6 +292,43 @@ function Profile() {
              		</span>
 
 			</header>
+			<div class="Timeline-posts">
+                <ol>
+                    {state.posts.map((post)=>(
+                        <div className="Post">
+                        <button className="Post" onClick={(event) => {;
+                            handleClickName(event, post.post.author)}}>
+                            @{post.post.author}
+                        </button>
+                        <img className='Post-picture' src={post.post.image}></img>
+                        <p>Topic: {post.post.topic}</p>
+                        <p>{post.post.contents}</p>
+                        {post.post.author===location.state.username && <button 
+									onClick={(e) => {
+										deletePost(e, post.post.id)
+									}}><b>Delete Post</b>
+							</button>}
+                        {post.post.likers.includes(location.state.username) && <button className="Like"
+                                onClick={(e) => {
+                                    unlikePost(e, location.state.username, post.post.id)
+                                }}><b>{post.post.likers.length}|UNLIKE</b>
+							</button>}
+                        {!post.post.likers.includes(location.state.username) && <button className="Like"
+                                onClick={(e) => {
+                                    likePost(e, location.state.username, post.post.id)
+                                }}><b>{post.post.likers.length}|LIKE</b>
+                            </button>}
+                            <div className="hide">{post.post.likers.map((liker)=>(
+                                <button className="GreenButton" onClick={(event) => {;
+                                    handleClickName(event, liker)}}>
+                                   <b>@{liker}{"   "}</b> 
+                                </button>
+                            ))}</div>
+                        </div>
+                    ))}
+                </ol>
+                
+            </div>
 			</body>
 		);
 }
