@@ -2,7 +2,7 @@ import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import './Timeline.css';
-import data from "bootstrap/js/src/dom/data";
+
 
 function Followers(){
     const navigate = useNavigate();
@@ -51,6 +51,7 @@ function Followers(){
 
     return(
         <body>
+        {location.state.view}
                 <ol>
                     {input.users.map((user) => (
                         <div className={"Post"}>

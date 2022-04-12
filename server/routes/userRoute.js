@@ -284,7 +284,6 @@ router.post("/followPage", (req, res) => {
         status = {followers: 1}
     }
     User.findOne(criteria, status, function (err, users) {
-        console.log(users)
         res.json(users)
     }, {collection: "users"});
 
