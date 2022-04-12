@@ -368,7 +368,7 @@ router.post("/getComments", (req, res) => {
 
         //find all posts
         //return all posts
-        Post.find(criteria, function(err, comments) {
+        Comment.find(criteria, function(err, comments) {
             res.json(comments)
         }, {collection: 'comments'})
 
@@ -384,7 +384,7 @@ router.post("/likeComment", (req, res) => {
     const update = {$addToSet: {likers: username}} //update to add user to likers 
 
     //find post and add add user to likers 
-    Post.findOneAndUpdate(criteria, update, function(err, comment) {
+    Comment.findOneAndUpdate(criteria, update, function(err, comment) {
         res.json(comment) //return post
         
     }, {collection: 'comments'});
@@ -399,7 +399,7 @@ router.post("/unlikeComment", (req, res) => {
     const update = {$pull: {likers: username}} //updat to remove user from likers
 
     //find post and remove user from likers
-    Post.findOneAndUpdate(criteria, update, function(err, comment) {
+    Comment.findOneAndUpdate(criteria, update, function(err, comment) {
         res.json(comment) //return post
     }, {collection: 'comments'});
 
