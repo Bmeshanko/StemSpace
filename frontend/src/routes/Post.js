@@ -16,6 +16,7 @@ function Post() {
         topic: '',
         image: "",
         likers: [],
+        likes: Number,
         comments: []
 	});
 
@@ -30,6 +31,7 @@ function Post() {
 				setState(prevState => ({...prevState, author: res.data.author}))
 				setState(prevState => ({...prevState, topic: res.data.topic}))
                 setState(prevState => ({...prevState, likers: res.data.likers}))
+                setState(prevState => ({...prevState, likes: res.data.likers.length}))
                 axios.post("/getUsers", {
                     username: res.data.author
                 }).then (response=> {
@@ -43,7 +45,7 @@ function Post() {
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
-	}, [useParams()])
+	}, [useParams(), state.likes])
 
     useEffect(() => {
 		axios.post("/getComments", {
@@ -101,7 +103,7 @@ function Post() {
             username: username,
             id: id
         }).then( res => {
-            //whatever
+            setState(prevState => ({...prevState, likes: state.likes+1}))
         }).catch(function(error){
             console.log("Error Detected")
         })
@@ -112,7 +114,7 @@ function Post() {
             username: username,
             id: id
         }).then( res => {
-            //whatever
+            setState(prevState => ({...prevState, likes: state.likes-1}))
         }).catch(function(error){
             console.log("Error Detected")
         })
@@ -177,27 +179,28 @@ function Post() {
 
             <div className="Post">
 
-                <button className="Post" onClick={(event) => {;
+                <button className="Name" onClick={(event) => {;
                     handleClickName(event, state.author)}}>
                     @{state.author}
+                    <img className='Post-picture' src={state.image}></img>
                 </button>
 
-                <img className='Post-picture' src={state.image}></img>
+                
 
-                <p>Topic: {state.topic}</p>
+                <p className="Topic">Topic: {state.topic}</p>
 
                 <p>{state.contents}</p>
 
                 {state.likers.includes(location.state.username) && <button className="Like"
                         onClick={(e) => {
                             unlikePost(e, location.state.username, postid)
-                        }}><b>{state.likers.length}|UNLIKE</b>
+                        }}><b>{state.likes}|UNLIKE</b>
                     </button>}
 
                 {!state.likers.includes(location.state.username) && <button className="Like"
                         onClick={(e) => {
                             likePost(e, location.state.username, postid)
-                        }}><b>{state.likers.length}|LIKE</b>
+                        }}><b>{state.likes}|LIKE</b>
                     </button>}
 
                 <div className="hide">{state.likers.map((liker)=>(

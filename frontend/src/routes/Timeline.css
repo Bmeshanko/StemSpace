@@ -111,11 +111,11 @@
 }
 .Post-picture {
     display: inline-grid;
-    height: 100px;
-    width: 100px;
+    max-height: 40px;
+    max-width: 40px;
     object-fit: cover;
     border-radius:50%;
-    margin: 4px 4px 4px 4px;
+    vertical-align: middle;
 }
 
 .SmallerPost-picture {
@@ -150,10 +150,38 @@
 .Post {
     font-family: Consolas;
     display: block;
+    width: 100%;
     background-color: #5FAA4B;
-    outline: 1px solid #1F1F1F;
     border-radius: 5px;
+    border-color: #1F1F1F;
+    border-width: 1px;
+    line-height: 0.5;
+}
+
+.Post-Content {
+    font-family: Consolas;
+    font-size: 20px;
+    display: block;
+    text-align: left;
+    background-color: #5FAA4B;
+    width: 100%;
+    line-height: 0.5;
+    border-style: hidden;
+}
+
+.Name{
+    font-family: Consolas;
+    font-size: 20px;
+    display: block;
+    text-align: left;
+    display: inline-block;
+    background-color: #5FAA4B;
+    border-style: none;
     margin-bottom: 4px;
+}
+
+.Name:hover{
+    text-decoration: underline;
 }
 
 .hide {
@@ -184,4 +212,10 @@
 
 .Like:hover + .hide {
     display: block;
+  }
+
+  .Topic{
+      display: inline-block;
+      font-size: 15px;
+      float: right;
   }

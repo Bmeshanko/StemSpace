@@ -276,6 +276,10 @@ function Profile() {
         navigate(`/Profile/${name}`, {state:{username:location.state.username}});
     }
 
+	function handlePost(event, postid){
+        navigate(`/Post/${postid}`, {state:{username:location.state.username}});
+    }
+
 		return (
 			<body>
 			<div className="Banner">
@@ -322,35 +326,47 @@ function Profile() {
                 <ol>
                     {state.posts.map((post)=>(
                         <div className="Post">
-                        <button className="Post" onClick={(event) => {;
-                            handleClickName(event, post.post.author)}}>
-                            @{post.post.author}
-                        </button>
-                        <img className='Post-picture' src={post.post.image}></img>
-                        <p>Topic: {post.post.topic}</p>
-                        <p>{post.post.contents}</p>
+                        
+                            
+						<button className="Name" onClick={(event) => {;
+                                handleClickName(event, post.post.author)}}>
+                                
+                                <img className='Post-picture' src={post.post.image}></img>
+                                <b>@{post.post.author}</b>
+                            </button>  
 
-                        {post.post.likers.includes(location.state.username) && <button className="Like"
-                                onClick={(e) => {
-                                    unlikePost(e, location.state.username, post.post.id)
-                                }}><b>{post.post.likers.length}|UNLIKE</b>
-							</button>}
-                        {!post.post.likers.includes(location.state.username) && <button className="Like"
-                                onClick={(e) => {
-                                    likePost(e, location.state.username, post.post.id)
-                                }}><b>{post.post.likers.length}|LIKE</b>
-                            </button>}
-                            <div className="hide">{post.post.likers.map((liker)=>(
-                                <button className="GreenButton" onClick={(event) => {;
-                                    handleClickName(event, liker)}}>
-                                   <b>@{liker}{"   "}</b> 
-                                </button>							
-                            ))}</div>
-						 {post.post.author===location.state.username && <button 
-									onClick={(e) => {
-										deletePost(e, post.post.id)
-									}}><b>Delete Post</b>
-							</button>}
+                            <p className="Topic">Topic: {post.post.topic ?  post.post.topic: "None"}</p>
+
+                            <button className="Post-Content" onClick={(event) => {;
+                            handlePost(event, post.post.id)}}>
+                                
+                            <p>{post.post.contents}</p>
+                            </button>
+                            
+
+                            {post.post.likers.includes(location.state.username) && <button className="Like"
+                                    onClick={(e) => {
+                                        unlikePost(e, location.state.username, post.post.id)
+                                    }}><b>{post.post.likers.length}|UNLIKE</b>
+                                </button>}
+                            {!post.post.likers.includes(location.state.username) && <button className="Like"
+                                    onClick={(e) => {
+                                        likePost(e, location.state.username, post.post.id)
+                                    }}><b>{post.post.likers.length}|LIKE</b>
+                                </button>}
+
+                                <div className="hide">{post.post.likers.map((liker)=>(
+                                    <button className="GreenButton" onClick={(event) => {;
+                                        handleClickName(event, liker)}}>
+                                    <b>@{liker}{"   "}</b> 
+                                    </button>
+                                ))}</div>
+
+                            {post.post.author===location.state.username && <button 
+                                        onClick={(e) => {
+                                            deletePost(e, post.post.id)
+                                        }}><b>Delete Post</b>
+                                </button>}
                         </div>
                     ))}
                 </ol>

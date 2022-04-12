@@ -28,6 +28,10 @@ function Timeline() {
         navigate(`/Profile/${name}`, {state:{username:input.username}});
     }
 
+    function handlePost(event, postid){
+        navigate(`/Post/${postid}`, {state:{username:input.username}});
+    }
+
     function deletePost(event,id) {
         axios.post("/deletePost", {
 			id: id
@@ -123,35 +127,46 @@ function Timeline() {
                 <ol>
                     {input.posts.map((post)=>(
                         <div className="Post">
-                        <button className="Post" onClick={(event) => {;
-                            handleClickName(event, post.post.author)}}>
-                            @{post.post.author}
-                        </button>
-                        <img className='Post-picture' src={post.post.image}></img>
-                        <p>Topic: {post.post.topic}</p>
-                        <p>{post.post.contents}</p>
+                            
+                            <button className="Name" onClick={(event) => {;
+                                handleClickName(event, post.post.author)}}>
+                                
+                                <img className='Post-picture' src={post.post.image}></img>
+                                <b>@{post.post.author}</b>
+                            </button>  
 
-                        {post.post.likers.includes(input.username) && <button className="Like"
-                                onClick={(e) => {
-                                    unlikePost(e, input.username, post.post.id)
-                                }}><b>{post.post.likers.length}|UNLIKE</b>
-							</button>}
-                        {!post.post.likers.includes(input.username) && <button className="Like"
-                                onClick={(e) => {
-                                    likePost(e, input.username, post.post.id)
-                                }}><b>{post.post.likers.length}|LIKE</b>
-                            </button>}
-                            <div className="hide">{post.post.likers.map((liker)=>(
-                                <button className="GreenButton" onClick={(event) => {;
-                                    handleClickName(event, liker)}}>
-                                   <b>@{liker}{"   "}</b> 
-                                </button>
-                            ))}</div>
-                        {post.post.author===input.username && <button 
-									onClick={(e) => {
-										deletePost(e, post.post.id)
-									}}><b>Delete Post</b>
-							</button>}
+                            <p className="Topic">Topic: {post.post.topic ?  post.post.topic: "None"}</p>
+
+                            <button className="Post-Content" onClick={(event) => {;
+                            handlePost(event, post.post.id)}}>
+                                
+                            <p>{post.post.contents}</p>
+                            </button>
+                            
+
+                            {post.post.likers.includes(input.username) && <button className="Like"
+                                    onClick={(e) => {
+                                        unlikePost(e, input.username, post.post.id)
+                                    }}><b>{post.post.likers.length}|UNLIKE</b>
+                                </button>}
+                            {!post.post.likers.includes(input.username) && <button className="Like"
+                                    onClick={(e) => {
+                                        likePost(e, input.username, post.post.id)
+                                    }}><b>{post.post.likers.length}|LIKE</b>
+                                </button>}
+
+                                <div className="hide">{post.post.likers.map((liker)=>(
+                                    <button className="GreenButton" onClick={(event) => {;
+                                        handleClickName(event, liker)}}>
+                                    <b>@{liker}{"   "}</b> 
+                                    </button>
+                                ))}</div>
+
+                            {post.post.author===input.username && <button 
+                                        onClick={(e) => {
+                                            deletePost(e, post.post.id)
+                                        }}><b>Delete Post</b>
+                                </button>}
                         </div>
                     ))}
                 </ol>
