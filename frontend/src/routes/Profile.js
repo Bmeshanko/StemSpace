@@ -43,7 +43,7 @@ function Profile() {
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
-	}, [useParams(), state.following, state.followers, state.bio, state.image, state.following_number, state.username])
+	}, [useParams()])
 
 	useEffect(() => {
 		axios.post("/getPostsFromUser", {
@@ -139,18 +139,20 @@ function Profile() {
 			user: location.state.username,
 			followed_user: userid
 		}).then(res =>{
-			axios.post("/getUsers", {
-				username: userid
-			}).then(res => {
-				if (res.data == null) {
-					alert("Profile not Found")
-				} else {
-					setState(prevState => ({ ...prevState,following:res.data.followers.includes(location.state.username)}));
-					setState(prevState => ({...prevState, followers: res.data.followers.length}))
-				}
-			}).catch(function (error) {
-				console.log("Error Detected")
-			})
+			setState(prevState => ({ ...prevState,following:true}));
+			setState(prevState => ({...prevState, followers: state.followers+1}))
+			// axios.post("/getUsers", {
+			// 	username: userid
+			// }).then(res => {
+			// 	if (res.data == null) {
+			// 		alert("Profile not Found")
+			// 	} else {
+			// 		setState(prevState => ({ ...prevState,following:res.data.followers.includes(location.state.username)}));
+			// 		setState(prevState => ({...prevState, followers: res.data.followers.length}))
+			// 	}
+			// }).catch(function (error) {
+			// 	console.log("Error Detected")
+			// })
 		})
 	}
 
@@ -159,17 +161,19 @@ function Profile() {
 			user: location.state.username,
 			followed_user: userid
 		}).then(res =>{
-			axios.post("/getUsers", {
-				username: userid
-			}).then(res => {
-				if (res.data == null) {
-					alert("Profile not Found")
-				} else {
-					setState(prevState => ({ ...prevState,following:res.data.followers.includes(location.state.username)}));
-				}
-			}).catch(function (error) {
-				console.log("Error Detected")
-			})
+			// axios.post("/getUsers", {
+			// 	username: userid
+			// }).then(res => {
+			// 	if (res.data == null) {
+			// 		alert("Profile not Found")
+			// 	} else {
+			// 		setState(prevState => ({ ...prevState,following:res.data.followers.includes(location.state.username)}));
+			// 	}
+			// }).catch(function (error) {
+			// 	console.log("Error Detected")
+			// })
+			setState(prevState => ({ ...prevState,following:false}));
+			setState(prevState => ({...prevState, followers: state.followers-1}))
 		})
 	}
 
