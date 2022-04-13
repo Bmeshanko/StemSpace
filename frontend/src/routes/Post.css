@@ -1,230 +1,207 @@
-.Profile-picture {
-    float: left;
-    display: inline-grid;
-    height: 200px;
-    width: 200px;
-    object-fit: cover;
-    border-radius:50%;
-    margin: 4px 4px 4px 4px;
-}
-
-.Profile-Picture-Button {
-    font-family: Consolas;
-    font-size: 20px;
-    padding: 12px;
-    width: 200px;
-    background-color: #5FAA4B;
-    border-radius: 8px;
-    border-color: #1F1F1F;
-    border-width: 1px;
-    margin-right: 4px;
-    display: inline;
-}
-
-.Profile-info {
-    display: flex;
-    font-family: Consolas;
-    font-size: 24px;
-    background-color: #DDDDDD;
-    width: calc(99vw - 230px);
-    padding: 10px;
-}
-
-.Profile-bio {
-    font-size: 14px;
-}
-
-.Edit-profile-button {
-    font-family: Consolas;
-    font-size: 20px;
-    padding: 12px;
-    width: 200px;
-    background-color: #5FAA4B;
-    border-radius: 8px;
-    border-color: #1F1F1F;
-    border-width: 1px;
-    margin-right: 4px;
-}
-
-.logout-button {
-    font-family: Consolas;
-    font-size: 20px;
-    padding: 12px;
-    width: 200px;
-    background-color: #5FAA4B;
-    border-radius: 8px;
-    border-color: #1F1F1F;
-    border-width: 1px;
-    margin-right: 4px;
-}
-
-.space {
-    margin-top: 10px;
-}
-
-.filetype {
-    position: absolute;
-    width: 99.9%;
-    height: calc(100vh - 280px);
-}
-
-.Banner{
+.Post-Top-Banner{
     height: 40px;
     display: block;
     background-color: #5FAA4B;
     padding-top: 10px;
-    padding-left: 12px;
-    padding-right: 5px;
-    padding-bottom: 6px;
+    padding-bottom: 10px;
 }
 
-.Timeline-banner-text {
+.Post-Logo-Button {
+    background: #5FAA4B;
+    border-width: 0px;
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.Post-Logo-Image {
+    width: 40px;
+    height: 40px;
+    background-color: #DDDDDD;
+    border-radius: 20px;
+}
+
+.Post-Banner-Text {
     font-family: Consolas;
     font-size: 38px;
     vertical-align: text-bottom;
 }
 
-.Timeline-logo {
-    float: left;
-    display: inline;
-    margin-right: 10px;
+.Post-Banner-Button {
+    float: right;
+    background: #5FAA4B;
+    border-width: 0px;
     width: 40px;
     height: 40px;
-    background-color: #DDDDDD;
-    border-radius: 20px;
-  }
+    margin-right: 20px;
+    margin-left: 10px;
+}
 
-.Timeline-bar-horizontal {
+.Post-Horizontal-Bar {
     background-color: #1F1F1F;
     height: 1px;
-    margin-top: 0px;
 }
 
-.Notification-button {
-    float: right;
-    background: #5FAA4B;
-    border-width: 0px;
-    width: 40px;
-    height: 40px;
-    margin-right: 20px;
-    margin-left: 10px;
-}
-
-.Timeline-logo-button {
-    background: #5FAA4B;
-    border-width: 0px;
-    width: 40px;
-    height: 40px;
-    margin-right: 20px;
-    margin-left: 10px;
-}
-
-.Create-post-button {
-    float: right;
-    background: #5FAA4B;
-    border-width: 0px;
-    width: 40px;
-    height: 40px;
-    margin-right: 20px;
-    margin-left: 10px;
-}
-
-.Notification-logo {
-    float: right;
-    display: inline-grid;
-    width: 40px;
-    margin-top: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
-}
-
-.Posts{
-    display: block;
-    
-    overflow-y: scroll;
-    /*scrollbar-color: ;*/
-    scrollbar-width: thin;
-    padding: 5px;
-}
-
-.Post-picture {
-    display: inline-grid;
-    height: 100px;
-    width: 100px;
-    object-fit: cover;
-    border-radius:50%;
-    margin: 4px 4px 4px 4px;
-}
-
-.SmallerPost-picture {
-    display: inline-grid;
-    height: 40px;
-    width: 40px;
-    object-fit: cover;
-    border-radius:50%;
-    margin: 4px 4px 4px 4px;
-}
-
-.Post {
+.Post-Post-Wrapper{
     margin:auto;
     font-family: Consolas;
     display: block;
-    text-align: left;
-    width: 100%;
+    width: 50%;
     background-color: #5FAA4B;
     outline: 1px solid #1F1F1F;
     border-radius: 5px;
     border-color: #1F1F1F;
     border-width: 1px;
     margin-bottom: 4px;
+    margin-top: 5px;
+    padding: 5px;
+    padding-bottom: 0px;
+    padding-left: 0px;
 }
 
-.hide {
+.Post-Post-Content {
+    font-family: Consolas;
+    font-size: 20px;
+    display: block;
+    text-align: left;
+    background-color: #5FAA4B;
+    line-height: 0.5;
+    border-style: hidden;
+}
+
+.Post-Post-Name{
+    font-family: Consolas;
+    font-size: 20px;
+    display: inline-block;
+    background-color: #5FAA4B;
+    border-style: none;
+}
+
+.Post-Post-Name:hover{
+    text-decoration: underline;
+}
+
+.Post-Post-PFP {
+    display: inline;
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius:50%;
+    vertical-align: middle;
+    padding-right: 5px;
+}
+
+.Post-Post-Topic{
+    font-size: 15px;
+    float: right;
+}
+
+.Post-Like-Button:hover + .Post-Likers {
+    display: block;
+}
+
+.Post-Likers {
     display: none;
     position: absolute;
     z-index: 1;
     background-color: #5FAA4B;
     border-color: #1F1F1F;  
     border-radius: 10px;
+    border-width: 2px;
     border-style: solid;
-    padding-left: 2px;
-    padding-right: 2px;
-  }
-
-  .hide:hover{
-      display: block;
-  }
-
-  .GreenButton{
-      display: block;
-      background-color: #5FAA4B;
-      border-style: none;
-  }
-
-  .GreenButton:hover{
-    filter: brightness(90%);
-  }
-
-.Like:hover + .hide {
-    display: block;
-  }
-
-  .Topic{
-    font-size: 15px;
-    float: right;
 }
 
-.Name{
+.Post-Likers:hover{
+      display: block;
+}
+
+.Post-Liker-Button{
+    display: block;
+    background-color: #5FAA4B;
+    border-style: hidden;
+    border-radius: 10px;
+}
+
+.Post-Liker-Button:hover{
+  filter: brightness(90%);
+}
+
+.Post-Comment-Wrapper{
+    display: block;
+    width: 100%;
+    padding: 5px;
+}
+
+.Post-Comment{
+    margin:auto;
+    font-family: Consolas;
+    display: block;
+    width: 70%;
+    background-color: #5FAA4B;
+    outline: 1px solid #1F1F1F;
+    border-radius: 5px;
+    border-color: #1F1F1F;
+    border-width: 1px;
+    margin-bottom: 4px;
+    padding: 5px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+}
+
+.Post-Comment-Name{
     font-family: Consolas;
     font-size: 20px;
-    display: block;
-    text-align: left;
     display: inline-block;
     background-color: #5FAA4B;
     border-style: none;
-    margin-bottom: 4px;
 }
 
-.Name:hover{
+.Post-Comment-Name:hover{
     text-decoration: underline;
 }
+
+.Post-Comment-PFP{
+    display: inline;
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius:50%;
+    vertical-align: middle;
+    padding-right: 5px;
+}
+
+.Post-Comment-Like-Button:hover + .Post-Comment-Likers{
+    display: block;
+}
+
+.Post-Comment-Likers{
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: #5FAA4B;
+    border-color: #1F1F1F;  
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+}
+
+.Post-Comment-Likers:hover{
+    display: block;
+}
+
+.Post-Comment-Liker-Button{
+    display: block;
+    background-color: #5FAA4B;
+    border-style: hidden;
+    border-radius: 10px;
+}
+
+.Post-Comment-Liker-Button:hover{
+  filter: brightness(90%);
+}
+
+
+
+
+

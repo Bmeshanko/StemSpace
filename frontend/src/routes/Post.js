@@ -49,7 +49,7 @@ function Post() {
 
     useEffect(() => {
 		axios.post("/getComments", {
-			id: postid
+			post: postid
 		}).then(res => {
             let temp=[];
             let promises=[];
@@ -98,6 +98,21 @@ function Post() {
 			console.log("Error Detected")
 		})
     }
+
+    function handleLike(event, username, id){
+        axios.post("/getPost", {
+            id: id
+        }).then( res => {
+            if(res.data.likers.includes(username)){
+                unlikePost(event, username, id)
+            } else{
+                likePost(event, username, id)
+            }           
+        }).catch(function(error){
+            console.log("Error Detected")
+        })
+    }
+
     function likePost(event, username, id){
         axios.post("/likePost", {
             username: username,
@@ -134,6 +149,21 @@ function Post() {
 			console.log("Error Detected")
 		})
     }
+
+    function handleLikeComment(event, username, id){
+        axios.post("/getComment", {
+            id: id
+        }).then( res => {
+            if(res.data.likers.includes(username)){
+				unlikeComment(event, username, id);
+			} else{
+				likeComment(event, username, id);
+			}
+        }).catch(function(error){
+            console.log("Error Detected")
+        })
+	}
+
     function likeComment(event, username, id){
         axios.post("/likeComment", {
             username: username,
@@ -158,97 +188,113 @@ function Post() {
 
     return (
         <body>
-            <div className="Banner">
-                <button className="Timeline-logo-button"
-                        onClick={(e) => {
-                            handleClickLogo(e, location.state.username)
-                        }}
-                ><b><img className='Timeline-logo' src="/Logo_new.png" alt="STEM"></img></b>
+            <div className="Post-Top-Banner">
+                <button className="Post-Logo-Button"
+                    onClick={(e) => {
+                        handleClickLogo(e, location.state.username)
+                    }}>
+                        
+                    <img className="Post-Logo-Image" src="/Logo_new.png" alt="STEM"></img>
                 </button>
 
-                <a className="Timeline-banner-text">StemSpace</a>
+                <a className="Post-Banner-Text">StemSpace</a>
 
-                <button className="Notification-button"
-                        onClick={(e) => {
-                            handleClickNotification(e)
-                        }}
-                ><b><img src="/Notification.png" className="Notification-logo" alt="Notification"/></b>
+                <button className="Post-Banner-Button"
+                    onClick={(e) => {
+                        handleClickNotification(e)
+                    }}>
+
+                    <img src="/Notification.png" className="Post-Banner-Button" alt="Notification"/>
                 </button>
             </div>
-            <div className="Timeline-bar-horizontal"/>
 
-            <div className="Post">
+            <div className="Post-Horizontal-Bar"/>
 
-                <button className="Name" onClick={(event) => {;
-                    handleClickName(event, state.author)}}>
+            <div className="Post-Post-Wrapper">
+
+                <button className="Post-Post-Name" 
+                    onClick={(event) => {;
+                        handleClickName(event, state.author)
+                    }}>
+
+                    <img className='Post-Post-PFP' src={state.image}></img>
                     @{state.author}
-                    <img className='Post-picture' src={state.image}></img>
+                    
                 </button>
 
                 
 
-                <p className="Topic">Topic: {state.topic}</p>
+                <p className="Post-Post-Topic">Topic: {state.topic? state.topic:"None"}</p>
 
-                <p>{state.contents}</p>
+                <p className="Post-Post-Content">{state.contents}</p>
 
-                {state.likers.includes(location.state.username) && <button className="Like"
+                <button className="Post-Like-Button"
                         onClick={(e) => {
-                            unlikePost(e, location.state.username, postid)
-                        }}><b>{state.likes}|UNLIKE</b>
-                    </button>}
+                            handleLike(e, location.state.username, postid)
+                        }}>
+                        <b>{state.likes}|{state.likers.includes(location.state.username)? "UNLIKE": "LIKE"}</b>
+                </button>
 
-                {!state.likers.includes(location.state.username) && <button className="Like"
-                        onClick={(e) => {
-                            likePost(e, location.state.username, postid)
-                        }}><b>{state.likes}|LIKE</b>
-                    </button>}
-
-                <div className="hide">{state.likers.map((liker)=>(
-                    <button className="GreenButton" onClick={(event) => {;
-                        handleClickName(event, liker)}}>
-                        <b>@{liker}{"   "}</b> 
+                <div className="Post-Likers">{state.likers.map((liker)=>(
+                    <button className="Post-Liker-Button" 
+                        onClick={(event) => {;
+                            handleClickName(event, liker)
+                        }}>
+                        <b>@{liker}</b> 
                     </button>							
                 ))}</div>
 
                 {state.author===location.state.username && <button 
-                        onClick={(e) => {
-                            deletePost(e, postid)
-                        }}><b>Delete Post</b>
+                    onClick={(e) => {
+                        deletePost(e, postid)
+                    }}>
+
+                    <b>Delete Post</b>
                 </button>}
             </div>
 
-            <header class="Posts">
+            <header class="Post-Comment-Wrapper">
                 <ol>
                     {state.comments.map((comment)=>(
-                        <div className="Post">
-                        <button className="Post" onClick={(event) => {;
-                            handleClickName(event, comment.comment.author)}}>
-                            @{comment.comment.author}
-                        </button>
-                        <img className='Post-picture' src={comment.comment.image}></img>
-                        <p>{comment.comment.contents}</p>
+                        <div className="Post-Comment">
+                            <button className="Post-Comment-Name" 
+                                onClick={(event) => {
+                                    handleClickName(event, comment.comment.author)
+                                }}>
 
-                        {comment.comment.likers.includes(location.state.username) && <button className="Like"
+                                <img className='Post-Comment-PFP' src={comment.comment.image}></img>
+
+                                @{comment.comment.author}
+                            </button>
+                            
+                            <p>{comment.comment.contents}</p>
+
+                            <button className="Like"
+                                    onClick={(e) => {
+                                        handleLikeComment(e, location.state.username, comment.comment.id)
+                                    }}>
+
+                                    <b>{comment.comment.likers.length}|{comment.comment.likers.includes(location.state.username)? "UNLIKE": "LIKE"}</b>
+                            </button>
+
+                            <div className="Post-Comment-Likers">
+                                {comment.comment.likers.map((liker)=>(
+                                    <button className="Post-Comment-Liker-Button" 
+                                        onClick={(event) => {
+                                            handleClickName(event, liker)}}>
+                                        
+                                        <b>@{liker}</b> 
+                                    </button>							
+                                ))}
+                            </div>
+
+                            {comment.comment.author===location.state.username && 
+                            <button 
                                 onClick={(e) => {
-                                    unlikeComment(e, location.state.username, comment.comment.id)
-                                }}><b>{comment.comment.likers.length}|UNLIKE</b>
-							</button>}
-                        {!comment.comment.likers.includes(location.state.username) && <button className="Like"
-                                onClick={(e) => {
-                                    likeComment(e, location.state.username, comment.comment.id)
-                                }}><b>{comment.comment.likers.length}|LIKE</b>
+                                    deleteComment(e, comment.comment.id)
+                                }}>
+                                <b>Delete Comment</b>
                             </button>}
-                            <div className="hide">{comment.comment.likers.map((liker)=>(
-                                <button className="GreenButton" onClick={(event) => {;
-                                    handleClickName(event, liker)}}>
-                                   <b>@{liker}{"   "}</b> 
-                                </button>							
-                            ))}</div>
-						 {comment.comment.author===location.state.username && <button 
-									onClick={(e) => {
-										deleteComment(e, comment.comment.id)
-									}}><b>Delete Comment</b>
-							</button>}
                         </div>
                     ))}
                 </ol>
