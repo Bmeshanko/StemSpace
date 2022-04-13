@@ -1,190 +1,148 @@
-.Timeline-banner {
-    margin-top: 0px;
-    margin-left: 0px;
-    margin-bottom: 0px;
+.Timeline-Top-Banner {
     background-color: #5FAA4B;
     padding-top: 10px;
-    padding-left: 12px;
-    padding-right: 5px;
     padding-bottom: 6px;
     height: 40px;
     display: block;
 }
 
-.Timeline-banner-text {
+.Timeline-Logo-Button {
+    background: #5FAA4B;
+    border-width: 0px;
+    width: 40px;
+    height: 40px;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.Timeline-Logo-Image {
+    width: 40px;
+    height: 40px;
+    background-color: #DDDDDD;  
+    border-radius: 20px;
+  }
+
+.Timeline-Banner-Text {
     font-family: Consolas;
     font-size: 38px;
     vertical-align: text-bottom;
 }
 
-.Timeline-logo {
-    float: left;
-    display: inline;
-    margin-right: 10px;
+.Timeline-Banner-Button {
+    float: right;
+    background: #5FAA4B;
+    border-width: 0px;
     width: 40px;
     height: 40px;
-    background-color: #DDDDDD;
-    border-radius: 20px;
-  }
+    margin-right: 20px;
+    margin-left: 10px;
+}
 
-.Timeline-bar-horizontal {
+.Timeline-Banner-Logos {
+    width: 40px;
+}
+
+.Timeline-Horizontal-Bar {
     background-color: #1F1F1F;
     height: 1px;
-    margin-top: 0px;
 }
 
-.Timeline-bar-vertical {
-    background-color: #1F1F1F;
-    width: 1px;
-    height: 64px;
-    display: inline-grid;
-    position: absolute;
-    margin: 0px 0px 0px 0px;
-}
-
-.Timeline-selector {
+.Timeline-Selector {
     font-family: Consolas;
     font-size: 20px;
     background-color: #EEEEEE;
     margin-right: 0px;
 }
 
-.Timeline-following {
+.Timeline-Following {
     display: inline-grid;
     width: 50%;
     text-align: center;
 }
 
-.Timeline-topics {
+
+.Timeline-Vertical-Bar{
+    background-color: #1F1F1F;
+    width: 1px;
+    height: 64px;
+    display: inline-grid;
+    position: absolute;
+}
+
+.Timeline-Topics {
     display: inline-grid;
     width: 50%;
     text-align: center;
 }
 
-.Notification-button {
-    float: right;
-    background: #5FAA4B;
-    border-width: 0px;
-    width: 40px;
-    height: 40px;
-    margin-right: 20px;
-    margin-left: 10px;
-}
-
-.Timeline-logo-button {
-    background: #5FAA4B;
-    border-width: 0px;
-    width: 40px;
-    height: 40px;
-    margin-right: 20px;
-    margin-left: 10px;
-}
-
-.Create-post-button {
-    float: right;
-    background: #5FAA4B;
-    border-width: 0px;
-    width: 40px;
-    height: 40px;
-    margin-right: 20px;
-    margin-left: 10px;
-}
-
-.Notification-logo {
-    float: right;
-    display: inline-grid;
-    width: 40px;
-    margin-top: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
-}
-
-.Timeline-posts {
+.Timeline-Posts-Wrapper {
     position: absolute;
     display: inline-block;
     width: 59.5%;
     height: calc(100vh - 135px);
     overflow-y: scroll;
-    /*scrollbar-color: ;*/
     scrollbar-width: thin;
     padding: 5px;
 }
-.Post-picture {
-    display: inline-grid;
-    max-height: 40px;
-    max-width: 40px;
-    object-fit: cover;
-    border-radius:50%;
-    vertical-align: middle;
-}
 
-.SmallerPost-picture {
-    display: inline-grid;
-    height: 40px;
-    width: 40px;
-    object-fit: cover;
-    border-radius:50%;
-    margin: 4px 4px 4px 4px;
-}
-
-
-
-.Timeline-DMs {
-    position: absolute;
-    display: inline-block;
-    width: 39.3%;
-    height: calc(100vh - 135px);
-    padding: 5px;
-    right: 0;
-    overflow-y: scroll;
-    /*scrollbar-color: ;*/
-    scrollbar-width: thin;
-}
-
-.DM-header {
-    font-family: Consolas;
-    font-size: 24px;
-    margin-left: 45%;
-}
-
-.Post {
+.Timeline-Post {
     font-family: Consolas;
     display: block;
-    width: 100%;
+    width: calc(100% - 10px);
     background-color: #5FAA4B;
     border-radius: 5px;
     border-color: #1F1F1F;
     border-width: 1px;
-    line-height: 0.5;
+    border-style: solid;
+    line-height: 0.5;   
+    margin-bottom: 4px;
+    padding: 5px;
+    padding-bottom: 0px;
+    padding-left: 0px;
 }
 
-.Post-Content {
+.Timeline-Post-Name{
+    font-family: Consolas;
+    font-size: 20px;
+    display: inline-block;
+    background-color: #5FAA4B;
+    border-style: none;
+}
+
+.Timeline-Post-Name:hover{
+    text-decoration: underline;
+}
+
+.Timeline-Post-PFP {
+    display: inline;
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius:50%;
+    vertical-align: middle;
+    padding-right: 5px;
+}
+
+.Timeline-Post-Topic{
+      font-size: 15px;
+      float: right;
+ }
+
+.Timeline-Post-Content {
     font-family: Consolas;
     font-size: 20px;
     display: block;
     text-align: left;
     background-color: #5FAA4B;
-    width: 100%;
     line-height: 0.5;
     border-style: hidden;
 }
 
-.Name{
-    font-family: Consolas;
-    font-size: 20px;
+.Timeline-Like-Button:hover + .Timeline-Likers {
     display: block;
-    text-align: left;
-    display: inline-block;
-    background-color: #5FAA4B;
-    border-style: none;
-    margin-bottom: 4px;
-}
+  }
 
-.Name:hover{
-    text-decoration: underline;
-}
-
-.hide {
+.Timeline-Likers {
     display: none;
     position: absolute;
     z-index: 1;
@@ -196,25 +154,44 @@
     padding-right: 2px;
   }
 
-  .hide:hover{
-      display: block;
-  }
-
-  .GreenButton{
-      display: block;
-      background-color: #5FAA4B;
-      border-style: none;
-  }
-
-  .GreenButton:hover{
-    filter: brightness(90%);
-  }
-
-.Like:hover + .hide {
+.Timeline-Likers:hover{
     display: block;
-  }
+}
 
-  .Topic{
-      font-size: 15px;
-      float: right;
-  }
+.Timeline-Liker-Button{
+    display: block;
+    background-color: #5FAA4B;
+    border-style: hidden;
+    border-radius: 10px;
+}
+
+.Timeline-Liker-Button:hover{
+  filter: brightness(90%);
+}
+
+.Timeline-DMs {
+    position: absolute;
+    display: inline-block;
+    width: 39.3%;
+    height: calc(100vh - 135px);
+    padding: 5px;
+    right: 0;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+}
+
+.DM-header {
+    font-family: Consolas;
+    font-size: 24px;
+    margin-left: 45%;
+}
+
+
+
+
+
+
+
+
+
+

@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 
 function Timeline() {
+    
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -11,6 +12,29 @@ function Timeline() {
         username: location.state.username,
         posts: []
     })
+
+    useEffect(()=>{
+        axios.post("/getPosts", {
+			//criteria would go here
+		}).then (res => {
+            //put in console all the posts
+            let temp=[];
+            let promises=[];
+            for(let i = 0; i < res.data.length; i++){
+                promises.push(axios.post("/getUsers", {
+                    username: res.data[i].author
+                }).then (response=> {
+                    let base64Flag = 'data:image/jpeg;base64,';
+                    let imageStr = arrayBufferToBase64(response.data.img.data.data);
+                    let picture=base64Flag+imageStr;
+                    temp[i] = {post:{author:res.data[i].author, contents:res.data[i].contents, topic:res.data[i].topic, id:res.data[i]._id, likers:res.data[i].likers, image: picture}};
+                }))
+            }
+            Promise.all(promises).then(()=>setInput({username: location.state.username, posts: temp}));
+		}).catch(function (error) {
+			console.log("Error Detected")
+		})
+    },[input.posts]);
 
     function handleClickPost(event) {
         navigate("/CreatePost", {state:{username:input.username}});
@@ -41,6 +65,21 @@ function Timeline() {
 			console.log("Error Detected")
 		})
     }
+
+    function handleLike(event, username, id){
+        axios.post("/getPost", {
+            id: id
+        }).then( res => {
+            if(res.data.likers.includes(username)){
+				unlikePost(event, username, id);
+			} else{
+				likePost(event, username, id);
+			}
+        }).catch(function(error){
+            console.log("Error Detected")
+        })
+	}
+
     function likePost(event, username, id){
         axios.post("/likePost", {
             username: username,
@@ -69,109 +108,94 @@ function Timeline() {
 		bytes.forEach((b) => binary += String.fromCharCode(b));
 		return window.btoa(binary);
 	};
-    
-    //function getPosts(){
-    useEffect(()=>{
-        axios.post("/getPosts", {
-			//criteria would go here
-		}).then (res => {
-            //put in console all the posts
-            let temp=[];
-            let promises=[];
-            for(let i = 0; i < res.data.length; i++){
-                promises.push(axios.post("/getUsers", {
-                    username: res.data[i].author
-                }).then (response=> {
-                    let base64Flag = 'data:image/jpeg;base64,';
-                    let imageStr = arrayBufferToBase64(response.data.img.data.data);
-                    let picture=base64Flag+imageStr;
-                    temp[i] = {post:{author:res.data[i].author, contents:res.data[i].contents, topic:res.data[i].topic, id:res.data[i]._id, likers:res.data[i].likers, image: picture}};
-                }))
-            }
-            Promise.all(promises).then(()=>setInput({username: location.state.username, posts: temp}));
-		}).catch(function (error) {
-			console.log("Error Detected")
-		})
-    },[input.posts]);
-    //}
 
     return(
-        <body className="wrapper">
-            <div className="Timeline-banner">
-                <button className="Timeline-logo-button"
-                        onClick={handleClickLogo}
-                ><b><img className='Timeline-logo' src="Logo_new.png" alt="STEM"></img></b>
+        <body>
+            <div className="Timeline-Top-Banner">
+                <button className="Timeline-Logo-Button"
+                    onClick={handleClickLogo}>
+                            
+                    <img className='Timeline-Logo-Image' src="Logo_new.png" alt="STEM"></img>
                 </button>
 
-                <a className="Timeline-banner-text">StemSpace</a>
-                <button className="Notification-button"
-                    onClick={handleClickPost}
-                    ><b><img src="post_button.png" className="Notification-logo" alt="Create-post"/></b>
+                <a className="Timeline-Banner-Text">StemSpace</a>
+
+                <button className="Timeline-Banner-Button"
+                    onClick={handleClickPost}>
+                    
+                    <img src="post_button.png" className="Timeline-Banner-Logos" alt="Create-post"/>
                 </button>
-                <button className="Notification-button"
-                    onClick={handleClickNotification}
-                    ><b><img src="Notification.png" className="Notification-logo" alt="Notification"/></b>
+
+                <button className="Timeline-Banner-Button"
+                    onClick={handleClickNotification}>
+                        
+                    <img src="Notification.png" className="Timeline-Banner-Logos" alt="Notification"/>
                 </button>
             </div>
-            <div className="Timeline-bar-horizontal"/>
-            <header className="Timeline-selector">
-                <p className="Timeline-following">Following</p>
-                <div className="Timeline-bar-vertical"/>
-                <p className="Timeline-topics">Topics</p>
-            </header>
-            <div className="Timeline-bar-horizontal"/>
-            <header className="Direct-messages">
 
+            <div className="Timeline-Horizontal-Bar"/>
+
+            <header className="Timeline-Selector">
+                <p className="Timeline-Following">Following</p>
+
+                <div className="Timeline-Vertical-Bar"/>
+
+                <p className="Timeline-Topics">Topics</p>
             </header>
-            <span class="Timeline-posts">
-                <ol>
-                    {input.posts.map((post)=>(
-                        <div className="Post">
-                            
-                            <button className="Name" onClick={(event) => {;
+
+            <div className="Timeline-Horizontal-Bar"/>
+
+            <span class="Timeline-Posts-Wrapper">
+                {input.posts.map((post)=>(
+                    <div className="Timeline-Post">
+                        
+                        <button className="Timeline-Post-Name" 
+                            onClick={(event) => {
                                 handleClickName(event, post.post.author)}}>
-                                
-                                <img className='Post-picture' src={post.post.image}></img>
-                                <b>@{post.post.author}</b>
-                            </button>  
-
-                            <p className="Topic">Topic: {post.post.topic ?  post.post.topic: "None"}</p>
-
-                            <button className="Post-Content" onClick={(event) => {;
-                            handlePost(event, post.post.id)}}>
-                                
-                            <p>{post.post.contents}</p>
-                            </button>
                             
+                            <img className='Timeline-Post-PFP' src={post.post.image}></img>
 
-                            {post.post.likers.includes(input.username) && <button className="Like"
-                                    onClick={(e) => {
-                                        unlikePost(e, input.username, post.post.id)
-                                    }}><b>{post.post.likers.length}|UNLIKE</b>
-                                </button>}
-                            {!post.post.likers.includes(input.username) && <button className="Like"
-                                    onClick={(e) => {
-                                        likePost(e, input.username, post.post.id)
-                                    }}><b>{post.post.likers.length}|LIKE</b>
-                                </button>}
+                            <b>@{post.post.author}</b>
 
-                                <div className="hide">{post.post.likers.map((liker)=>(
-                                    <button className="GreenButton" onClick={(event) => {;
-                                        handleClickName(event, liker)}}>
-                                    <b>@{liker}{"   "}</b> 
-                                    </button>
-                                ))}</div>
+                        </button>  
 
-                            {post.post.author===input.username && <button 
-                                        onClick={(e) => {
-                                            deletePost(e, post.post.id)
-                                        }}><b>Delete Post</b>
-                                </button>}
-                        </div>
-                    ))}
-                </ol>
-                
+                        <p className="Timeline-Post-Topic">Topic: {post.post.topic ?  post.post.topic: "None"}</p>
+
+                        <button className="Timeline-Post-Content" 
+                            onClick={(event) => {
+                                handlePost(event, post.post.id)}}>
+                            
+                            <p>{post.post.contents}</p>
+                        </button>
+                        
+
+                        <button className="Timeline-Like-Button"
+                            onClick={(e) => {
+                                handleLike(e, location.state.username, post.post.id)
+                            }}>
+                                
+                            <b>{post.post.likers.length}|{post.post.likers.includes(location.state.username)? "UNLIKE": "LIKE"}</b>
+                        </button>
+
+                        <div className="Timeline-Likers">{post.post.likers.map((liker)=>(
+                            <button className="Timeline-Liker-Button" 
+                                onClick={(event) => {;
+                                    handleClickName(event, liker)}}>
+
+                                <b>@{liker}</b> 
+                            </button>
+                        ))}</div>
+
+                        {post.post.author===input.username &&
+                        <button 
+                            onClick={(e) => {
+                                deletePost(e, post.post.id)
+                            }}><b>Delete Post</b>
+                        </button>}
+                    </div>
+                ))}
             </span>
+
             <span class="Timeline-DMs">
                     <p className="DM-header">Chats</p>
             </span>

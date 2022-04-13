@@ -278,8 +278,7 @@ function Profile() {
 
 
 		return (
-			<div>
-			
+			<body>
 				<div className="Profile-Top-Banner">
 					<button className="Profile-Logo-Button"
 							onClick={(e) => {
@@ -381,7 +380,7 @@ function Profile() {
 						</div>
 					))}
 				</header>
-			</div>
+			</body>
 	);
 }
 export default Profile;
