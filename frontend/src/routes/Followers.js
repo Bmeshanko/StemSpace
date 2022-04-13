@@ -48,10 +48,6 @@ function Followers(){
         navigate(`/Profile/${name}`, {state:{username:location.state.username}});
     }
 
-    function handleClickPost(event) {
-        navigate("/CreatePost", {state:{username:input.username}});
-    }
-
     function handleClickNotification(event) {
         navigate(`/Profile/${input.username}`, {state:{username:input.username}});
     }
@@ -66,7 +62,7 @@ function Followers(){
                 <button className="Timeline-Logo-Button"
                     onClick={handleClickLogo}>
                             
-                    <img className='Timeline-Logo-Image' src="Logo_new.png" alt="STEM"></img>
+                    <img className='Timeline-Logo-Image' src="/Logo_new.png" alt="STEM"></img>
                 </button>
 
                 <a className="Timeline-Banner-Text">StemSpace</a>
@@ -74,23 +70,26 @@ function Followers(){
                 <button className="Timeline-Banner-Button"
                     onClick={handleClickNotification}>
                         
-                    <img src="Notification.png" className="Timeline-Banner-Logos"/>
+                    <img src="/Notification.png" className="Timeline-Banner-Logos"/>
                 </button>
             </div>
 
             <div className="Timeline-Horizontal-Bar"/>
 
-            {input.users.map((user) => (
-                <button className="Follower-Wrapper">
-                    <img className="Follow-Profile-Picture" src={user.user.image}></img>
-                    <p
-                         onClick={(e) => {
-                            handleClickName(e,user.user.username)
-                        }}>
-                        @{user.user.username}
-                    </p>
-                </button>
-            ))}
+            <div className="Follower-Wrapper">
+                {input.users.map((user) => (
+                    <button className="Follower">
+                        <img className="Follow-Profile-Picture" src={user.user.image}></img>
+                        <p className="Follower-Name"
+                            onClick={(e) => {
+                                handleClickName(e,user.user.username)
+                            }}>
+                            @{user.user.username}
+                        </p>
+                    </button>
+                ))}
+            </div>
+            
         </body>
     );
 }
