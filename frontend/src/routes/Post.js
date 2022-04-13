@@ -187,7 +187,7 @@ function Post() {
     }
 
     return (
-        <body>
+        <body className="Ignore-X-Overflow">
             <div className="Post-Top-Banner">
                 <button className="Post-Logo-Button"
                     onClick={(e) => {

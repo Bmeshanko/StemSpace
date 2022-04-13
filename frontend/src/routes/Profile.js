@@ -278,7 +278,7 @@ function Profile() {
 
 
 		return (
-			<body>
+			<body className="Ignore-X-Overflow">
 				<div className="Profile-Top-Banner">
 					<button className="Profile-Logo-Button"
 							onClick={(e) => {

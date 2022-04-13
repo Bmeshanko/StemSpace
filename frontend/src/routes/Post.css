@@ -212,6 +212,10 @@
   filter: brightness(90%);
 }
 
+.Ignore-X-Overflow{
+    overflow-x: hidden;
+}
+
 
 
 
