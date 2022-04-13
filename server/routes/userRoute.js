@@ -269,6 +269,7 @@ router.post("/deletePost", (req, res) => {
         console.log(e);
     }
 });
+
 router.post("/followPage", (req, res) => {
     const view = req.body.view; //followers or following
 
@@ -418,6 +419,21 @@ router.post("/unlikeComment", (req, res) => {
         res.json(comment) //return post
     }, {collection: 'comments'});
 
+});
+
+router.post("/deleteComment", (req, res) => {
+    try {
+        const id = req.body.id; //get post id
+        let criteria = {_id: id}; //criteria to find post
+
+        //delete and return user
+        Comment.findOneAndDelete(criteria, function(err, users) {
+            res.json(users)
+        }, {collection: 'comments'});
+
+    } catch (e) {
+        console.log(e);
+    }
 });
 
 
