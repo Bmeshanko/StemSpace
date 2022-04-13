@@ -156,3 +156,18 @@
 .Profile-Liker-Button:hover{
   filter: brightness(90%);
 }
+
+.Edit-Profile-Button{
+  font-family: Consolas;
+  font-size: 20px;
+  padding: 12px;
+  width: 320px;
+  background-color: #5FAA4B;
+  border-radius: 8px;
+  border-color: #1F1F1F;
+  border-width: 1px;
+}
+
+.Edit-Profile-Button:hover{
+    filter: brightness(90%);
+  }

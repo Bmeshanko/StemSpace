@@ -167,14 +167,14 @@ function Profile() {
 		if(location.state.username !== userid && followbutton) {
 			if(state.following == false) {
 				return (
-					<button className="Edit-profile-button" onClick={(e) => {
+					<button className="Edit-Profile-Button" onClick={(e) => {
 						handleClickFollow()}} >
 						<b>Follow</b>
 					</button>
 				);
 			} else {
 				return (
-					<button className="Edit-profile-button"
+					<button className="Edit-Profile-Button"
 							onClick={(e) => {
 								handleClickUnfollow()}}>
 						<b>Unfollow</b>

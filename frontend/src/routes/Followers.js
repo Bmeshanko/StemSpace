@@ -1,8 +1,7 @@
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import './Timeline.css';
-
+import './Followers.css'
 
 function Followers(){
     const navigate = useNavigate();
@@ -49,20 +48,49 @@ function Followers(){
         navigate(`/Profile/${name}`, {state:{username:location.state.username}});
     }
 
+    function handleClickPost(event) {
+        navigate("/CreatePost", {state:{username:input.username}});
+    }
+
+    function handleClickNotification(event) {
+        navigate(`/Profile/${input.username}`, {state:{username:input.username}});
+    }
+
+    function handleClickLogo(event) {
+        navigate("/Timeline", {state:{username:input.username}});
+    }
+
     return(
         <body>
-        {location.state.view}
-                <ol>
-                    {input.users.map((user) => (
-                        <div className={"Post"}>
-                            <img className='SmallerPost-picture' src={user.user.image}></img>
-                            <button class = "Post" onClick={(e) => {
-                                handleClickName(e,user.user.username)}}>
-                                @{user.user.username}
-                            </button>
-                        </div>
-                    ))}
-                </ol>
+            <div className="Timeline-Top-Banner">
+                <button className="Timeline-Logo-Button"
+                    onClick={handleClickLogo}>
+                            
+                    <img className='Timeline-Logo-Image' src="Logo_new.png" alt="STEM"></img>
+                </button>
+
+                <a className="Timeline-Banner-Text">StemSpace</a>
+
+                <button className="Timeline-Banner-Button"
+                    onClick={handleClickNotification}>
+                        
+                    <img src="Notification.png" className="Timeline-Banner-Logos"/>
+                </button>
+            </div>
+
+            <div className="Timeline-Horizontal-Bar"/>
+
+            {input.users.map((user) => (
+                <button className="Follower-Wrapper">
+                    <img className="Follow-Profile-Picture" src={user.user.image}></img>
+                    <p
+                         onClick={(e) => {
+                            handleClickName(e,user.user.username)
+                        }}>
+                        @{user.user.username}
+                    </p>
+                </button>
+            ))}
         </body>
     );
 }
