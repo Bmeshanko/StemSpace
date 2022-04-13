@@ -3,17 +3,21 @@ import React, {Component, useState, useEffect} from 'react';
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 function Profile() {
+
 	const navigate = useNavigate();
 	const location = useLocation();
+
 	let followbutton;
-	const FOLLOWERS = Symbol("followers");
-	const FOLLOWING = Symbol("following");
 	if(location.state == null || location.state == "") {
 		followbutton = false;
 		location.state = "";
 	} else {
 		followbutton = true;	
 	}
+
+	const FOLLOWERS = Symbol("followers");
+	const FOLLOWING = Symbol("following");
+
 	const {userid} = useParams();
 	const [state, setState] = useState({
 		username: userid,
@@ -73,6 +77,18 @@ function Profile() {
 		})
 	}, [state.posts])
 
+
+	function UserPermissionsProfilePic() {
+		if(userid == location.state.username) {
+			return(	<button className="Profile-Picture-Button">
+					<label htmlFor="image"><b>Change Picture</b></label>
+					<input type="file" onChange={onImageChange} id="image" name="image" value="" required/>
+			</button>
+			)
+		}
+		return (<p></p>)
+	}
+
 	function onImageChange(event){
 		if (event.target.files && event.target.files[0]) {
 			let reader = new FileReader();
@@ -92,13 +108,6 @@ function Profile() {
 			reader.readAsDataURL(event.target.files[0]);
 		}
 	}
-
-	function arrayBufferToBase64(buffer) {
-		let binary = '';
-		let bytes = [].slice.call(new Uint8Array(buffer));
-		bytes.forEach((b) => binary += String.fromCharCode(b));
-		return window.btoa(binary);
-	};
 
 	function handleClickPost(e, username) {
 		if (!followbutton) {
@@ -125,12 +134,57 @@ function Profile() {
 		}
 	}
 
+	function UserPermissionsEditProfile() {
+		if(userid == location.state.username) {
+			return(<button className="Edit-profile-button"
+					onClick={(e) => {
+						handleClickEdit(e, state.username)
+					}}><b>Edit Profile</b>
+			</button>)
+		}
+		return (<p></p>)
+	}
+
 	function handleClickEdit(e, username) {
 			navigate("/EditProfile", {state: {username: location.state.username}});
+	}
+	
+	function UserPermissionsLogout() {
+		if(userid == location.state.username) {
+			return(	<button className="Edit-profile-button" onClick={(e) => {
+				handleCLickLogout(e)
+			}}><b>Log Out</b>
+			</button>)
+		}
+		return (<p></p>)
 	}
 
 	function handleCLickLogout(e) {
 		navigate("/");
+	}
+
+	function FollowButton(){
+		if(location.state.username !== userid && followbutton) {
+			if(state.following == false) {
+				return (
+					<button className="Edit-profile-button" onClick={(e) => {
+						handleClickFollow()}} >
+						<b>Follow</b>
+					</button>
+				);
+			} else {
+				return (
+					<button className="Edit-profile-button"
+							onClick={(e) => {
+								handleClickUnfollow()}}>
+						<b>Unfollow</b>
+					</button>
+				);
+			}
+			}
+		return(
+			<p></p>
+		)
 	}
 
 	function handleClickFollow(){
@@ -161,72 +215,21 @@ function Profile() {
 		}
 	}
 
-	function FollowButton(){
-		if(location.state.username !== userid && followbutton) {
-			if(state.following == false) {
-				return (
-					<button className="Edit-profile-button" onClick={(e) => {
-						handleClickFollow()}} >
-						<b>Follow</b>
-					</button>
-				);
-			} else {
-				return (
-					<button className="Edit-profile-button"
-							onClick={(e) => {
-								handleClickUnfollow()}}>
-						<b>Unfollow</b>
-					</button>
-				);
+	function handleLike(event, username, id){
+        axios.post("/getPost", {
+            id: id
+        }).then( res => {
+            if(res.data.likers.includes(username)){
+				unlikePost(event, username, id);
+			} else{
+				likePost(event, username, id);
 			}
-			}
-		return(
-			<p></p>
-		)
+        }).catch(function(error){
+            console.log("Error Detected")
+        })
 	}
 
-		function UserPermissionsEditProfile() {
-			if(userid == location.state.username) {
-				return(<button className="Edit-profile-button"
-						onClick={(e) => {
-							handleClickEdit(e, state.username)
-						}}><b>Edit Profile</b>
-				</button>)
-			}
-			return (<p></p>)
-		}
-
-	function UserPermissionsLogout() {
-		if(userid == location.state.username) {
-			return(	<button className="Edit-profile-button" onClick={(e) => {
-				handleCLickLogout(e)
-			}}><b>Log Out</b>
-			</button>)
-		}
-		return (<p></p>)
-	}
-
-	function UserPermissionsProfilePic() {
-		if(userid == location.state.username) {
-			return(	<button className="Profile-Picture-Button">
-					<label htmlFor="image"><b>Change Picture</b></label>
-					<input type="file" onChange={onImageChange} id="image" name="image" value="" required/>
-			</button>
-			)
-		}
-		return (<p></p>)
-	}
-
-	function deletePost(event,id) {
-        axios.post("/deletePost", {
-			id: id
-		}).then (res => {
-            //put in console all the posts
-		}).catch(function (error) {
-			console.log("Error Detected")
-		})
-    }
-    function likePost(event, username, id){
+	function likePost(event, username, id){
         axios.post("/likePost", {
             username: username,
             id: id
@@ -248,6 +251,16 @@ function Profile() {
         })
     }
 
+	function deletePost(event,id) {
+        axios.post("/deletePost", {
+			id: id
+		}).then (res => {
+            //put in console all the posts
+		}).catch(function (error) {
+			console.log("Error Detected")
+		})
+    }
+
 	function handleClickName(event, name) {
         navigate(`/Profile/${name}`, {state:{username:location.state.username}});
     }
@@ -256,20 +269,13 @@ function Profile() {
         navigate(`/Post/${postid}`, {state:{username:location.state.username}});
     }
 
-	function handleLike(event, username, id){
-		
-        axios.post("/getPost", {
-            id: id
-        }).then( res => {
-            if(res.data.likers.includes(username)){
-				unlikePost(event, username, id);
-			} else{
-				likePost(event, username, id);
-			}
-        }).catch(function(error){
-            console.log("Error Detected")
-        })
-	}
+	function arrayBufferToBase64(buffer) {
+		let binary = '';
+		let bytes = [].slice.call(new Uint8Array(buffer));
+		bytes.forEach((b) => binary += String.fromCharCode(b));
+		return window.btoa(binary);
+	};
+
 
 		return (
 			<div>
