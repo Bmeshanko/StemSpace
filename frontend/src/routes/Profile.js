@@ -80,7 +80,7 @@ function Profile() {
 
 	function UserPermissionsProfilePic() {
 		if(userid == location.state.username) {
-			return(	<button className="Profile-Picture-Button">
+			return(	<button className="Big-Green-Button">
 					<label htmlFor="image"><b>Change Picture</b></label>
 					<input type="file" onChange={onImageChange} id="image" name="image" value="" required/>
 			</button>
@@ -136,7 +136,7 @@ function Profile() {
 
 	function UserPermissionsEditProfile() {
 		if(userid == location.state.username) {
-			return(<button className="Edit-profile-button"
+			return(<button className="Big-Green-Button"
 					onClick={(e) => {
 						handleClickEdit(e, state.username)
 					}}><b>Edit Profile</b>
@@ -151,7 +151,7 @@ function Profile() {
 	
 	function UserPermissionsLogout() {
 		if(userid == location.state.username) {
-			return(	<button className="Edit-profile-button" onClick={(e) => {
+			return(	<button className="Big-Green-Button" onClick={(e) => {
 				handleCLickLogout(e)
 			}}><b>Log Out</b>
 			</button>)
@@ -317,8 +317,8 @@ function Profile() {
 								<UserPermissionsEditProfile />
 								<UserPermissionsLogout />
 								<UserPermissionsProfilePic />
-								<h6>{state.followers} <button onClick={(e)=>{handClickShowFollowers(FOLLOWERS)}}>Followers</button></h6>
-								<h6>{state.following_number} <button onClick={(e)=>{handClickShowFollowers(FOLLOWING)}}>Following</button></h6>
+								<h3>{state.followers} <button className="Big-Green-Button" onClick={(e)=>{handClickShowFollowers(FOLLOWERS)}}>Followers</button></h3>
+								<h3>{state.following_number} <button className="Big-Green-Button" onClick={(e)=>{handClickShowFollowers(FOLLOWING)}}>Following</button></h3>
 								<p className="username">@{userid}</p>
 								<p>{state.bio}</p>
 								<FollowButton />
@@ -370,7 +370,7 @@ function Profile() {
 							</div>
 
 							{post.post.author===location.state.username && 
-							<button 
+							<button className="Profile-Like-Button"
 								onClick={(e) => {
 									deletePost(e, post.post.id)
 								}}>

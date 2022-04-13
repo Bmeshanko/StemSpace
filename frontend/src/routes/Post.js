@@ -244,7 +244,8 @@ function Post() {
                     </button>							
                 ))}</div>
 
-                {state.author===location.state.username && <button 
+                {state.author===location.state.username && 
+                <button className="Post-Like-Button"
                     onClick={(e) => {
                         deletePost(e, postid)
                     }}>

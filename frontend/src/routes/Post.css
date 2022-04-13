@@ -56,8 +56,8 @@
     margin-bottom: 4px;
     margin-top: 5px;
     padding: 5px;
-    padding-bottom: 0px;
-    padding-left: 0px;
+    padding-bottom: 1px;
+    padding-left: 1px;
 }
 
 .Post-Post-Content {
@@ -95,6 +95,17 @@
 .Post-Post-Topic{
     font-size: 15px;
     float: right;
+}
+
+.Post-Like-Button{
+    background-color: #5FAA4B;
+    border-radius: 5px;
+    border-color: #1F1F1F;
+    border-width: 1px;
+}
+
+.Post-Like-Button:hover{
+    filter: brightness(90%);
 }
 
 .Post-Like-Button:hover + .Post-Likers {

@@ -49,6 +49,7 @@
 
 .Profile-bio {
     background-color: #DDDDDD;
+    padding-top: 10px;
 }
 
 .Profile-picture {
@@ -86,8 +87,8 @@
     border-width: 1px;
     margin-bottom: 4px;
     padding: 5px;
-    padding-bottom: 0px;
-    padding-left: 0px;
+    padding-bottom: 1px;
+    padding-left: 1px;
 }
 
 .Profile-Post-Name{
@@ -125,6 +126,17 @@
     background-color: #5FAA4B;
     line-height: 0.5;
     border-style: hidden;
+}
+
+.Profile-Like-Button{
+  background-color: #5FAA4B;
+  border-radius: 5px;
+  border-color: #1F1F1F;
+  border-width: 1px;
+}
+
+.Profile-Like-Button:hover{
+    filter: brightness(90%);
 }
 
 .Profile-Like-Button:hover + .Profile-Likers {
@@ -170,4 +182,19 @@
 
 .Edit-Profile-Button:hover{
     filter: brightness(90%);
+  }
+
+  .Big-Green-Button{
+    font-family: Consolas;
+    font-size: 20px;
+    padding: 12px;
+    width: 200px;
+    background-color: #5FAA4B;
+    border-radius: 8px;
+    border-color: #1F1F1F;
+    border-width: 1px;
+  }
+
+  .Big-Green-Button:hover{
+      filter: brightness(90%);
   }

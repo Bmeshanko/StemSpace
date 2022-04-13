@@ -32,6 +32,10 @@
     padding-left: 0px;
 }
 
+.Follower:hover{
+    filter: brightness(90%);
+}
+
 .Follower-Name{
     display: inline;
 }

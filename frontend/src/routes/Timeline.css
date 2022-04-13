@@ -97,8 +97,8 @@
     line-height: 0.5;   
     margin-bottom: 4px;
     padding: 5px;
-    padding-bottom: 0px;
-    padding-left: 0px;
+    padding-bottom: 1px;
+    padding-left: 1px;
 }
 
 .Timeline-Post-Name{
@@ -136,6 +136,17 @@
     background-color: #5FAA4B;
     line-height: 0.5;
     border-style: hidden;
+}
+
+.Timeline-Like-Button{
+  background-color: #5FAA4B;
+  border-radius: 5px;
+  border-color: #1F1F1F;
+  border-width: 1px;
+}
+
+.Timeline-Like-Button:hover{
+    filter: brightness(90%);
 }
 
 .Timeline-Like-Button:hover + .Timeline-Likers {

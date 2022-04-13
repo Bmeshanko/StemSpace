@@ -187,7 +187,7 @@ function Timeline() {
                         ))}</div>
 
                         {post.post.author===input.username &&
-                        <button 
+                        <button className="Timeline-Like-Button"
                             onClick={(e) => {
                                 deletePost(e, post.post.id)
                             }}><b>Delete Post</b>
