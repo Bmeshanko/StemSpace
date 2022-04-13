@@ -49,7 +49,6 @@ function Profile() {
 		axios.post("/getPostsFromUser", {
 			username: userid
 		}).then (res => {
-            //put in console all the posts
             let temp=[];
             let promises=[];
             for(let i = 0; i < res.data.length; i++){
@@ -141,18 +140,6 @@ function Profile() {
 		}).then(res =>{
 			setState(prevState => ({ ...prevState,following:true}));
 			setState(prevState => ({...prevState, followers: state.followers+1}))
-			// axios.post("/getUsers", {
-			// 	username: userid
-			// }).then(res => {
-			// 	if (res.data == null) {
-			// 		alert("Profile not Found")
-			// 	} else {
-			// 		setState(prevState => ({ ...prevState,following:res.data.followers.includes(location.state.username)}));
-			// 		setState(prevState => ({...prevState, followers: res.data.followers.length}))
-			// 	}
-			// }).catch(function (error) {
-			// 	console.log("Error Detected")
-			// })
 		})
 	}
 
@@ -161,17 +148,6 @@ function Profile() {
 			user: location.state.username,
 			followed_user: userid
 		}).then(res =>{
-			// axios.post("/getUsers", {
-			// 	username: userid
-			// }).then(res => {
-			// 	if (res.data == null) {
-			// 		alert("Profile not Found")
-			// 	} else {
-			// 		setState(prevState => ({ ...prevState,following:res.data.followers.includes(location.state.username)}));
-			// 	}
-			// }).catch(function (error) {
-			// 	console.log("Error Detected")
-			// })
 			setState(prevState => ({ ...prevState,following:false}));
 			setState(prevState => ({...prevState, followers: state.followers-1}))
 		})
@@ -280,99 +256,126 @@ function Profile() {
         navigate(`/Post/${postid}`, {state:{username:location.state.username}});
     }
 
+	function handleLike(event, username, id){
+		
+        axios.post("/getPost", {
+            id: id
+        }).then( res => {
+            if(res.data.likers.includes(username)){
+				unlikePost(event, username, id);
+			} else{
+				likePost(event, username, id);
+			}
+        }).catch(function(error){
+            console.log("Error Detected")
+        })
+	}
+
 		return (
-			<body>
-			<div className="Banner">
-				<button className="Timeline-logo-button"
-						onClick={(e) => {
-							handleClickLogo(e, state.username)
-						}}
-				><b><img className='Timeline-logo' src="/Logo_new.png" alt="STEM"></img></b>
-				</button>
+			<div>
+			
+				<div className="Profile-Top-Banner">
+					<button className="Profile-Logo-Button"
+							onClick={(e) => {
+								handleClickLogo(e, state.username)
+							}}>
+							
+							<img className='Profile-Logo-Image' src="/Logo_new.png" alt="STEM"></img>
+					</button>
 
-				<a className="Timeline-banner-text">StemSpace</a>
-				<button className="Notification-button"
-						onClick={(e) => {
-							handleClickPost(e, state.username)
-						}}
-				><b><img src="/post_button.png" className="Notification-logo" alt="Create-post"/></b>
-				</button>
-				<button className="Notification-button"
-						onClick={(e) => {
-							handleClickNotification(e)
-						}}
-				><b><img src="/Notification.png" className="Notification-logo" alt="Notification"/></b>
-				</button>
-			</div>
-			<div className="Timeline-bar-horizontal"/>
-			<header className="Profile-bio">
-				<img className='Profile-picture' src={state.image}></img>
-				<span className="Profile-info">
-						<div>
-							<UserPermissionsEditProfile />
-							<UserPermissionsLogout />
-							<UserPermissionsProfilePic />
-							<h6>{state.followers} <button onClick={(e)=>{handClickShowFollowers(FOLLOWERS)}}>followers</button></h6>
-                       		<h6>{state.following_number} <button onClick={(e)=>{handClickShowFollowers(FOLLOWING)}}>following</button></h6>
-							<p className="username">@{userid}</p>
-							<p>{state.bio}</p>
-							<FollowButton />
+					<a className="Profile-Banner-Text">StemSpace</a>
+
+					<button className="Profile-Banner-Button"
+							onClick={(e) => {
+								handleClickPost(e, state.username)
+							}}>
+								
+							<img src="/post_button.png" className="Profile-Banner-Logos" alt="Create-post"/>
+					</button>
+
+					<button className="Profile-Banner-Button"
+							onClick={(e) => {
+								handleClickNotification(e, state.username)
+							}}>
+								
+							<img src="/Notification.png" className="Profile-Banner-Logos" alt="Notification"/>
+					</button>
+				</div>
+
+				<div className="Profile-Horizontal-Bar"/>
+
+				<header className="Profile-bio">
+					<img className='Profile-picture' src={state.image}></img>
+
+					<span className="Profile-info">
+							<div>
+								<UserPermissionsEditProfile />
+								<UserPermissionsLogout />
+								<UserPermissionsProfilePic />
+								<h6>{state.followers} <button onClick={(e)=>{handClickShowFollowers(FOLLOWERS)}}>Followers</button></h6>
+								<h6>{state.following_number} <button onClick={(e)=>{handClickShowFollowers(FOLLOWING)}}>Following</button></h6>
+								<p className="username">@{userid}</p>
+								<p>{state.bio}</p>
+								<FollowButton />
+							</div>
+					</span>
+				</header>
+
+				<header class="Profile-Posts-Wrapper">
+					{state.posts.map((post)=>(
+						<div className="Profile-Post">
+							<button className="Profile-Post-Name"
+								onClick={(event) => {
+									handleClickName(event, post.post.author)
+								}}>
+
+								<img className="Profile-Post-PFP" src={post.post.image}></img>
+								<b>@{post.post.author}</b>
+							</button>  
+
+							<p className="Profile-Post-Topic">Topic: {post.post.topic ?  post.post.topic: "None"}</p>
+
+							<button className="Profile-Post-Content" 
+								onClick={(event) => {
+									handlePost(event, post.post.id)
+								}}>
+								
+								<p>{post.post.contents}</p>
+							</button>
+							
+
+							<button className="Profile-Like-Button"
+									onClick={(e) => {
+										handleLike(e, location.state.username, post.post.id)
+									}}>
+									
+									<b>{post.post.likers.length}|{post.post.likers.includes(location.state.username)? "UNLIKE": "LIKE"}</b>
+							</button>
+
+							<div className="Profile-Likers"
+								>{post.post.likers.map((liker)=>(
+									<button className="Profile-Liker-Button" 
+										onClick={(event) => {;
+											handleClickName(event, liker)
+										}}>
+
+										<b>@{liker}</b> 
+									</button>
+								))}
+							</div>
+
+							{post.post.author===location.state.username && 
+							<button 
+								onClick={(e) => {
+									deletePost(e, post.post.id)
+								}}>
+									
+								<b>Delete Post</b>
+							</button>}
 						</div>
-
-             		</span>
-
-			</header>
-			<header class="Posts">
-                <ol>
-                    {state.posts.map((post)=>(
-                        <div className="Post">
-                        
-                            
-						<button className="Name" onClick={(event) => {;
-                                handleClickName(event, post.post.author)}}>
-                                
-                                <img className='Post-picture' src={post.post.image}></img>
-                                <b>@{post.post.author}</b>
-                            </button>  
-
-                            <p className="Topic">Topic: {post.post.topic ?  post.post.topic: "None"}</p>
-
-                            <button className="Post-Content" onClick={(event) => {;
-                            handlePost(event, post.post.id)}}>
-                                
-                            <p>{post.post.contents}</p>
-                            </button>
-                            
-
-                            {post.post.likers.includes(location.state.username) && <button className="Like"
-                                    onClick={(e) => {
-                                        unlikePost(e, location.state.username, post.post.id)
-                                    }}><b>{post.post.likers.length}|UNLIKE</b>
-                                </button>}
-                            {!post.post.likers.includes(location.state.username) && <button className="Like"
-                                    onClick={(e) => {
-                                        likePost(e, location.state.username, post.post.id)
-                                    }}><b>{post.post.likers.length}|LIKE</b>
-                                </button>}
-
-                                <div className="hide">{post.post.likers.map((liker)=>(
-                                    <button className="GreenButton" onClick={(event) => {;
-                                        handleClickName(event, liker)}}>
-                                    <b>@{liker}{"   "}</b> 
-                                    </button>
-                                ))}</div>
-
-                            {post.post.author===location.state.username && <button 
-                                        onClick={(e) => {
-                                            deletePost(e, post.post.id)
-                                        }}><b>Delete Post</b>
-                                </button>}
-                        </div>
-                    ))}
-                </ol>
-                
-            </header>
-			</body>
-		);
+					))}
+				</header>
+			</div>
+	);
 }
 export default Profile;
