@@ -1,5 +1,4 @@
 import './EditProfile.css';
-import Sha1 from './Sha1.js';
 import React, {useState} from "react";
 import axios from "axios";
 import {useNavigate, useLocation} from "react-router-dom";
@@ -32,10 +31,33 @@ function EditProfile() {
     	});
         
     }
+    function onImageChange(event){
+        if (event.target.files && event.target.files[0]) {
+			let reader = new FileReader();
+			const size=event.target.files[0].size;
+			if(size>18000)
+			{
+				alert("File too large, will not be saved!")
+			}
+			reader.onload = (e) => {
+				axios.post("/editImage", {
+					image: e.target.result,
+					username: input.username
+				}).then(res => {
+                    navigate(`/Profile/${input.username}`, {state:{username:input.username}});
+				})
+			};
+			reader.readAsDataURL(event.target.files[0]);
+		}
+    }
 
     return (
         <body>
         <header className="Edit-profile-header">
+            <button className="Big-Green-Button">
+					<label htmlFor="image"><b>Change Picture</b></label>
+					<input type="file" onChange={onImageChange} id="image" name="image" value="" required/>
+			</button>
             <div className="Edit-profile-space"></div>
             <textarea className="Biography" onChange={handleChange} value={input.bio} id="bio" name="bio" placeholder="Write about yourself...">
             </textarea>

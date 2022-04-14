@@ -77,38 +77,6 @@ function Profile() {
 		})
 	}, [state.posts])
 
-
-	function UserPermissionsProfilePic() {
-		if(userid == location.state.username) {
-			return(	<button className="Big-Green-Button">
-					<label htmlFor="image"><b>Change Picture</b></label>
-					<input type="file" onChange={onImageChange} id="image" name="image" value="" required/>
-			</button>
-			)
-		}
-		return (<p></p>)
-	}
-
-	function onImageChange(event){
-		if (event.target.files && event.target.files[0]) {
-			let reader = new FileReader();
-			const size=event.target.files[0].size;
-			if(size>18000)
-			{
-				alert("File too large, will not be saved!")
-			}
-			reader.onload = (e) => {
-				setState(prevState => ({ ...prevState, image: e.target.result}));
-				axios.post("/editImage", {
-					image: e.target.result,
-					username: state.username
-				}).then(res => {
-				})
-			};
-			reader.readAsDataURL(event.target.files[0]);
-		}
-	}
-
 	function handleClickPost(e, username) {
 		if (!followbutton) {
 			navigate("/Front");
@@ -316,7 +284,6 @@ function Profile() {
 							<div>
 								<UserPermissionsEditProfile />
 								<UserPermissionsLogout />
-								<UserPermissionsProfilePic />
 								<h3>{state.followers} <button className="Big-Green-Button" onClick={(e)=>{handClickShowFollowers(FOLLOWERS)}}>Followers</button></h3>
 								<h3>{state.following_number} <button className="Big-Green-Button" onClick={(e)=>{handClickShowFollowers(FOLLOWING)}}>Following</button></h3>
 								<p className="username">@{userid}</p>

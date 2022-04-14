@@ -217,6 +217,7 @@ router.post("/editBio", (req, res) => {
 
 router.post("/editImage", (req, res) => {
     try {
+        console.log(req);
         const newImage = req.body.image; //get new image
         var picdata=newImage.substring(23); //get new image data
         const username = req.body.username; //get username
