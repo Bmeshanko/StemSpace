@@ -1,8 +1,10 @@
 import './ForgotPassword.css';
+import React from 'react'
+// import ReactDOM from 'react-dom'
 import axios from "axios";
 import {useState} from "react";
-import {wait} from "@testing-library/user-event/dist/utils";
-import {waitFor} from "@testing-library/react";
+// import {wait} from "@testing-library/user-event/dist/utils";
+// import {waitFor} from "@testing-library/react";
 
 function ForgotPassword() {
 
