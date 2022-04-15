@@ -78,12 +78,12 @@ function Followers(){
 
             <div className="Follower-Wrapper">
                 {input.users.map((user) => (
-                    <button className="Follower">
+                    <button className="Follower"
+                        onClick={(e) => {
+                            handleClickName(e,user.user.username)
+                        }}>
                         <img className="Follow-Profile-Picture" src={user.user.image}></img>
-                        <p className="Follower-Name"
-                            onClick={(e) => {
-                                handleClickName(e,user.user.username)
-                            }}>
+                        <p className="Follower-Name">
                             @{user.user.username}
                         </p>
                     </button>

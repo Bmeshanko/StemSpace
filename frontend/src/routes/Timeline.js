@@ -153,9 +153,7 @@ function Timeline() {
                             onClick={(event) => {
                                 handleClickName(event, post.post.author)}}>
                             
-                            <img className='Timeline-Post-PFP' src={post.post.image} 
-                            onClick={(event) => {
-                                handleClickName(event, post.post.author)}}></img>
+                            <img className='Timeline-Post-PFP' src={post.post.image}></img>
                             <b>@{post.post.author}</b>
 
                         </button>  
