@@ -8,11 +8,13 @@ function Profile() {
 	const location = useLocation();
 
 	let followbutton;
+	let blockbutton;
 	if(location.state == null || location.state == "") {
 		followbutton = false;
 		location.state = "";
 	} else {
-		followbutton = true;	
+		followbutton = true;
+		blockbutton = true;
 	}
 
 	const FOLLOWERS = Symbol("followers");
@@ -24,6 +26,7 @@ function Profile() {
 		bio: '',
 		image: "",
 		following: false,
+		blocking: false,
 		followers: 0,
 		following_number: 0,
 		posts: []
@@ -132,7 +135,7 @@ function Profile() {
 	}
 
 	function FollowButton(){
-		if(location.state.username !== userid && followbutton) {
+		if (location.state.username !== userid && followbutton) {
 			if(state.following == false) {
 				return (
 					<button className="Edit-Profile-Button" onClick={(e) => {
@@ -155,6 +158,30 @@ function Profile() {
 		)
 	}
 
+	function BlockButton() {
+		if (location.state.username !== userid && blockbutton) {
+			if (state.blocking == false) {
+				return (
+					<button className="Edit-Profile-Button" onClick={(e) => {
+						handleClickBlock()}} >
+						<b>Block</b>
+					</button>
+				);
+			} else {
+				return (
+					<button className="Edit-Profile-Button"
+							onClick={(e) => {
+								handleClickUnblock()}}>
+						<b>Unfollow</b>
+					</button>
+				);
+			}
+		}
+		return(
+			<p></p>
+		)
+	}
+
 	function handleClickFollow(){
 		axios.post("/follow",{
 			user: location.state.username,
@@ -166,12 +193,32 @@ function Profile() {
 	}
 
 	function handleClickUnfollow(){
-		axios.post("/Unfollow",{
+		axios.post("/unfollow",{
 			user: location.state.username,
 			followed_user: userid
 		}).then(res =>{
 			setState(prevState => ({ ...prevState,following:false}));
 			setState(prevState => ({...prevState, followers: state.followers-1}))
+		})
+	}
+
+	function handleClickBlock(){
+		axios.post("/block",{
+			user: location.state.username,
+			blocked_user: userid
+		}).then(res =>{
+			setState(prevState => ({ ...prevState, blocking:true}));
+			setState(prevState => ({...prevState, blockers: state.blockers + 1}))
+		})
+	}
+
+	function handleClickUnblock(){
+		axios.post("/unblock",{
+			user: location.state.username,
+			blocked_user: userid
+		}).then(res =>{
+			setState(prevState => ({ ...prevState,blocking:false}));
+			setState(prevState => ({...prevState, blockers: state.blockers - 1}))
 		})
 	}
 
@@ -289,6 +336,7 @@ function Profile() {
 								<p className="username">@{userid}</p>
 								<p>{state.bio}</p>
 								<FollowButton />
+								<BlockButton />
 							</div>
 					</span>
 				</header>
