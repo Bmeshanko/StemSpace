@@ -14,6 +14,8 @@ const userSchema = {
     verification: Boolean,
     following: Array,
     followers: Array,
+    blocking: Array,
+    blockers: Array,
     expireAt: {
         type: Date,
         default: Date.now,

@@ -52,6 +52,45 @@ router.post("/unfollow", (req, res) => {
     }, {collection: 'users'});
 })
 
+router.post("/block", (req, res) => {
+    const user = req.body.user; //get current user
+    const blocked_user = req.body.blocked_user; //get user who is getting followed
+    
+    const criteria = {username: user} //criteria to search for "user"
+    const criteria_blocked = {username: blocked_user} //criteria to search for "followed_user"
+    
+    const update = {$addToSet: {blocking: blocked_user}} //update to add "followed_user" to "user"s following  
+    const update_blocked = {$addToSet: {blockers: user}} //update to add "user" to "followed_user"s followed
+
+    //add "followed_user" to "user"s following
+    User.findOneAndUpdate(criteria, update, function(err, users) {
+    }, {collection: 'users'});
+
+    //add "user" to "followed_user"s followed
+    User.findOneAndUpdate(criteria_blocked, update_blocked, function(err, users) {
+        res.json(users)
+    }, {collection: 'users'});
+})
+
+router.post("/unfollow", (req, res) => {
+    const user = req.body.user; //get current user
+    const blocked_user = req.body.blocked_user; //get user who is getting followed
+    
+    const criteria = {username: user} //criteria to search for "user"
+    const criteria_blocked = {username: blocked_user} //criteria to search for "followed_user"
+    
+    const update = {$pull: {blocking: blocked_user}} //update to remove "followed_user" to "user"s following
+    const update_blocked = {$pull: {blockers: user}} //update to remove "user" to "followed_user"s followed
+
+    //remove "followed_user" to "user"s following
+    User.findOneAndUpdate(criteria, update, function(err, users) {
+    }, {collection: 'users'});
+
+    //remove "user" to "followed_user"s followed
+    User.findOneAndUpdate(criteria_blocked, update_blocked, function(err, users) {
+        res.json(users)
+    }, {collection: 'users'});
+})
 
 router.post("/createUser", (req, res) => {
     const code = Math.floor(1000 + Math.random() * 9000); //create random confirmation code
