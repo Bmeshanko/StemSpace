@@ -13,17 +13,22 @@ function Timeline() {
         posts: [],
         following: [],
         viewing: "",
-        topic: "None"
+        topic: "None",
+        blocked: []
     })
 
     useEffect(()=>{
         axios.post("/getUsers", {
 			username: location.state.username
 		}).then (res => {
-            let followList = [];
             for(let i = 0; i < res.data.following.length; i++){
-                followList[i] = res.data.following[i];
                 input.following.push(res.data.following[i]);
+            }
+            for(let i = 0; i < res.data.blocking.length; i++){
+                input.blocked.push(res.data.blocking[i])
+            }
+            for(let i = 0; i < res.data.blockers.length; i++){
+                input.blocked.push(res.data.blockers[i])
             }
 		}).catch(function (error) {
 			console.log("Error Detected")
@@ -139,6 +144,10 @@ function Timeline() {
         return input.topic === post.post.topic;
     }
 
+    function removeBlocks(post){
+        return !(input.blocked.includes(post.post.author));
+    }
+
     function filterPosts(posts, viewing, topic){
         let filteredArray = posts;
         if(viewing === "Follow"){
@@ -150,6 +159,7 @@ function Timeline() {
         if(topic == "Follow"){
             //code for filtering array by only topics that the user follows
         }
+        filteredArray = filteredArray.filter(removeBlocks);
         return filteredArray;
     }
 
