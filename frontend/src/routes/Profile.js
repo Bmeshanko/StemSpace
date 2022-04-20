@@ -173,7 +173,7 @@ function Profile() {
 					<button className="Edit-Profile-Button"
 							onClick={(e) => {
 								handleClickUnblock()}}>
-						<b>Unfollow</b>
+						<b>Unblock</b>
 					</button>
 				);
 			}

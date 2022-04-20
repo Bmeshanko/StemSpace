@@ -10,8 +10,24 @@ function Timeline() {
 
     const [input, setInput] = useState({
         username: location.state.username,
-        posts: []
+        posts: [],
+        blocked: []
     })
+
+    useEffect(()=>{
+        axios.post("/getUsers", {
+			username: location.state.username
+		}).then (res => {
+            for(let i = 0; i< res.data.blocking; i++){
+                input.blocked.push(res.data.blocking[i]);
+            }
+            for(let i = 0; i< res.data.blockers; i++){
+                input.blocked.push(res.data.blockers[i]);
+            }
+		}).catch(function (error) {
+			console.log("Error Detected")
+		})
+    },[]);
 
     useEffect(()=>{
         axios.post("/getPosts", {
@@ -27,7 +43,12 @@ function Timeline() {
                     let base64Flag = 'data:image/jpeg;base64,';
                     let imageStr = arrayBufferToBase64(response.data.img.data.data);
                     let picture=base64Flag+imageStr;
-                    temp[i] = {post:{author:res.data[i].author, contents:res.data[i].contents, topic:res.data[i].topic, id:res.data[i]._id, likers:res.data[i].likers, image: picture}};
+                    temp[i] = {post:{author:res.data[i].author, 
+                        contents:res.data[i].contents, 
+                        topic:res.data[i].topic, 
+                        id:res.data[i]._id, 
+                        likers:res.data[i].likers, 
+                        image: picture}};
                 }))
             }
             Promise.all(promises).then(()=>setInput({username: location.state.username, posts: temp}));
@@ -109,6 +130,13 @@ function Timeline() {
 		return window.btoa(binary);
 	};
 
+    function filterPosts(posts){
+        let filteredArray = posts;
+        for(let i = 0; i < posts.length; i++){
+        }
+        return filteredArray;
+    }
+
     return(
         <body>
             <div className="Timeline-Top-Banner">
@@ -146,7 +174,7 @@ function Timeline() {
             <div className="Timeline-Horizontal-Bar"/>
 
             <span class="Timeline-Posts-Wrapper">
-                {input.posts.map((post)=>(
+                {filterPosts(input.posts).map((post)=>(
                     <div className="Timeline-Post">
                         
                         <button className="Timeline-Post-Name" 
