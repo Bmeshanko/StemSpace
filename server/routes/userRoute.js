@@ -72,7 +72,7 @@ router.post("/block", (req, res) => {
     }, {collection: 'users'});
 })
 
-router.post("/unfollow", (req, res) => {
+router.post("/unblock", (req, res) => {
     const user = req.body.user; //get current user
     const blocked_user = req.body.blocked_user; //get user who is getting followed
     
