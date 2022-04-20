@@ -12,7 +12,8 @@ function Timeline() {
         username: location.state.username,
         posts: [],
         following: [],
-        viewing: ""
+        viewing: "",
+        topic: "None"
     })
 
     useEffect(()=>{
@@ -134,11 +135,17 @@ function Timeline() {
         return (input.following.includes(post.post.author) || post.post.author === location.state.username);
     }
 
-    function filterPosts(posts, viewing){
-        console.log(viewing);
+    function filterTopic(post){
+        return input.topic === post.post.topic;
+    }
+
+    function filterPosts(posts, viewing, topic){
         let filteredArray = posts;
         if(viewing === "Follow"){
-            return filteredArray.filter(isFollowing);
+            filteredArray = filteredArray.filter(isFollowing);
+        }
+        if(topic != "None"){
+            filteredArray = filteredArray.filter(filterTopic);
         }
         return filteredArray;
     }
@@ -149,7 +156,11 @@ function Timeline() {
         } else{
             setInput(prevState => ({ ...prevState, viewing: "Follow"}));
         }
+    }
 
+    function viewTopic(event) {
+        const {value} = event.target;
+        setInput(prevState => ({ ...prevState, topic: value}));
     }
 
     return(
@@ -181,17 +192,33 @@ function Timeline() {
             <header className="Timeline-Selector">
                 <button className="Timeline-Following"
                     onClick={viewFollowing}
-                >Following</button>
+                >{input.viewing==="Follow"? "All": "Following"}</button>
 
                 <div className="Timeline-Vertical-Bar"/>
 
-                <p className="Timeline-Topics">Topics</p>
+                <select className="Topic-Selector" name="topic" id="topic" value={input.topic} onChange={viewTopic}>
+                    <option className="Timeline-Topic-Selection" value="None">No Topic</option>
+                    <option className="Timeline-Topic-Selection" value="Art">Art</option>
+                    <option className="Timeline-Topic-Selection" value="Biology">Biology</option>
+                    <option className="Timeline-Topic-Selection" value="Blogs">Blogs</option>
+                    <option className="Timeline-Topic-Selection" value="ComSci">ComSci</option>
+                    <option className="Timeline-Topic-Selection" value="Earth">Earth</option>
+                    <option className="Timeline-Topic-Selection" value="Engineering">Engineering</option>
+                    <option className="Timeline-Topic-Selection" value="Fitness">Fitness</option>
+                    <option className="Timeline-Topic-Selection" value="Funny">Funny</option>
+                    <option className="Timeline-Topic-Selection" value="Gaming">Gaming</option>
+                    <option className="Timeline-Topic-Selection" value="Health">Health</option>
+                    <option className="Timeline-Topic-Selection" value="Math">Math</option>
+                    <option className="Timeline-Topic-Selection" value="Music">Music</option>
+                    <option className="Timeline-Topic-Selection" value="Psychology">Psychology</option>
+                    <option className="Timeline-Topic-Selection" value="Sports">Sports</option>
+                </select>
             </header>
 
             <div className="Timeline-Horizontal-Bar"/>
 
             <span class="Timeline-Posts-Wrapper">
-                {filterPosts(input.posts, input.viewing).map((post)=>(
+                {filterPosts(input.posts, input.viewing, input.topic).map((post)=>(
                     <div className="Timeline-Post">
                         
                         <button className="Timeline-Post-Name" 

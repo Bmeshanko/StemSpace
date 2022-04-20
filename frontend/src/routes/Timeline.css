@@ -64,19 +64,26 @@
     border-style: hidden;
 }
 
-
 .Timeline-Vertical-Bar{
     background-color: #1F1F1F;
     width: 1px;
-    height: 64px;
+    height: 59px;
     display: inline-grid;
     position: absolute;
 }
 
-.Timeline-Topics {
+.Topic-Selector{
+    font-size: 20px;
     display: inline-grid;
     width: 50%;
     text-align: center;
+    padding-top: 16px;
+    padding-bottom: 18px;
+    border-style: hidden;
+}
+
+.Timeline-Topic-Selection{
+    font-size: 12px;
 }
 
 .Timeline-Posts-Wrapper {
