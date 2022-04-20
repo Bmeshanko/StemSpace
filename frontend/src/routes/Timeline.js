@@ -11,18 +11,18 @@ function Timeline() {
     const [input, setInput] = useState({
         username: location.state.username,
         posts: [],
-        blocked: []
+        following: [],
+        viewing: ""
     })
 
     useEffect(()=>{
         axios.post("/getUsers", {
 			username: location.state.username
 		}).then (res => {
-            for(let i = 0; i< res.data.blocking; i++){
-                input.blocked.push(res.data.blocking[i]);
-            }
-            for(let i = 0; i< res.data.blockers; i++){
-                input.blocked.push(res.data.blockers[i]);
+            let followList = [];
+            for(let i = 0; i < res.data.following.length; i++){
+                followList[i] = res.data.following[i];
+                input.following.push(res.data.following[i]);
             }
 		}).catch(function (error) {
 			console.log("Error Detected")
@@ -51,7 +51,7 @@ function Timeline() {
                         image: picture}};
                 }))
             }
-            Promise.all(promises).then(()=>setInput({username: location.state.username, posts: temp}));
+            Promise.all(promises).then(()=>setInput(prevState => ({ ...prevState, posts: temp})));
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
@@ -130,11 +130,26 @@ function Timeline() {
 		return window.btoa(binary);
 	};
 
-    function filterPosts(posts){
+    function isFollowing(post){
+        return (input.following.includes(post.post.author) || post.post.author === location.state.username);
+    }
+
+    function filterPosts(posts, viewing){
+        console.log(viewing);
         let filteredArray = posts;
-        for(let i = 0; i < posts.length; i++){
+        if(viewing === "Follow"){
+            return filteredArray.filter(isFollowing);
         }
         return filteredArray;
+    }
+
+    function viewFollowing(){
+        if(input.viewing === "Follow"){
+            setInput(prevState => ({ ...prevState, viewing: ""}));
+        } else{
+            setInput(prevState => ({ ...prevState, viewing: "Follow"}));
+        }
+
     }
 
     return(
@@ -164,7 +179,9 @@ function Timeline() {
             <div className="Timeline-Horizontal-Bar"/>
 
             <header className="Timeline-Selector">
-                <p className="Timeline-Following">Following</p>
+                <button className="Timeline-Following"
+                    onClick={viewFollowing}
+                >Following</button>
 
                 <div className="Timeline-Vertical-Bar"/>
 
@@ -174,7 +191,7 @@ function Timeline() {
             <div className="Timeline-Horizontal-Bar"/>
 
             <span class="Timeline-Posts-Wrapper">
-                {filterPosts(input.posts).map((post)=>(
+                {filterPosts(input.posts, input.viewing).map((post)=>(
                     <div className="Timeline-Post">
                         
                         <button className="Timeline-Post-Name" 

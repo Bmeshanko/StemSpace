@@ -55,9 +55,13 @@
 }
 
 .Timeline-Following {
+    font-size: 20px;
     display: inline-grid;
     width: 50%;
     text-align: center;
+    padding-top: 16px;
+    padding-bottom: 18px;
+    border-style: hidden;
 }
 
 
