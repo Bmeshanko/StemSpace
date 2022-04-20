@@ -144,8 +144,11 @@ function Timeline() {
         if(viewing === "Follow"){
             filteredArray = filteredArray.filter(isFollowing);
         }
-        if(topic != "None"){
+        if(topic != "None" && topic != "Follow"){
             filteredArray = filteredArray.filter(filterTopic);
+        }
+        if(topic == "Follow"){
+            //code for filtering array by only topics that the user follows
         }
         return filteredArray;
     }
@@ -198,6 +201,7 @@ function Timeline() {
 
                 <select className="Topic-Selector" name="topic" id="topic" value={input.topic} onChange={viewTopic}>
                     <option className="Timeline-Topic-Selection" value="None">No Topic</option>
+                    <option className="Timeline-Topic-Selection" value="Follow">Followed Topics</option>
                     <option className="Timeline-Topic-Selection" value="Art">Art</option>
                     <option className="Timeline-Topic-Selection" value="Biology">Biology</option>
                     <option className="Timeline-Topic-Selection" value="Blogs">Blogs</option>
