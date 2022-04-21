@@ -12,13 +12,30 @@ function Post() {
     const [state, setState] = useState({
         post: postid,
         contents: '',
-        author: '',
+        username: location.state.username,
         topic: '',
         image: "",
         likers: [],
         likes: Number,
         comments: []
 	});
+
+    const [input, setInput] = useState({
+        comment: '',
+        username: location.state.username,
+        post: postid
+    });
+
+    function handleChange(event) {
+        const {name, value} = event.target;
+
+        setInput(prevInput=> {
+            return {
+                ...prevInput,
+                [name]: value
+            }
+        })
+    }
 
     useEffect(() => {
 		axios.post("/getPost", {
@@ -103,9 +120,9 @@ function Post() {
         axios.post("/getPost", {
             id: id
         }).then( res => {
-            if(res.data.likers.includes(username)){
+            if (res.data.likers.includes(username)){
                 unlikePost(event, username, id)
-            } else{
+            } else {
                 likePost(event, username, id)
             }           
         }).catch(function(error){
@@ -139,6 +156,17 @@ function Post() {
         navigate(`/Profile/${name}`, {state:{username:location.state.username}});
     }
 
+    function handleComment(comment) {
+        console.log(comment);
+
+        axios.post("/createComment", {
+            author: input.username,
+            contents: comment,
+            post: input.post
+        }).catch(function(error) {
+            console.log("Error Detected!")
+        })
+    }
     
     function deleteComment(event,id) {
         axios.post("/deleteComment", {
@@ -252,6 +280,18 @@ function Post() {
 
                     <b>Delete Post</b>
                 </button>}
+
+                <button className="Post-Like-Button"
+                        onClick={(e) => {
+                            handleComment(input.comment);
+                        }}>
+                    <b>Comment</b>
+                </button>
+                <textarea
+                    className="Post-Comment-Field"
+                    onChange={handleChange}
+                    value={input.comment} id="comment" name="comment" placeholder="Write something..">
+                </textarea>
             </div>
 
             <header class="Post-Comment-Wrapper">

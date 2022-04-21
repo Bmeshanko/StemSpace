@@ -4,7 +4,8 @@ const postSchema = {
     contents: String,
     topic: String,
     author: String,
-    likers: [String]
+    likers: [String],
+    comments: Array
 }
 
 const Post = mongoose.model("Post", postSchema);

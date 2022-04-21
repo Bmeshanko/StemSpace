@@ -127,7 +127,7 @@
       display: block;
 }
 
-.Post-Liker-Button{
+.Post-Liker-Button {
     display: block;
     background-color: #5FAA4B;
     border-style: hidden;
@@ -138,7 +138,7 @@
   filter: brightness(90%);
 }
 
-.Post-Comment-Wrapper{
+.Post-Comment-Wrapper {
     display: block;
     width: 100%;
     padding: 5px;
@@ -214,6 +214,16 @@
 
 .Ignore-X-Overflow{
     overflow-x: hidden;
+}
+
+.Post-Comment-Field {
+    margin-bottom: -2px;
+    margin-left: 2px;
+    font-family: Consolas;
+    width: 400px;
+    border-radius: 4px;
+    height: 20px;
+    background-color: #5FAA4B;
 }
 
 

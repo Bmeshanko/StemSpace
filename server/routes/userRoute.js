@@ -99,10 +99,6 @@ router.post("/createUser", (req, res) => {
     const email = req.body.email; //get email
     const bio = "";  //make empty bio
     const imgPath='./Blank-Profile.png'; //set default profile picture path
-    const following = [];
-    const followers = [];
-    const blockers = [];
-    const blocking = [];
 
     let userCriteria = {username: username};
     let emailCriteria = {email: email};
@@ -125,11 +121,7 @@ router.post("/createUser", (req, res) => {
             bio,
             img: { data: Buffer, contentType: String},
             code,
-            verification: false,
-            following,
-            followers,
-            blockers,
-            blocking
+            verification: false
         });
 
         newUser.img.data=fs.readFileSync(path.resolve(__dirname,imgPath)); //set profile picture from path
@@ -395,20 +387,33 @@ router.post("/getPost", (req, res) => {
 });
 
 router.post("/createComment", (req, res) => {
+    const postid = req.body.postid; //get post
     const author = req.body.username; //get username
     const contents = req.body.contents; //get post contents
-    const post = req.body.postid; //get post topic
-    const likers = []; //empty likers array - no likes yet 
+    const likers = []; //empty likers array - no likes yet
+
+    console.log(postid);
+    console.log(author);
+    console.log(contents);
+
+    
+    const criteria = {_id: postid};
+    const post = Post.findOne(criteria);
 
     //create new post object
     const newComment = new Comment({
-        contents,
         post,
+        contents,
         author,
         likers
     });
 
     newComment.save(); //save new post in db
+    const update = {$addToSet: {comments: newComment}};
+
+    Post.findOneAndUpdate(criteria, update, function(err, posts) {
+        res.json(posts) //return post
+    }, {collection: 'posts'});
 });
 
 router.post("/getComments", (req, res) => {
