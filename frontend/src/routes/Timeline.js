@@ -49,11 +49,11 @@ function Timeline() {
                     let base64Flag = 'data:image/jpeg;base64,';
                     let imageStr = arrayBufferToBase64(response.data.img.data.data);
                     let picture=base64Flag+imageStr;
-                    temp[i] = {post:{author:res.data[i].author, 
-                        contents:res.data[i].contents, 
-                        topic:res.data[i].topic, 
-                        id:res.data[i]._id, 
-                        likers:res.data[i].likers, 
+                    temp[i] = {post: {author: res.data[i].author,
+                        contents: res.data[i].contents,
+                        topic: res.data[i].topic,
+                        id: res.data[i]._id,
+                        likers: res.data[i].likers,
                         image: picture}};
                 }))
             }

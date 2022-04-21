@@ -68,7 +68,9 @@ function Post() {
 		axios.post("/getPost", {
 			id: postid
 		}).then(res => {
-            console.log(res.data.comments);
+            location.state.comments = res.data.comments;
+
+
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
