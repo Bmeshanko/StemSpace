@@ -392,8 +392,6 @@ router.post("/createComment", (req, res) => {
     const contents = req.body.contents; //get post contents
     const likers = []; //empty likers array - no likes yet
 
-    
-
     //create new post object
     const newComment = new Comment({
         postid,
@@ -413,7 +411,9 @@ router.post("/createComment", (req, res) => {
 
 router.post("/getComments", (req, res) => {
     try {
-        let criteria = {Post: req.body.post}; 
+        let criteria = {_id: req.body.postid}; 
+
+        const Post = Post.findOne(criteria);
 
         //find all posts
         //return all posts

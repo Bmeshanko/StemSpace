@@ -236,9 +236,7 @@ function Post() {
             </div>
 
             <div className="Post-Horizontal-Bar"/>
-
             <div className="Post-Post-Wrapper">
-
                 <button className="Post-Post-Name" 
                     onClick={(event) => {;
                         handleClickName(event, state.author)
@@ -246,15 +244,10 @@ function Post() {
 
                     <img className='Post-Post-PFP' src={state.image}></img>
                     @{state.author}
-                    
                 </button>
 
-                
-
                 <p className="Post-Post-Topic">Topic: {state.topic? state.topic:"None"}</p>
-
                 <p className="Post-Post-Content">{state.contents}</p>
-
                 <button className="Post-Like-Button"
                         onClick={(e) => {
                             handleLike(e, location.state.username, postid)
