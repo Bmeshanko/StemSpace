@@ -1,8 +1,9 @@
+const { ObjectID } = require("bson");
 const mongoose = require("mongoose");
-const Post = require("./postModel");
+const { ObjectId } = require("mongoose");
 
 const commentSchema = {
-    Post: String,
+    Post: ObjectId,
     contents: String,
     author: String,
     likers: []

@@ -331,12 +331,14 @@ function Profile() {
 					<span className="Profile-info">
 							<div>
 								<UserPermissionsEditProfile />
+								<span className="right-space"/>
 								<UserPermissionsLogout />
 								<h3>{state.followers} <button className="Big-Green-Button" onClick={(e)=>{handClickShowFollowers(FOLLOWERS)}}>Followers</button></h3>
 								<h3>{state.following_number} <button className="Big-Green-Button" onClick={(e)=>{handClickShowFollowers(FOLLOWING)}}>Following</button></h3>
 								<p className="username">@{userid}</p>
 								<p>{state.bio}</p>
 								<FollowButton />
+								<span className="right-space"/>
 								<BlockButton />
 							</div>
 					</span>

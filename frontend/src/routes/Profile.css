@@ -198,3 +198,7 @@
   .Big-Green-Button:hover{
       filter: brightness(90%);
   }
+
+  .right-space {
+      margin-right: 2px;
+  }

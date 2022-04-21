@@ -12,13 +12,30 @@ function Post() {
     const [state, setState] = useState({
         post: postid,
         contents: '',
-        author: '',
+        username: location.state.username,
         topic: '',
         image: "",
         likers: [],
         likes: Number,
         comments: []
 	});
+
+    const [input, setInput] = useState({
+        comment: '',
+        username: location.state.username,
+        post: postid
+    });
+
+    function handleChange(event) {
+        const {name, value} = event.target;
+
+        setInput(prevInput=> {
+            return {
+                ...prevInput,
+                [name]: value
+            }
+        })
+    }
 
     useEffect(() => {
 		axios.post("/getPost", {
@@ -103,9 +120,9 @@ function Post() {
         axios.post("/getPost", {
             id: id
         }).then( res => {
-            if(res.data.likers.includes(username)){
+            if (res.data.likers.includes(username)){
                 unlikePost(event, username, id)
-            } else{
+            } else {
                 likePost(event, username, id)
             }           
         }).catch(function(error){
@@ -139,6 +156,16 @@ function Post() {
         navigate(`/Profile/${name}`, {state:{username:location.state.username}});
     }
 
+    function handleComment(comment, author, post) {
+        axios.post("/createComment", {
+
+            author: author,
+            contents: comment,
+            postid: post
+        }).catch(function(error) {
+            console.log("Error Detected!")
+        })
+    }
     
     function deleteComment(event,id) {
         axios.post("/deleteComment", {
@@ -209,9 +236,7 @@ function Post() {
             </div>
 
             <div className="Post-Horizontal-Bar"/>
-
             <div className="Post-Post-Wrapper">
-
                 <button className="Post-Post-Name" 
                     onClick={(event) => {;
                         handleClickName(event, state.author)
@@ -219,15 +244,10 @@ function Post() {
 
                     <img className='Post-Post-PFP' src={state.image}></img>
                     @{state.author}
-                    
                 </button>
 
-                
-
                 <p className="Post-Post-Topic">Topic: {state.topic? state.topic:"None"}</p>
-
                 <p className="Post-Post-Content">{state.contents}</p>
-
                 <button className="Post-Like-Button"
                         onClick={(e) => {
                             handleLike(e, location.state.username, postid)
@@ -252,6 +272,18 @@ function Post() {
 
                     <b>Delete Post</b>
                 </button>}
+
+                <button className="Post-Like-Button"
+                        onClick={(e) => {
+                            handleComment(input.comment, location.state.username, postid);
+                        }}>
+                    <b>Comment</b>
+                </button>
+                <textarea
+                    className="Post-Comment-Field"
+                    onChange={handleChange}
+                    value={input.comment} id="comment" name="comment" placeholder="Write something..">
+                </textarea>
             </div>
 
             <header class="Post-Comment-Wrapper">

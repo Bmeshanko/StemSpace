@@ -99,10 +99,6 @@ router.post("/createUser", (req, res) => {
     const email = req.body.email; //get email
     const bio = "";  //make empty bio
     const imgPath='./Blank-Profile.png'; //set default profile picture path
-    const following = [];
-    const followers = [];
-    const blockers = [];
-    const blocking = [];
 
     let userCriteria = {username: username};
     let emailCriteria = {email: email};
@@ -125,11 +121,7 @@ router.post("/createUser", (req, res) => {
             bio,
             img: { data: Buffer, contentType: String},
             code,
-            verification: false,
-            following,
-            followers,
-            blockers,
-            blocking
+            verification: false
         });
 
         newUser.img.data=fs.readFileSync(path.resolve(__dirname,imgPath)); //set profile picture from path
@@ -395,25 +387,33 @@ router.post("/getPost", (req, res) => {
 });
 
 router.post("/createComment", (req, res) => {
-    const author = req.body.username; //get username
+    const postid = req.body.postid; //get post
+    const author = req.body.author; //get username
     const contents = req.body.contents; //get post contents
-    const post = req.body.postid; //get post topic
-    const likers = []; //empty likers array - no likes yet 
+    const likers = []; //empty likers array - no likes yet
 
     //create new post object
     const newComment = new Comment({
+        postid,
         contents,
-        post,
         author,
         likers
     });
 
     newComment.save(); //save new post in db
+    const update = {$addToSet: {comments: newComment}};
+    const criteria = {_id: postid};
+
+    Post.findOneAndUpdate(criteria, update, function(err, posts) {
+        res.json(posts) //return post
+    }, {collection: 'posts'});
 });
 
 router.post("/getComments", (req, res) => {
     try {
-        let criteria = {Post: req.body.post}; 
+        let criteria = {_id: req.body.postid}; 
+
+        const Post = Post.findOne(criteria);
 
         //find all posts
         //return all posts
