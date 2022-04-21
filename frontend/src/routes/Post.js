@@ -156,13 +156,12 @@ function Post() {
         navigate(`/Profile/${name}`, {state:{username:location.state.username}});
     }
 
-    function handleComment(comment) {
-        console.log(comment);
-
+    function handleComment(comment, author, post) {
         axios.post("/createComment", {
-            author: input.username,
+
+            author: author,
             contents: comment,
-            post: input.post
+            postid: post
         }).catch(function(error) {
             console.log("Error Detected!")
         })
@@ -283,7 +282,7 @@ function Post() {
 
                 <button className="Post-Like-Button"
                         onClick={(e) => {
-                            handleComment(input.comment);
+                            handleComment(input.comment, location.state.username, postid);
                         }}>
                     <b>Comment</b>
                 </button>

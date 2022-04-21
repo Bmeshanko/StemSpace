@@ -388,21 +388,15 @@ router.post("/getPost", (req, res) => {
 
 router.post("/createComment", (req, res) => {
     const postid = req.body.postid; //get post
-    const author = req.body.username; //get username
+    const author = req.body.author; //get username
     const contents = req.body.contents; //get post contents
     const likers = []; //empty likers array - no likes yet
 
-    console.log(postid);
-    console.log(author);
-    console.log(contents);
-
     
-    const criteria = {_id: postid};
-    const post = Post.findOne(criteria);
 
     //create new post object
     const newComment = new Comment({
-        post,
+        postid,
         contents,
         author,
         likers
@@ -410,6 +404,7 @@ router.post("/createComment", (req, res) => {
 
     newComment.save(); //save new post in db
     const update = {$addToSet: {comments: newComment}};
+    const criteria = {_id: postid};
 
     Post.findOneAndUpdate(criteria, update, function(err, posts) {
         res.json(posts) //return post
