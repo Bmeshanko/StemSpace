@@ -68,7 +68,23 @@ function Post() {
 		axios.post("/getPost", {
 			id: postid
 		}).then(res => {
-            console.log(res.data.comments);
+            let temp=[];
+            let promises=[];
+            for(let i = 0; i < res.data.comments.length; i++){
+                promises.push(axios.post("/getUsers", {
+                    username: res.data.comments[i].author
+                }).then (response=> {
+                    let base64Flag = 'data:image/jpeg;base64,';
+                    let imageStr = arrayBufferToBase64(response.data.img.data.data);
+                    let picture=base64Flag+imageStr;
+                    temp[i] = {comment:
+                        {author:res.data.comments[i].author, 
+                        contents:res.data.comments[i].contents, 
+                        likers:res.data.comments[i].likers, 
+                        image: picture}};
+                }))
+            }
+            Promise.all(promises).then(()=>setState(prevState => ({ ...prevState, comments: temp})));
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
@@ -141,7 +157,6 @@ function Post() {
 
     function handleComment(comment, author, post) {
         axios.post("/createComment", {
-
             author: author,
             contents: comment,
             postid: post
