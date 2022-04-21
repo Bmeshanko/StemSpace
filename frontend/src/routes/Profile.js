@@ -46,6 +46,7 @@ function Profile() {
 				setState(prevState => ({ ...prevState,following:res.data.followers.includes(location.state.username)}));
 				setState(prevState => ({...prevState, followers: res.data.followers.length}))
 				setState(prevState => ({...prevState, following_number: res.data.following.length}))
+				setState(prevState => ({ ...prevState,blocking:res.data.blockers.includes(location.state.username)}));
 			}
 		}).catch(function (error) {
 			console.log("Error Detected")
@@ -172,7 +173,7 @@ function Profile() {
 					<button className="Edit-Profile-Button"
 							onClick={(e) => {
 								handleClickUnblock()}}>
-						<b>Unfollow</b>
+						<b>Unblock</b>
 					</button>
 				);
 			}

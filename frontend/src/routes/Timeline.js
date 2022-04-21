@@ -10,8 +10,30 @@ function Timeline() {
 
     const [input, setInput] = useState({
         username: location.state.username,
-        posts: []
+        posts: [],
+        following: [],
+        viewing: "",
+        topic: "None",
+        blocked: []
     })
+
+    useEffect(()=>{
+        axios.post("/getUsers", {
+			username: location.state.username
+		}).then (res => {
+            for(let i = 0; i < res.data.following.length; i++){
+                input.following.push(res.data.following[i]);
+            }
+            for(let i = 0; i < res.data.blocking.length; i++){
+                input.blocked.push(res.data.blocking[i])
+            }
+            for(let i = 0; i < res.data.blockers.length; i++){
+                input.blocked.push(res.data.blockers[i])
+            }
+		}).catch(function (error) {
+			console.log("Error Detected")
+		})
+    },[]);
 
     useEffect(()=>{
         axios.post("/getPosts", {
@@ -27,10 +49,15 @@ function Timeline() {
                     let base64Flag = 'data:image/jpeg;base64,';
                     let imageStr = arrayBufferToBase64(response.data.img.data.data);
                     let picture=base64Flag+imageStr;
-                    temp[i] = {post:{author:res.data[i].author, contents:res.data[i].contents, topic:res.data[i].topic, id:res.data[i]._id, likers:res.data[i].likers, image: picture}};
+                    temp[i] = {post:{author:res.data[i].author, 
+                        contents:res.data[i].contents, 
+                        topic:res.data[i].topic, 
+                        id:res.data[i]._id, 
+                        likers:res.data[i].likers, 
+                        image: picture}};
                 }))
             }
-            Promise.all(promises).then(()=>setInput({username: location.state.username, posts: temp}));
+            Promise.all(promises).then(()=>setInput(prevState => ({ ...prevState, posts: temp})));
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
@@ -109,6 +136,46 @@ function Timeline() {
 		return window.btoa(binary);
 	};
 
+    function isFollowing(post){
+        return (input.following.includes(post.post.author) || post.post.author === location.state.username);
+    }
+
+    function filterTopic(post){
+        return input.topic === post.post.topic;
+    }
+
+    function removeBlocks(post){
+        return !(input.blocked.includes(post.post.author));
+    }
+
+    function filterPosts(posts, viewing, topic){
+        let filteredArray = posts;
+        if(viewing === "Follow"){
+            filteredArray = filteredArray.filter(isFollowing);
+        }
+        if(topic != "None" && topic != "Follow"){
+            filteredArray = filteredArray.filter(filterTopic);
+        }
+        if(topic == "Follow"){
+            //code for filtering array by only topics that the user follows
+        }
+        filteredArray = filteredArray.filter(removeBlocks);
+        return filteredArray;
+    }
+
+    function viewFollowing(){
+        if(input.viewing === "Follow"){
+            setInput(prevState => ({ ...prevState, viewing: ""}));
+        } else{
+            setInput(prevState => ({ ...prevState, viewing: "Follow"}));
+        }
+    }
+
+    function viewTopic(event) {
+        const {value} = event.target;
+        setInput(prevState => ({ ...prevState, topic: value}));
+    }
+
     return(
         <body>
             <div className="Timeline-Top-Banner">
@@ -136,17 +203,36 @@ function Timeline() {
             <div className="Timeline-Horizontal-Bar"/>
 
             <header className="Timeline-Selector">
-                <p className="Timeline-Following">Following</p>
+                <button className="Timeline-Following"
+                    onClick={viewFollowing}
+                >{input.viewing==="Follow"? "All": "Following"}</button>
 
                 <div className="Timeline-Vertical-Bar"/>
 
-                <p className="Timeline-Topics">Topics</p>
+                <select className="Topic-Selector" name="topic" id="topic" value={input.topic} onChange={viewTopic}>
+                    <option className="Timeline-Topic-Selection" value="None">No Topic</option>
+                    <option className="Timeline-Topic-Selection" value="Follow">Followed Topics</option>
+                    <option className="Timeline-Topic-Selection" value="Art">Art</option>
+                    <option className="Timeline-Topic-Selection" value="Biology">Biology</option>
+                    <option className="Timeline-Topic-Selection" value="Blogs">Blogs</option>
+                    <option className="Timeline-Topic-Selection" value="ComSci">ComSci</option>
+                    <option className="Timeline-Topic-Selection" value="Earth">Earth</option>
+                    <option className="Timeline-Topic-Selection" value="Engineering">Engineering</option>
+                    <option className="Timeline-Topic-Selection" value="Fitness">Fitness</option>
+                    <option className="Timeline-Topic-Selection" value="Funny">Funny</option>
+                    <option className="Timeline-Topic-Selection" value="Gaming">Gaming</option>
+                    <option className="Timeline-Topic-Selection" value="Health">Health</option>
+                    <option className="Timeline-Topic-Selection" value="Math">Math</option>
+                    <option className="Timeline-Topic-Selection" value="Music">Music</option>
+                    <option className="Timeline-Topic-Selection" value="Psychology">Psychology</option>
+                    <option className="Timeline-Topic-Selection" value="Sports">Sports</option>
+                </select>
             </header>
 
             <div className="Timeline-Horizontal-Bar"/>
 
             <span class="Timeline-Posts-Wrapper">
-                {input.posts.map((post)=>(
+                {filterPosts(input.posts, input.viewing, input.topic).map((post)=>(
                     <div className="Timeline-Post">
                         
                         <button className="Timeline-Post-Name" 

@@ -72,7 +72,7 @@ router.post("/block", (req, res) => {
     }, {collection: 'users'});
 })
 
-router.post("/unfollow", (req, res) => {
+router.post("/unblock", (req, res) => {
     const user = req.body.user; //get current user
     const blocked_user = req.body.blocked_user; //get user who is getting followed
     
@@ -99,6 +99,10 @@ router.post("/createUser", (req, res) => {
     const email = req.body.email; //get email
     const bio = "";  //make empty bio
     const imgPath='./Blank-Profile.png'; //set default profile picture path
+    const following = [];
+    const followers = [];
+    const blockers = [];
+    const blocking = [];
 
     let userCriteria = {username: username};
     let emailCriteria = {email: email};
@@ -121,7 +125,11 @@ router.post("/createUser", (req, res) => {
             bio,
             img: { data: Buffer, contentType: String},
             code,
-            verification: false
+            verification: false,
+            following,
+            followers,
+            blockers,
+            blocking
         });
 
         newUser.img.data=fs.readFileSync(path.resolve(__dirname,imgPath)); //set profile picture from path
