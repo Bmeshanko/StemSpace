@@ -394,7 +394,6 @@ router.post("/createComment", (req, res) => {
 
     //create new post object
     const newComment = new Comment({
-        postid,
         contents,
         author,
         likers
@@ -411,18 +410,16 @@ router.post("/createComment", (req, res) => {
 
 router.post("/getComments", (req, res) => {
     try {
-        let criteria = {_id: req.body.postid}; 
-
-        const Post = Post.findOne(criteria);
+        let criteria = {_id: req.body.id};
 
         //find all posts
         //return all posts
-        Comment.find(criteria, function(err, comments) {
-            res.json(comments)
-        }, {collection: 'comments'})
+        Post.findOne(criteria, function(err, posts) {
+            res.json(posts)
+        }, {collection: 'posts'})
 
     } catch(e) {
-        console.log("Error Detected in /getComments");
+        console.log(e);
     }
 });
 

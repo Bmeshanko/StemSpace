@@ -65,27 +65,10 @@ function Post() {
 	}, [useParams(), state.likes])
 
     useEffect(() => {
-		axios.post("/getComments", {
-			post: postid
+		axios.post("/getPost", {
+			id: postid
 		}).then(res => {
-            let temp=[];
-            let promises=[];
-            for(let i = 0; i < res.data.length; i++){
-                promises.push(axios.post("/getUsers", {
-                    username: res.data[i].author
-                }).then (response=> {
-                    let base64Flag = 'data:image/jpeg;base64,';
-                    let imageStr = arrayBufferToBase64(response.data.img.data.data);
-                    let picture=base64Flag+imageStr;
-                    temp[i] = {
-						comment:{author:res.data[i].author, 
-						contents:res.data[i].contents, 
-						id:res.data[i]._id, 
-						likers:res.data[i].likers, 
-						image: picture}};
-                }))
-            }
-            Promise.all(promises).then(()=>setState(prevState => ({...prevState, comments: temp})));
+            console.log(res.data.comments);
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})

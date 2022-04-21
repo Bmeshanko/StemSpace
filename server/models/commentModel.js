@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const { ObjectId } = require("mongoose");
 
 const commentSchema = {
-    Post: ObjectId,
     contents: String,
     author: String,
     likers: []
