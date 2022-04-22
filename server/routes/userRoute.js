@@ -387,7 +387,7 @@ router.post("/getPost", (req, res) => {
 });
 
 router.post("/createComment", (req, res) => {
-    const postid = req.body.postid; //get post
+    const post = req.body.post; //get post
     const author = req.body.author; //get username
     const contents = req.body.contents; //get post contents
     const likers = []; //empty likers array - no likes yet
@@ -396,26 +396,21 @@ router.post("/createComment", (req, res) => {
     const newComment = new Comment({
         contents,
         author,
+        post,
         likers
     });
 
     newComment.save(); //save new post in db
-    const update = {$addToSet: {comments: newComment}};
-    const criteria = {_id: postid};
-
-    Post.findOneAndUpdate(criteria, update, function(err, posts) {
-        res.json(posts) //return post
-    }, {collection: 'posts'});
 });
 
 router.post("/getComments", (req, res) => {
     try {
-        let criteria = {_id: req.body.id};
+        let criteria = {post: req.body.id};
 
         //find all posts
         //return all posts
-        Post.findOne(criteria, function(err, posts) {
-            res.json(posts)
+        Comment.find(criteria, function(err, comments) {
+            res.json(comments)
         }, {collection: 'posts'})
 
     } catch(e) {
@@ -425,16 +420,16 @@ router.post("/getComments", (req, res) => {
 
 router.post("/getComment", (req, res) => {
     try {
-        let criteria = {_id: id}; 
+        let criteria = {_id: req.body.id}; 
 
         //find all posts
         //return all posts
-        Comment.find(criteria, function(err, comments) {
-            res.json(comments)
+        Comment.findOne(criteria, function(err, comment) {
+            res.json(comment)
         }, {collection: 'comments'})
 
     } catch(e) {
-        console.log("Error Detected in /getComments");
+        console.log("Error Detected in /getComment");
     }
 });
 

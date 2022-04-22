@@ -5,6 +5,7 @@ const { ObjectId } = require("mongoose");
 const commentSchema = {
     contents: String,
     author: String,
+    post: String,
     likers: []
 }
 

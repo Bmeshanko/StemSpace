@@ -121,6 +121,9 @@
     border-radius: 10px;
     border-width: 2px;
     border-style: solid;
+    
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 .Post-Likers:hover{
@@ -155,9 +158,7 @@
     border-color: #1F1F1F;
     border-width: 1px;
     margin-bottom: 4px;
-    padding: 5px;
-    padding-bottom: 0px;
-    padding-left: 0px;
+    padding: 2px;
 }
 
 .Post-Comment-Name{

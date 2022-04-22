@@ -65,22 +65,23 @@ function Post() {
 	}, [useParams(), state.likes])
 
     useEffect(() => {
-		axios.post("/getPost", {
+		axios.post("/getComments", {
 			id: postid
 		}).then(res => {
             let temp=[];
             let promises=[];
-            for(let i = 0; i < res.data.comments.length; i++){
+            for(let i = 0; i < res.data.length; i++){
                 promises.push(axios.post("/getUsers", {
-                    username: res.data.comments[i].author
+                    username: res.data[i].author
                 }).then (response=> {
                     let base64Flag = 'data:image/jpeg;base64,';
                     let imageStr = arrayBufferToBase64(response.data.img.data.data);
                     let picture=base64Flag+imageStr;
                     temp[i] = {comment:
-                        {author:res.data.comments[i].author, 
-                        contents:res.data.comments[i].contents, 
-                        likers:res.data.comments[i].likers, 
+                        {id:res.data[i]._id,
+                        author:res.data[i].author, 
+                        contents:res.data[i].contents, 
+                        likers:res.data[i].likers, 
                         image: picture}};
                 }))
             }
@@ -159,10 +160,11 @@ function Post() {
         axios.post("/createComment", {
             author: author,
             contents: comment,
-            postid: post
+            post: post
         }).catch(function(error) {
             console.log("Error Detected!")
         })
+        input.comment = '';
     }
     
     function deleteComment(event,id) {
@@ -273,7 +275,7 @@ function Post() {
 
                 <button className="Post-Like-Button"
                         onClick={(e) => {
-                            handleComment(input.comment, location.state.username, postid);
+                            handleComment(input.comment, location.state.username, state.post);
                         }}>
                     <b>Comment</b>
                 </button>
@@ -300,15 +302,15 @@ function Post() {
                             
                             <p>{comment.comment.contents}</p>
 
-                            <button className="Like"
+                            <button className="Post-Like-Button"
                                     onClick={(e) => {
-                                        handleLikeComment(e, location.state.username, comment.comment.id)
+                                        handleLikeComment(e, location.state.username, comment.comment.id);
                                     }}>
 
                                     <b>{comment.comment.likers.length}|{comment.comment.likers.includes(location.state.username)? "UNLIKE": "LIKE"}</b>
                             </button>
 
-                            <div className="Post-Comment-Likers">
+                            <div className="Post-Likers">
                                 {comment.comment.likers.map((liker)=>(
                                     <button className="Post-Comment-Liker-Button" 
                                         onClick={(event) => {
@@ -320,7 +322,7 @@ function Post() {
                             </div>
 
                             {comment.comment.author===location.state.username && 
-                            <button 
+                            <button className="Timeline-Like-Button"
                                 onClick={(e) => {
                                     deleteComment(e, comment.comment.id)
                                 }}>
