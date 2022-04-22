@@ -185,7 +185,7 @@ function Timeline() {
                     <img className='Timeline-Logo-Image' src="Logo_new.png" alt="STEM"></img>
                 </button>
 
-                <div className="Timeline-Banner-Text">StemSpace</div>
+                <a href="/#" className="Timeline-Banner-Text">StemSpace</a>
 
                 <button className="Timeline-Banner-Button"
                     onClick={handleClickPost}>
