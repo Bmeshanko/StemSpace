@@ -106,9 +106,6 @@ router.post("/createUser", (req, res) => {
     let userUser = User.findOne(userCriteria);
     let emailUser = User.findOne(emailCriteria);
 
-    console.log(userUser);
-    console.log(emailUser);
-
     if (userUser.username != null) {
         res.json("That username is taken!");
     } else if (emailUser.email != null) {
@@ -256,7 +253,6 @@ router.post("/editBio", (req, res) => {
 
 router.post("/editImage", (req, res) => {
     try {
-        console.log(req);
         const newImage = req.body.image; //get new image
         var picdata=newImage.substring(23); //get new image data
         const username = req.body.username; //get username

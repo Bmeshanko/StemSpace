@@ -31,7 +31,7 @@ function sendMail(email, code, id) {
 
     transporter.sendMail(mailConfigurations, function (err, info) {
         if (err) throw Error(err);
-        console.log('Email Sent Successfully');
+        //console.log('Email Sent Successfully');
     });
 }
 
