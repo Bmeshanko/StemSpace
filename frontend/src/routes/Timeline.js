@@ -1,5 +1,5 @@
 import './Timeline.css';
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 
@@ -33,7 +33,7 @@ function Timeline() {
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
-    },[]);
+    },[input.blocked, input.following, location.state.username]);
 
     useEffect(()=>{
         axios.post("/getPosts", {
@@ -153,10 +153,10 @@ function Timeline() {
         if(viewing === "Follow"){
             filteredArray = filteredArray.filter(isFollowing);
         }
-        if(topic != "None" && topic != "Follow"){
+        if(topic !== "None" && topic !== "Follow"){
             filteredArray = filteredArray.filter(filterTopic);
         }
-        if(topic == "Follow"){
+        if(topic === "Follow"){
             //code for filtering array by only topics that the user follows
         }
         filteredArray = filteredArray.filter(removeBlocks);
@@ -185,7 +185,7 @@ function Timeline() {
                     <img className='Timeline-Logo-Image' src="Logo_new.png" alt="STEM"></img>
                 </button>
 
-                <a className="Timeline-Banner-Text">StemSpace</a>
+                <div className="Timeline-Banner-Text">StemSpace</div>
 
                 <button className="Timeline-Banner-Button"
                     onClick={handleClickPost}>
@@ -205,7 +205,7 @@ function Timeline() {
             <header className="Timeline-Selector">
                 <button className="Timeline-Following"
                     onClick={viewFollowing}
-                >{input.viewing==="Follow"? "All": "Following"}</button>
+                >{input.viewing==="Follow"? "Following": "All" }</button>
 
                 <div className="Timeline-Vertical-Bar"/>
 
@@ -239,7 +239,7 @@ function Timeline() {
                             onClick={(event) => {
                                 handleClickName(event, post.post.author)}}>
                             
-                            <img className='Timeline-Post-PFP' src={post.post.image}></img>
+                            <img className='Timeline-Post-PFP' src={post.post.image} alt={"PFP of" + post.post.author}></img>
                             <b>@{post.post.author}</b>
 
                         </button>  
