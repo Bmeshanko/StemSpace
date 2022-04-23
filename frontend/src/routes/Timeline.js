@@ -14,26 +14,33 @@ function Timeline() {
         following: [],
         viewing: "",
         topic: "None",
-        blocked: []
+        blocked: [],
+        topics: []
     })
 
     useEffect(()=>{
         axios.post("/getUsers", {
 			username: location.state.username
 		}).then (res => {
+            input.following = [];
             for(let i = 0; i < res.data.following.length; i++){
                 input.following.push(res.data.following[i]);
             }
+            input.blocked = [];
             for(let i = 0; i < res.data.blocking.length; i++){
                 input.blocked.push(res.data.blocking[i])
             }
             for(let i = 0; i < res.data.blockers.length; i++){
                 input.blocked.push(res.data.blockers[i])
             }
+            input.topics = [];
+            for(let i = 0; i < res.data.topics.length; i++){
+                input.topics.push(res.data.topics[i])
+            }
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
-    },[input.blocked, input.following, location.state.username]);
+    },[]);
 
     useEffect(()=>{
         axios.post("/getPosts", {
@@ -144,6 +151,10 @@ function Timeline() {
         return input.topic === post.post.topic;
     }
 
+    function isFollowingTopic(post){
+        return input.topics.includes(post.post.topic);
+    }
+
     function removeBlocks(post){
         return !(input.blocked.includes(post.post.author));
     }
@@ -157,7 +168,7 @@ function Timeline() {
             filteredArray = filteredArray.filter(filterTopic);
         }
         if(topic === "Follow"){
-            //code for filtering array by only topics that the user follows
+            filteredArray = filteredArray.filter(isFollowingTopic);
         }
         filteredArray = filteredArray.filter(removeBlocks);
         return filteredArray;
@@ -174,6 +185,38 @@ function Timeline() {
     function viewTopic(event) {
         const {value} = event.target;
         setInput(prevState => ({ ...prevState, topic: value}));
+    }
+
+    function handleFollowTopic(username, topic){
+        if(input.topics.includes(topic)){
+            unfollowTopic(username, topic)
+        } else{
+            followTopic(username, topic)
+        }
+    }
+
+    function followTopic(username, topic){
+        axios.post("/followTopic", {
+            username: username,
+            topic: topic
+        }).then( res =>{
+            input.topics.push(topic);
+        }).catch(function(error){
+            console.log("Error Detected")
+        })
+    }
+    function unfollowTopic(username, topic){
+        axios.post("/unfollowTopic", {
+            username: username,
+            topic: topic
+        }).then( res =>{
+            var index = input.topics.indexOf(topic);
+            if (index !== -1) {
+                input.topics.splice(index, 1);
+            }
+        }).catch(function(error){
+            console.log("Error Detected")
+        })
     }
 
     return(
@@ -232,6 +275,22 @@ function Timeline() {
             <div className="Timeline-Horizontal-Bar"/>
 
             <span class="Timeline-Posts-Wrapper">
+                
+                {input.topic !== "None" && input.topic !== "Follow" && input.topic !== "" &&
+                    <button className="Timeline-Follow-Topic"
+                        onClick={(e) => {handleFollowTopic(input.username, input.topic)}}>
+                        {input.topics.includes(input.topic)? "Unfollow Topic: ": "Follow Topic: "} {input.topic}
+                    </button>
+                }
+
+                { input.topic === "Follow" &&
+                    <div className="Timeline-Followed-Topic">
+                            Followed Topics: {input.topics.map((topic, index)=>(
+                                <span>{topic} </span>
+                            ))}
+                    </div>
+                }
+
                 {filterPosts(input.posts, input.viewing, input.topic).map((post)=>(
                     <div className="Timeline-Post">
                         
@@ -282,10 +341,9 @@ function Timeline() {
             </span>
 
             <span class="Timeline-DMs">
-                    <p className="DM-header">Chats</p>
+                    <p className="DM-header">Chats</p>                    
             </span>
         </body>
     );
 }
-
 export default Timeline;

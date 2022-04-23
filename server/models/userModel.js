@@ -16,6 +16,7 @@ const userSchema = {
     followers: Array,
     blocking: Array,
     blockers: Array,
+    topics: Array,
     expireAt: {
         type: Date,
         default: Date.now,

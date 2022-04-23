@@ -472,5 +472,26 @@ router.post("/deleteComment", (req, res) => {
     }
 });
 
+router.post("/followTopic", (req, res) => {
+    const username = req.body.username;
+    let criteria = {username: username};
+
+    const update = {$addToSet: {topics: req.body.topic}}
+
+    User.findOneAndUpdate(criteria, update, function(err, user){
+        res.json(user)
+    }, {collection: "users"})
+});
+
+router.post("/unfollowTopic", (req, res) => {
+    const username = req.body.username;
+    let criteria = {username: username};
+
+    const update = {$pull: {topics: req.body.topic}}
+
+    User.findOneAndUpdate(criteria, update, function(err, user){
+        res.json(user)
+    }, {collection: "users"})
+});
 
 module.exports = router;
