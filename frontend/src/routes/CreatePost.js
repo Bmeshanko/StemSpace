@@ -37,7 +37,7 @@ function CreatePost() {
         <body>
         <header className="Create-post-header">
             <p className="Create-post-text">Create Post:</p>
-            <textarea onChange={handleChange} value={input.contents} id="contents" name="contents" placeholder="Write something..">
+            <textarea onChange={handleChange} maxlength="500" value={input.contents} id="contents" name="contents" placeholder="Write something..">
             </textarea>
             <div className="space"></div>
             <label for="topic"><p className="topic-text">Topic: </p> </label>

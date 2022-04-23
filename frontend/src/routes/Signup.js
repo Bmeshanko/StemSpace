@@ -51,7 +51,7 @@ function Signup() {
                 <p className="Signup-text">Create an account on StemSpace today and join others
                     engaging with peers in their fields.</p>
                 <label for="username">
-                    <input onChange={handleChange} value={input.username} className="Signup-username-field" type="text" id="username" name="username"
+                    <input onChange={handleChange} maxlength="20" value={input.username} className="Signup-username-field" type="text" id="username" name="username"
                            placeholder="Username"/>
                 </label>
                 <div className="space"></div>
