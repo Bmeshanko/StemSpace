@@ -288,7 +288,7 @@ function Post() {
 
             <header class="Post-Comment-Wrapper">
                 <ol>
-                    {state.comments.map((comment)=>(
+                    {state.comments.slice(0).reverse().map((comment)=>(
                         <div className="Post-Comment">
                             <button className="Post-Comment-Name" 
                                 onClick={(event) => {

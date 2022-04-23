@@ -171,7 +171,7 @@ function Timeline() {
             filteredArray = filteredArray.filter(isFollowingTopic);
         }
         filteredArray = filteredArray.filter(removeBlocks);
-        return filteredArray;
+        return filteredArray.reverse();
     }
 
     function viewFollowing(){

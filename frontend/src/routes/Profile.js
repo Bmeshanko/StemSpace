@@ -345,7 +345,7 @@ function Profile() {
 				</header>
 
 				<header class="Profile-Posts-Wrapper">
-					{state.posts.map((post)=>(
+					{state.posts.slice(0).reverse().map((post)=>(
 						<div className="Profile-Post">
 							<button className="Profile-Post-Name"
 								onClick={(event) => {
