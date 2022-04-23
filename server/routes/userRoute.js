@@ -301,6 +301,10 @@ router.post("/deletePost", (req, res) => {
             res.json(users)
         }, {collection: 'post'});
 
+        let commentCrit = {post: id}
+        Comment.deleteMany(commentCrit, function(err, comments){
+        }, {collection: 'comments'})
+
     } catch (e) {
         console.log(e);
     }
