@@ -286,6 +286,15 @@ router.post("/deleteUser", (req, res) => {
             res.json(users)
         }, {collection: 'users'});
 
+        let postCrit = {author: username}
+        Post.deleteMany(postCrit, function(err, posts){
+
+        }, {collection: "posts"})
+
+        Comment.deleteMany(postCrit, function(err, comments){
+
+        }, {collection: "comments"})
+
     } catch (e) {
         console.log(e);
     }
