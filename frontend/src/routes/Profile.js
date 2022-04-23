@@ -1,6 +1,6 @@
 import './Profile.css';
-import React, {Component, useState, useEffect} from 'react';
-import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
+import React, {useState, useEffect} from 'react';
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 function Profile() {
 
@@ -9,7 +9,7 @@ function Profile() {
 
 	let followbutton;
 	let blockbutton;
-	if(location.state == null || location.state == "") {
+	if(location.state === null || location.state === "") {
 		followbutton = false;
 		location.state = "";
 	} else {
@@ -51,7 +51,7 @@ function Profile() {
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
-	}, [useParams()])
+	}, [userid])
 
 	useEffect(() => {
 		axios.post("/getPostsFromUser", {
@@ -107,7 +107,7 @@ function Profile() {
 	}
 
 	function UserPermissionsEditProfile() {
-		if(userid == location.state.username) {
+		if(userid === location.state.username) {
 			return(<button className="Big-Green-Button"
 					onClick={(e) => {
 						handleClickEdit(e, state.username)
@@ -122,7 +122,7 @@ function Profile() {
 	}
 	
 	function UserPermissionsLogout() {
-		if(userid == location.state.username) {
+		if(userid === location.state.username) {
 			return(	<button className="Big-Green-Button" onClick={(e) => {
 				handleCLickLogout(e)
 			}}><b>Log Out</b>
@@ -137,7 +137,7 @@ function Profile() {
 
 	function FollowButton(){
 		if (location.state.username !== userid && followbutton) {
-			if(state.following == false) {
+			if(state.following === false) {
 				return (
 					<button className="Edit-Profile-Button" onClick={(e) => {
 						handleClickFollow()}} >
@@ -161,7 +161,7 @@ function Profile() {
 
 	function BlockButton() {
 		if (location.state.username !== userid && blockbutton) {
-			if (state.blocking == false) {
+			if (state.blocking === false) {
 				return (
 					<button className="Edit-Profile-Button" onClick={(e) => {
 						handleClickBlock()}} >
@@ -304,7 +304,7 @@ function Profile() {
 							<img className='Profile-Logo-Image' src="/Logo_new.png" alt="STEM"></img>
 					</button>
 
-					<a className="Profile-Banner-Text">StemSpace</a>
+					<span className="Profile-Banner-Text">StemSpace</span>
 
 					<button className="Profile-Banner-Button"
 							onClick={(e) => {
@@ -326,7 +326,7 @@ function Profile() {
 				<div className="Profile-Horizontal-Bar"/>
 
 				<header className="Profile-bio">
-					<img className='Profile-picture' src={state.image}></img>
+					<img className='Profile-picture' src={state.image} alt={"PFP of " + state.username}></img>
 
 					<span className="Profile-info">
 							<div>
@@ -352,7 +352,7 @@ function Profile() {
 									handleClickName(event, post.post.author)
 								}}>
 
-								<img className="Profile-Post-PFP" src={post.post.image}></img>
+								<img className="Profile-Post-PFP" src={post.post.image} alt={"PFP of " + post.post.author}></img>
 								<b>@{post.post.author}</b>
 							</button>  
 
