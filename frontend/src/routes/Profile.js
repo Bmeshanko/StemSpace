@@ -9,10 +9,13 @@ function Profile() {
 
 	let followbutton;
 	let blockbutton;
+	let loggedin = false;
 	if(location.state === null || location.state === "") {
+		loggedin = false;
 		followbutton = false;
 		location.state = "";
 	} else {
+		loggedin = true;
 		followbutton = true;
 		blockbutton = true;
 	}
@@ -396,7 +399,7 @@ function Profile() {
 				
 				<div className="Profile-Horizontal-Bar"/>
 
-			<header className="Timeline-Selector">
+			{loggedin && <header className="Timeline-Selector">
                 <button className="Timeline-Following"
 					onClick={(event) => {
 						switchView("Posts")
@@ -413,11 +416,11 @@ function Profile() {
 					Likes
 				</button>
 
-            </header>
+            </header>}
 
 			<div className="Profile-Horizontal-Bar"/>
 
-				<header class="Profile-Posts-Wrapper">
+				{loggedin && <header class="Profile-Posts-Wrapper">
 					{showPost().map((post)=>(
 						<div className="Profile-Post">
 							{!post.post.anon && <button className="Profile-Post-Name"
@@ -474,7 +477,7 @@ function Profile() {
 							</button>}
 						</div>
 					))}
-				</header>
+				</header>}
 			</body>
 	);
 }
