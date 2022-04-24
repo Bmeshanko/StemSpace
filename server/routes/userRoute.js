@@ -11,6 +11,7 @@ var fs = require('fs');
 const path = require('path');
 const Post = require("../models/postModel");
 const Comment = require("../models/commentModel");
+const DM = require("../models/dmsModel");
 
 router.post("/follow", (req, res) => {
     const user = req.body.user; //get current user
@@ -541,5 +542,32 @@ router.post("/unfollowTopic", (req, res) => {
         res.json(user)
     }, {collection: "users"})
 });
+router.post("/createDM", (req, res) => {
+    const content = req.body.content; //get content
+    const author = req.body.author; //get post contents
+    const target = req.body.target;
 
+    //create new DM object
+    const newDM = new DM({
+        content,
+        author,
+        target
+    });
+
+    newDM.save(); //save new DM in db
+});
+router.post("/getDMS", (req, res) => {
+    try {
+        let criteria = {$or:[{author: req.body.author},{target: req.body.author}]};
+
+        //find all DMS involving user
+        //return all DMS involving user
+        DM.find(criteria, function(err, dms) {
+            res.json(dms)
+        }, {collection: 'dms'})
+
+    } catch(e) {
+        console.log(e);
+    }
+});
 module.exports = router;

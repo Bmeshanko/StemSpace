@@ -1,5 +1,5 @@
 import './Timeline.css';
-import {useLocation, useNavigate} from "react-router-dom";
+import {createRoutesFromChildren, useLocation, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 
@@ -11,6 +11,7 @@ function Timeline() {
     const [input, setInput] = useState({
         username: location.state.username,
         posts: [],
+        DMS: [],
         following: [],
         viewing: "",
         topic: "None",
@@ -106,6 +107,10 @@ function Timeline() {
 
     function handlePost(event, postid){
         navigate(`/Post/${postid}`, {state:{username:input.username}});
+    }
+
+    function handleDM(event, target){
+        navigate(`/SeeDM`, {state:{username:input.username, target:target}});
     }
 
     function deletePost(event,id) {
@@ -236,6 +241,31 @@ function Timeline() {
             console.log("Error Detected")
         })
     }
+    function createDM(event,id) {
+        navigate("/CreateDM", {state:{username:input.username}});
+    }
+
+    useEffect(()=>{
+        axios.post("/getDMS", {
+			//criteria would go here
+            author: input.username
+		}).then (res => {
+            //put in console all the posts
+            let temp=[];
+            for(let x=0;x<res.data.length;x++)
+            {
+                if(res.data[x].author === input.username)
+                    temp[x]=res.data[x].target;
+                if(res.data[x].target === input.username)
+                    temp[x]=res.data[x].author;
+            }
+            setInput(prevState => ({ ...prevState, DMS: temp}))
+		}).catch(function (error) {
+			console.log("Error Detected")
+		})
+    },[input.DMS]);
+
+
 
     return(
         <body>
@@ -351,7 +381,21 @@ function Timeline() {
             </span>
 
             <span class="Timeline-DMs">
-                    <p className="DM-header">Chats</p>                    
+                    <p className="DM-header">Chats</p>
+                    <button className="Timeline-Like-Button"
+                            onClick={(e) => {
+                                createDM()
+                            }}><b>makeDm</b>
+                    </button>
+
+                    {(input.DMS).map((DM)=>(
+                        <button onClick={(e)=>{
+                            handleDM(e,DM) 
+                        }}>
+                            <b>{DM}</b>
+                        </button>
+                    ))}                    
+                    
             </span>
         </body>
     );
