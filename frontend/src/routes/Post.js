@@ -17,7 +17,8 @@ function Post() {
         image: "",
         likers: [],
         likes: Number,
-        comments: []
+        comments: [],
+        anon: Boolean
 	});
 
     const [input, setInput] = useState({
@@ -49,6 +50,7 @@ function Post() {
 				setState(prevState => ({...prevState, topic: res.data.topic}))
                 setState(prevState => ({...prevState, likers: res.data.likers}))
                 setState(prevState => ({...prevState, likes: res.data.likers.length}))
+                setState(prevState => ({...prevState, anon: res.data.anon}))
                 axios.post("/getUsers", {
                     username: res.data.author
                 }).then (response=> {
@@ -237,7 +239,7 @@ function Post() {
 
             <div className="Post-Horizontal-Bar"/>
             <div className="Post-Post-Wrapper">
-                {state.author !== "" && <button className="Post-Post-Name" 
+                {!state.anon && <button className="Post-Post-Name" 
                     onClick={(event) => {;
                         handleClickName(event, state.author)
                     }}>
@@ -246,7 +248,7 @@ function Post() {
                     @{state.author}
                 </button>}
 
-                {state.author === "" && <button className="Post-Post-Name" >
+                {state.anon && <button className="Post-Post-Name" >
                     <b>@anon</b>
                 </button>}
 

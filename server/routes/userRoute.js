@@ -357,6 +357,7 @@ router.post("/createPost", (req, res) => {
     const author = req.body.username; //get username
     const contents = req.body.contents; //get post contents
     const topic = req.body.topic; //get post topic
+    const anon = req.body.anon;
     const likers = []; //empty likers array - no likes yet 
 
     //create new post object
@@ -364,7 +365,8 @@ router.post("/createPost", (req, res) => {
         contents,
         topic,
         author,
-        likers
+        likers,
+        anon
     });
 
     newPost.save(); //save new post in db

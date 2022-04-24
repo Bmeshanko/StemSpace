@@ -28,7 +28,8 @@ function CreatePost() {
         axios.post("/createPost", {
             contents: input.contents,
             topic: input.topic,
-            username: input.username
+            username: input.username,
+            anon: false
         });
         navigate("/Timeline", {state:{username:input.username}})
     }
@@ -37,7 +38,8 @@ function CreatePost() {
         axios.post("/createPost", {
             contents: input.contents,
             topic: input.topic,
-            username: ""
+            username: input.username,
+            anon: true
         });
         navigate("/Timeline", {state:{username:input.username}})
     }

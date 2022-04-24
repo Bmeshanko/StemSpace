@@ -5,7 +5,8 @@ const postSchema = {
     topic: String,
     author: String,
     likers: [String],
-    comments: Array
+    comments: Array,
+    anon: Boolean
 }
 
 const Post = mongoose.model("Post", postSchema);
