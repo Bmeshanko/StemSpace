@@ -7,6 +7,21 @@ function CreatePost() {
     const navigate = useNavigate();
     const location = useLocation();
 
+    const defaultTopics = ["Art", 
+                "Biology", 
+                "Blogs", 
+                "CompSci",
+                "Earth",
+                "Engineering",
+                "Fitness",
+                "Funny",
+                "Gaming",
+                "Health",
+                "Math",
+                "Music",
+                "Psychology",
+                "Sports"]
+
     const [input, setInput] = useState({
         topic: '',
         contents: '',
@@ -22,6 +37,7 @@ function CreatePost() {
                 [name]: value
             }
         })
+        console.log(input.topic)
     }
 
     function handleClick(event) {
@@ -52,22 +68,10 @@ function CreatePost() {
             </textarea>
             <div className="space"></div>
             <label for="topic"><p className="topic-text">Topic: </p> </label>
-            <select className="topic" name="topic" id="topic" value={input.topic} onChange={handleChange}>
-                <option value="Art">Art</option>
-                <option value="Biology">Biology</option>
-                <option value="Blogs">Blogs</option>
-                <option value="ComSci">ComSci</option>
-                <option value="Earth">Earth</option>
-                <option value="Engineering">Engineering</option>
-                <option value="Fitness">Fitness</option>
-                <option value="Funny">Funny</option>
-                <option value="Gaming">Gaming</option>
-                <option value="Health">Health</option>
-                <option value="Math">Math</option>
-                <option value="Music">Music</option>
-                <option value="Psychology">Psychology</option>
-                <option value="Sports">Sports</option>
-            </select>
+            <input list="topic-selection" id="topic" name="topic" value={input.topic} onChange={handleChange}/>
+                        <datalist id="topic-selection">
+                            {defaultTopics.map((topic) => <option value={topic}>{topic}</option>)}
+                        </datalist>  
             <div className="space"></div>
             <button className="Signup-button2"
                     onClick={(e) => {
