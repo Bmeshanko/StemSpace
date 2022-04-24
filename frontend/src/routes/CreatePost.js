@@ -37,7 +37,6 @@ function CreatePost() {
                 [name]: value
             }
         })
-        console.log(input.topic)
     }
 
     function handleClick(event) {
@@ -68,7 +67,7 @@ function CreatePost() {
             </textarea>
             <div className="space"></div>
             <label for="topic"><p className="topic-text">Topic: </p> </label>
-            <input list="topic-selection" id="topic" name="topic" value={input.topic} onChange={handleChange}/>
+            <input maxlength="20" list="topic-selection" id="topic" name="topic" value={input.topic} onChange={handleChange}/>
                         <datalist id="topic-selection">
                             {defaultTopics.map((topic) => <option value={topic}>{topic}</option>)}
                         </datalist>  

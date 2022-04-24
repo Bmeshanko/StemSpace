@@ -15,7 +15,21 @@ function Timeline() {
         viewing: "",
         topic: "None",
         blocked: [],
-        topics: []
+        topics: [],
+        defaultTopics: ["Art", 
+            "Biology", 
+            "Blogs", 
+            "CompSci",
+            "Earth",
+            "Engineering",
+            "Fitness",
+            "Funny",
+            "Gaming",
+            "Health",
+            "Math",
+            "Music",
+            "Psychology",
+            "Sports"]
     })
 
     useEffect(()=>{
@@ -50,6 +64,9 @@ function Timeline() {
             let temp=[];
             let promises=[];
             for(let i = 0; i < res.data.length; i++){
+                if(!input.defaultTopics.includes(res.data[i].topic) && res.data[i].topic !== "" && res.data[i].topic !== "None"){
+                    input.defaultTopics.push(res.data[i].topic);
+                }
                 promises.push(axios.post("/getUsers", {
                     username: res.data[i].author
                 }).then (response=> {
@@ -256,20 +273,7 @@ function Timeline() {
                 <select className="Topic-Selector" name="topic" id="topic" value={input.topic} onChange={viewTopic}>
                     <option className="Timeline-Topic-Selection" value="None">No Topic</option>
                     <option className="Timeline-Topic-Selection" value="Follow">Followed Topics</option>
-                    <option className="Timeline-Topic-Selection" value="Art">Art</option>
-                    <option className="Timeline-Topic-Selection" value="Biology">Biology</option>
-                    <option className="Timeline-Topic-Selection" value="Blogs">Blogs</option>
-                    <option className="Timeline-Topic-Selection" value="ComSci">ComSci</option>
-                    <option className="Timeline-Topic-Selection" value="Earth">Earth</option>
-                    <option className="Timeline-Topic-Selection" value="Engineering">Engineering</option>
-                    <option className="Timeline-Topic-Selection" value="Fitness">Fitness</option>
-                    <option className="Timeline-Topic-Selection" value="Funny">Funny</option>
-                    <option className="Timeline-Topic-Selection" value="Gaming">Gaming</option>
-                    <option className="Timeline-Topic-Selection" value="Health">Health</option>
-                    <option className="Timeline-Topic-Selection" value="Math">Math</option>
-                    <option className="Timeline-Topic-Selection" value="Music">Music</option>
-                    <option className="Timeline-Topic-Selection" value="Psychology">Psychology</option>
-                    <option className="Timeline-Topic-Selection" value="Sports">Sports</option>
+                    {input.defaultTopics.map((topic) => <option className="Timeline-Topic-Selection" value={topic}>{topic}</option>)}
                 </select>
             </header>
 
