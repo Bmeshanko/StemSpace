@@ -36,7 +36,8 @@ function Profile() {
 		following_number: 0,
 		posts: [],
 		likedposts: [],
-		viewing: "Posts"
+		viewing: "Posts",
+		exists: true
 	});
 
 	useEffect(() => {
@@ -44,7 +45,7 @@ function Profile() {
 			username: userid
 		}).then(res => {
 			if (res.data == null) {
-				alert("Profile not Found")
+				setState(prevState => ({ ...prevState, exists: false}));
 			} else {
 				setState(prevState => ({ ...prevState, bio: res.data.bio}));
 				let base64Flag = 'data:image/jpeg;base64,';
@@ -378,7 +379,9 @@ function Profile() {
 
 				<div className="Profile-Horizontal-Bar"/>
 
-				<header className="Profile-bio">
+				{!state.exists && <h1>PROFILE NOT FOUND</h1>}
+
+				{state.exists && <header className="Profile-bio">
 					<img className='Profile-picture' src={state.image} alt={"PFP of " + state.username}></img>
 
 					<span className="Profile-info">
@@ -395,11 +398,11 @@ function Profile() {
 								<BlockButton />
 							</div>
 					</span>
-				</header>
+				</header>}
 				
 				<div className="Profile-Horizontal-Bar"/>
 
-			{loggedin && <header className="Timeline-Selector">
+			{state.exists && loggedin && <header className="Timeline-Selector">
                 <button className="Timeline-Following"
 					onClick={(event) => {
 						switchView("Posts")

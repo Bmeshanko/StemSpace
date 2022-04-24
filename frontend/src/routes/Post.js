@@ -18,7 +18,8 @@ function Post() {
         likers: [],
         likes: Number,
         comments: [],
-        anon: Boolean
+        anon: Boolean,
+        exists: true,
 	});
 
     const [input, setInput] = useState({
@@ -43,7 +44,7 @@ function Post() {
 			id: postid
 		}).then(res => {
 			if (res.data == null) {
-				alert("Post not Found")
+				setState(prevState => ({ ...prevState, exists: false}));
 			} else {
 				setState(prevState => ({ ...prevState, contents: res.data.contents}));
 				setState(prevState => ({...prevState, author: res.data.author}))
@@ -238,7 +239,10 @@ function Post() {
             </div>
 
             <div className="Post-Horizontal-Bar"/>
-            <div className="Post-Post-Wrapper">
+
+            {!state.exists && <h1>POST NOT FOUND</h1>}
+            
+            {state.exists && <div className="Post-Post-Wrapper">
                 {!state.anon && <button className="Post-Post-Name" 
                     onClick={(event) => {;
                         handleClickName(event, state.author)
@@ -290,7 +294,7 @@ function Post() {
                     onChange={handleChange}
                     value={input.comment} id="comment" name="comment" placeholder="Write something..">
                 </textarea>
-            </div>
+            </div>}
 
             <header class="Post-Comment-Wrapper">
                 <ol>

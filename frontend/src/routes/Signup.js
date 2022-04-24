@@ -12,7 +12,9 @@ function Signup() {
         email: '',
         password: '',
         confirmEmail: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        usernameUsed: false,
+        emailUsed: false
     })
 
     function handleChange(event) {
@@ -37,7 +39,11 @@ function Signup() {
                 if (res.data == "Success!") {
                     navigate("/Code", {state:{email:input.email}}).then(window.location.href = '/Code');
                 } else {
-                    alert(res.data);
+                    if(res.data === "That username is taken!"){
+                        setInput(prevState => ({ ...prevState, usernameUsed: true}))
+                    } else if(res.data == "That email is taken!"){
+                        setInput(prevState => ({ ...prevState, emailUsed: true}))
+                    }
                 }
             })
         } else {
@@ -83,6 +89,14 @@ function Signup() {
                         }}><b>Sign Up</b>
                 </button>
             </header>
+
+            {input.usernameUsed && <p className="Signup-text">
+                "That username is taken!"
+                </p>}
+
+            {input.emailUsed && <p className="Signup-text">
+                "That email already has an account."
+                </p>}
         </body>
     );
 }
