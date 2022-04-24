@@ -295,6 +295,24 @@ router.post("/deleteUser", (req, res) => {
 
         }, {collection: "comments"})
 
+        let likeCrit = {likers: username}
+        const likeUpdate = {$pull: {likers: username}} //updat to remove user from likers
+        Post.updateMany(likeCrit, likeUpdate, function (err, docs) {
+        })
+
+        Comment.updateMany(likeCrit, likeUpdate, function (err, docs) {
+        })
+
+        let userCrit = {    $or: [
+            {followers: username},
+            {following: username},
+            {blockers: username},
+            {blocking: username}
+        ]};
+        const userUpdate = {$pull: {followers: username, following: username, blockers: username, blocking: username}}
+        User.updateMany(userCrit, userUpdate, function(err, users){
+        })
+
     } catch (e) {
         console.log(e);
     }
