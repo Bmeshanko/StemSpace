@@ -33,6 +33,15 @@ function CreatePost() {
         navigate("/Timeline", {state:{username:input.username}})
     }
 
+    function anonPost(event) {
+        axios.post("/createPost", {
+            contents: input.contents,
+            topic: input.topic,
+            username: ""
+        });
+        navigate("/Timeline", {state:{username:input.username}})
+    }
+
     return (
         <body>
         <header className="Create-post-header">
@@ -63,6 +72,13 @@ function CreatePost() {
                         e.preventDefault();
                         handleClick();
                     }}><b>Submit Post</b>
+            </button>
+            <p></p>
+            <button className="Signup-button2"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        anonPost();
+                    }}><b>Submit Post Anonymously</b>
             </button>
         </header>
         </body>

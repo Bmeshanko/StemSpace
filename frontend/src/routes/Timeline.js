@@ -53,15 +53,24 @@ function Timeline() {
                 promises.push(axios.post("/getUsers", {
                     username: res.data[i].author
                 }).then (response=> {
-                    let base64Flag = 'data:image/jpeg;base64,';
-                    let imageStr = arrayBufferToBase64(response.data.img.data.data);
-                    let picture=base64Flag+imageStr;
-                    temp[i] = {post: {author: res.data[i].author,
-                        contents: res.data[i].contents,
-                        topic: res.data[i].topic,
-                        id: res.data[i]._id,
-                        likers: res.data[i].likers,
-                        image: picture}};
+                    if(res.data[i].author === ""){
+                        temp[i] = {post: {author: res.data[i].author,
+                            contents: res.data[i].contents,
+                            topic: res.data[i].topic,
+                            id: res.data[i]._id,
+                            likers: res.data[i].likers,
+                            image: 'data:image/jpeg;base64,'}}; 
+                    } else{
+                        let base64Flag = 'data:image/jpeg;base64,';
+                        let imageStr = arrayBufferToBase64(response.data.img.data.data);
+                        let picture=base64Flag+imageStr;
+                        temp[i] = {post: {author: res.data[i].author,
+                            contents: res.data[i].contents,
+                            topic: res.data[i].topic,
+                            id: res.data[i]._id,
+                            likers: res.data[i].likers,
+                            image: picture}}; 
+                    }
                 }))
             }
             Promise.all(promises).then(()=>setInput(prevState => ({ ...prevState, posts: temp})));
@@ -294,14 +303,19 @@ function Timeline() {
                 {filterPosts(input.posts, input.viewing, input.topic).map((post)=>(
                     <div className="Timeline-Post">
                         
-                        <button className="Timeline-Post-Name" 
+                        {post.post.author !== "" && <button className="Timeline-Post-Name" 
                             onClick={(event) => {
                                 handleClickName(event, post.post.author)}}>
                             
                             <img className='Timeline-Post-PFP' src={post.post.image} alt={"PFP of" + post.post.author}></img>
                             <b>@{post.post.author}</b>
 
-                        </button>  
+                        </button>  }
+
+                        {post.post.author === "" && <button className="Timeline-Post-Name">
+                            <b>@anon</b>
+
+                        </button>  }
 
                         <p className="Timeline-Post-Topic">Topic: {post.post.topic ?  post.post.topic: "None"}</p>
 

@@ -237,14 +237,18 @@ function Post() {
 
             <div className="Post-Horizontal-Bar"/>
             <div className="Post-Post-Wrapper">
-                <button className="Post-Post-Name" 
+                {state.author !== "" && <button className="Post-Post-Name" 
                     onClick={(event) => {;
                         handleClickName(event, state.author)
                     }}>
 
                     <img className='Post-Post-PFP' src={state.image}></img>
                     @{state.author}
-                </button>
+                </button>}
+
+                {state.author === "" && <button className="Post-Post-Name" >
+                    <b>@anon</b>
+                </button>}
 
                 <p className="Post-Post-Topic">Topic: {state.topic? state.topic:"None"}</p>
                 <p className="Post-Post-Content">{state.contents}</p>
