@@ -20,6 +20,8 @@ function Profile() {
 	const FOLLOWERS = Symbol("followers");
 	const FOLLOWING = Symbol("following");
 
+	const showedPosts = [];
+
 	const {userid} = useParams();
 	const [state, setState] = useState({
 		username: userid,
@@ -29,7 +31,9 @@ function Profile() {
 		blocking: false,
 		followers: 0,
 		following_number: 0,
-		posts: []
+		posts: [],
+		likedposts: [],
+		viewing: "Posts"
 	});
 
 	useEffect(() => {
@@ -80,6 +84,34 @@ function Profile() {
 			console.log("Error Detected")
 		})
 	}, [state.posts])
+
+	useEffect(() => {
+		axios.post("/getLikedPosts", {
+			username: userid
+		}).then (res => {
+            let temp=[];
+            let promises=[];
+            for(let i = 0; i < res.data.length; i++){
+                promises.push(axios.post("/getUsers", {
+                    username: res.data[i].author
+                }).then (response=> {
+                    let base64Flag = 'data:image/jpeg;base64,';
+                    let imageStr = arrayBufferToBase64(response.data.img.data.data);
+                    let picture=base64Flag+imageStr;
+                    temp[i] = {
+						post:{author:res.data[i].author, 
+						contents:res.data[i].contents, 
+						topic:res.data[i].topic, 
+						id:res.data[i]._id, 
+						likers:res.data[i].likers, 
+						image: picture}};
+                }))
+            }
+            Promise.all(promises).then(()=>setState(prevState => ({...prevState, likedposts: temp})));
+		}).catch(function (error) {
+			console.log("Error Detected")
+		})
+	}, [state.likedposts])
 
 	function handleClickPost(e, username) {
 		if (!followbutton) {
@@ -292,6 +324,20 @@ function Profile() {
 		return window.btoa(binary);
 	};
 
+	function showPost(){
+		if(state.viewing === "Posts"){
+			return state.posts.slice(0).reverse();
+		} else if(state.viewing === "Likes"){
+			return state.likedposts.slice(0).reverse();
+		} else{
+			return state.posts.slice(0).reverse();
+		}
+	}
+
+	function switchView(view){
+		setState(prevState => ({ ...prevState, viewing: view}));
+	}
+
 
 		return (
 			<body className="Ignore-X-Overflow">
@@ -343,9 +389,32 @@ function Profile() {
 							</div>
 					</span>
 				</header>
+				
+				<div className="Profile-Horizontal-Bar"/>
+
+			<header className="Timeline-Selector">
+                <button className="Timeline-Following"
+					onClick={(event) => {
+						switchView("Posts")
+					}}>
+					Posts
+				</button>
+
+                <div className="Timeline-Vertical-Bar"/>
+
+                <button className="Timeline-Following"
+					onClick={(event) => {
+						switchView("Likes")
+					}}>
+					Likes
+				</button>
+
+            </header>
+
+			<div className="Profile-Horizontal-Bar"/>
 
 				<header class="Profile-Posts-Wrapper">
-					{state.posts.slice(0).reverse().map((post)=>(
+					{showPost().map((post)=>(
 						<div className="Profile-Post">
 							<button className="Profile-Post-Name"
 								onClick={(event) => {

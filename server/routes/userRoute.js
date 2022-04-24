@@ -413,6 +413,21 @@ router.post("/getPost", (req, res) => {
     }
 });
 
+router.post("/getLikedPosts", (req, res) => {
+    try {
+        const username = req.body.username; //get id
+        let criteria = {likers: username}; //get criteria to find post
+
+        //find and return post
+        Post.find(criteria, function(err, posts) {
+            res.json(posts)
+        }, {collection: 'posts'});
+
+    } catch (e) {
+        console.log(e);
+    }
+});
+
 router.post("/createComment", (req, res) => {
     const post = req.body.post; //get post
     const author = req.body.author; //get username
