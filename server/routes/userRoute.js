@@ -180,19 +180,12 @@ router.post("/getPostsFromUser", (req, res) => {
 
 router.post("/emailVerification", (req, res) => {
     try {
-        //find user profile from email
-        User.findOne({email: req.body.email}, function(err, users) {
-            if (users.code === req.body.code) { //if user enters correct code
+        let criteria = {email: req.body.email, code: req.body.code};
+        let update = {code: null, verification: true};
 
-                //update to set user.verification to true; remove confirmation code from db
-                const update = {code: null, verification: true}; 
-                User.findOneAndUpdate({email:req.body.email}, update, function(err, users) {
-                }, {collection: 'users'})
-                
-                res.json(users) //return user object
-            }
+        User.findOneAndUpdate(criteria, update, function(err, users) {
+            res.json(users)
         }, {collection: 'users'});
-
     } catch (e) {
         console.log(e);
     }
