@@ -11,6 +11,7 @@ var fs = require('fs');
 const path = require('path');
 const Post = require("../models/postModel");
 const Comment = require("../models/commentModel");
+const DM = require("../models/dmsModel");
 
 router.post("/follow", (req, res) => {
     const user = req.body.user; //get current user
@@ -253,7 +254,6 @@ router.post("/editBio", (req, res) => {
 
 router.post("/editImage", (req, res) => {
     try {
-        console.log(req);
         const newImage = req.body.image; //get new image
         var picdata=newImage.substring(23); //get new image data
         const username = req.body.username; //get username
@@ -287,6 +287,33 @@ router.post("/deleteUser", (req, res) => {
             res.json(users)
         }, {collection: 'users'});
 
+        let postCrit = {author: username}
+        Post.deleteMany(postCrit, function(err, posts){
+
+        }, {collection: "posts"})
+
+        Comment.deleteMany(postCrit, function(err, comments){
+
+        }, {collection: "comments"})
+
+        let likeCrit = {likers: username}
+        const likeUpdate = {$pull: {likers: username}} //updat to remove user from likers
+        Post.updateMany(likeCrit, likeUpdate, function (err, docs) {
+        })
+
+        Comment.updateMany(likeCrit, likeUpdate, function (err, docs) {
+        })
+
+        let userCrit = {    $or: [
+            {followers: username},
+            {following: username},
+            {blockers: username},
+            {blocking: username}
+        ]};
+        const userUpdate = {$pull: {followers: username, following: username, blockers: username, blocking: username}}
+        User.updateMany(userCrit, userUpdate, function(err, users){
+        })
+
     } catch (e) {
         console.log(e);
     }
@@ -301,6 +328,10 @@ router.post("/deletePost", (req, res) => {
         Post.findOneAndDelete(criteria, function(err, users) {
             res.json(users)
         }, {collection: 'post'});
+
+        let commentCrit = {post: id}
+        Comment.deleteMany(commentCrit, function(err, comments){
+        }, {collection: 'comments'})
 
     } catch (e) {
         console.log(e);
@@ -327,6 +358,7 @@ router.post("/createPost", (req, res) => {
     const author = req.body.username; //get username
     const contents = req.body.contents; //get post contents
     const topic = req.body.topic; //get post topic
+    const anon = req.body.anon;
     const likers = []; //empty likers array - no likes yet 
 
     //create new post object
@@ -334,7 +366,8 @@ router.post("/createPost", (req, res) => {
         contents,
         topic,
         author,
-        likers
+        likers,
+        anon
     });
 
     newPost.save(); //save new post in db
@@ -375,6 +408,21 @@ router.post("/getPost", (req, res) => {
 
         //find and return post
         Post.findOne(criteria, function(err, posts) {
+            res.json(posts)
+        }, {collection: 'posts'});
+
+    } catch (e) {
+        console.log(e);
+    }
+});
+
+router.post("/getLikedPosts", (req, res) => {
+    try {
+        const username = req.body.username; //get id
+        let criteria = {likers: username}; //get criteria to find post
+
+        //find and return post
+        Post.find(criteria, function(err, posts) {
             res.json(posts)
         }, {collection: 'posts'});
 
@@ -473,5 +521,53 @@ router.post("/deleteComment", (req, res) => {
     }
 });
 
+router.post("/followTopic", (req, res) => {
+    const username = req.body.username;
+    let criteria = {username: username};
 
+    const update = {$addToSet: {topics: req.body.topic}}
+
+    User.findOneAndUpdate(criteria, update, function(err, user){
+        res.json(user)
+    }, {collection: "users"})
+});
+
+router.post("/unfollowTopic", (req, res) => {
+    const username = req.body.username;
+    let criteria = {username: username};
+
+    const update = {$pull: {topics: req.body.topic}}
+
+    User.findOneAndUpdate(criteria, update, function(err, user){
+        res.json(user)
+    }, {collection: "users"})
+});
+router.post("/createDM", (req, res) => {
+    const content = req.body.content; //get content
+    const author = req.body.author; //get post contents
+    const target = req.body.target;
+
+    //create new DM object
+    const newDM = new DM({
+        content,
+        author,
+        target
+    });
+
+    newDM.save(); //save new DM in db
+});
+router.post("/getDMS", (req, res) => {
+    try {
+        let criteria = {$or:[{author: req.body.author},{target: req.body.author}]};
+
+        //find all DMS involving user
+        //return all DMS involving user
+        DM.find(criteria, function(err, dms) {
+            res.json(dms)
+        }, {collection: 'dms'})
+
+    } catch(e) {
+        console.log(e);
+    }
+});
 module.exports = router;

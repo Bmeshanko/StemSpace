@@ -21,7 +21,7 @@ function Code() {
                 if (res.data != null) {
                     window.location.href = '/Login';
                 } else {
-                    console.log("incorrect code")
+                    //wrong code entered
                 }
             })
         }

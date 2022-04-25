@@ -16,6 +16,8 @@ import EditProfile from "./routes/EditProfile";
 import Code from "./routes/Code";
 import Post from "./routes/Post";
 import Followers from "./routes/Followers";
+import CreateDM from "./routes/CreateDM";
+import SeeDM from "./routes/SeeDM";
 ReactDOM.render(
   <React.StrictMode>
       <BrowserRouter>
@@ -34,6 +36,8 @@ ReactDOM.render(
               <Route path="/Code" element={<Code />} />
               <Route path="/Followers/:userid" element={<Followers />} />
               <Route path="/Post/:postid" element={<Post />} />
+              <Route path="/CreateDM" element={<CreateDM />} />
+              <Route path="/SeeDM" element={<SeeDM />} />
           </Routes>
       </BrowserRouter>
   </React.StrictMode>,

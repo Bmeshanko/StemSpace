@@ -12,7 +12,9 @@ function Signup() {
         email: '',
         password: '',
         confirmEmail: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        usernameUsed: false,
+        emailUsed: false
     })
 
     function handleChange(event) {
@@ -38,7 +40,11 @@ function Signup() {
                 if (res.data == "Success!") {
                     navigate("/Code", {state:{email:input.email}}).then(window.location.href = '/Code');
                 } else {
-                    alert(res.data);
+                    if(res.data === "That username is taken!"){
+                        setInput(prevState => ({ ...prevState, usernameUsed: true}))
+                    } else if(res.data == "That email is taken!"){
+                        setInput(prevState => ({ ...prevState, emailUsed: true}))
+                    }
                 }
             })
         } else {
@@ -52,7 +58,7 @@ function Signup() {
                 <p className="Signup-text">Create an account on StemSpace today and join others
                     engaging with peers in their fields.</p>
                 <label for="username">
-                    <input onChange={handleChange} value={input.username} className="Signup-username-field" type="text" id="username" name="username"
+                    <input onChange={handleChange} maxlength="20" value={input.username} className="Signup-username-field" type="text" id="username" name="username"
                            placeholder="Username"/>
                 </label>
                 <div className="space"></div>
@@ -84,6 +90,14 @@ function Signup() {
                         }}><b>Sign Up</b>
                 </button>
             </header>
+
+            {input.usernameUsed && <p className="Signup-text">
+                "That username is taken!"
+                </p>}
+
+            {input.emailUsed && <p className="Signup-text">
+                "That email already has an account."
+                </p>}
         </body>
     );
 }

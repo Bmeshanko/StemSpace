@@ -17,7 +17,9 @@ function Post() {
         image: "",
         likers: [],
         likes: Number,
-        comments: []
+        comments: [],
+        anon: Boolean,
+        exists: true,
 	});
 
     const [input, setInput] = useState({
@@ -42,13 +44,14 @@ function Post() {
 			id: postid
 		}).then(res => {
 			if (res.data == null) {
-				alert("Post not Found")
+				setState(prevState => ({ ...prevState, exists: false}));
 			} else {
 				setState(prevState => ({ ...prevState, contents: res.data.contents}));
 				setState(prevState => ({...prevState, author: res.data.author}))
 				setState(prevState => ({...prevState, topic: res.data.topic}))
                 setState(prevState => ({...prevState, likers: res.data.likers}))
                 setState(prevState => ({...prevState, likes: res.data.likers.length}))
+                setState(prevState => ({...prevState, anon: res.data.anon}))
                 axios.post("/getUsers", {
                     username: res.data.author
                 }).then (response=> {
@@ -236,15 +239,22 @@ function Post() {
             </div>
 
             <div className="Post-Horizontal-Bar"/>
-            <div className="Post-Post-Wrapper">
-                <button className="Post-Post-Name" 
+
+            {!state.exists && <h1>POST NOT FOUND</h1>}
+            
+            {state.exists && <div className="Post-Post-Wrapper">
+                {!state.anon && <button className="Post-Post-Name" 
                     onClick={(event) => {;
                         handleClickName(event, state.author)
                     }}>
 
                     <img className='Post-Post-PFP' src={state.image}></img>
                     @{state.author}
-                </button>
+                </button>}
+
+                {state.anon && <button className="Post-Post-Name" >
+                    <b>@anon</b>
+                </button>}
 
                 <p className="Post-Post-Topic">Topic: {state.topic? state.topic:"None"}</p>
                 <p className="Post-Post-Content">{state.contents}</p>
@@ -284,11 +294,11 @@ function Post() {
                     onChange={handleChange}
                     value={input.comment} id="comment" name="comment" placeholder="Write something..">
                 </textarea>
-            </div>
+            </div>}
 
             <header class="Post-Comment-Wrapper">
                 <ol>
-                    {state.comments.map((comment)=>(
+                    {state.comments.slice(0).reverse().map((comment)=>(
                         <div className="Post-Comment">
                             <button className="Post-Comment-Name" 
                                 onClick={(event) => {

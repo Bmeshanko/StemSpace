@@ -1,6 +1,6 @@
 import './Profile.css';
-import React, {Component, useState, useEffect} from 'react';
-import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
+import React, {useState, useEffect} from 'react';
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 function Profile() {
 
@@ -9,16 +9,21 @@ function Profile() {
 
 	let followbutton;
 	let blockbutton;
-	if(location.state == null || location.state == "") {
+	let loggedin = false;
+	if(location.state === null || location.state === "") {
+		loggedin = false;
 		followbutton = false;
 		location.state = "";
 	} else {
+		loggedin = true;
 		followbutton = true;
 		blockbutton = true;
 	}
 
 	const FOLLOWERS = Symbol("followers");
 	const FOLLOWING = Symbol("following");
+
+	const showedPosts = [];
 
 	const {userid} = useParams();
 	const [state, setState] = useState({
@@ -27,9 +32,13 @@ function Profile() {
 		image: "",
 		following: false,
 		blocking: false,
+		blocked: false,
 		followers: 0,
 		following_number: 0,
-		posts: []
+		posts: [],
+		likedposts: [],
+		viewing: "Posts",
+		exists: true
 	});
 
 	useEffect(() => {
@@ -37,7 +46,7 @@ function Profile() {
 			username: userid
 		}).then(res => {
 			if (res.data == null) {
-				alert("Profile not Found")
+				setState(prevState => ({ ...prevState, exists: false}));
 			} else {
 				setState(prevState => ({ ...prevState, bio: res.data.bio}));
 				let base64Flag = 'data:image/jpeg;base64,';
@@ -47,13 +56,15 @@ function Profile() {
 				setState(prevState => ({...prevState, followers: res.data.followers.length}))
 				setState(prevState => ({...prevState, following_number: res.data.following.length}))
 				setState(prevState => ({ ...prevState,blocking:res.data.blockers.includes(location.state.username)}));
+				setState(prevState => ({ ...prevState,blocked:res.data.blocking.includes(location.state.username)}));
 			}
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
-	}, [useParams()])
+	}, [userid])
 
 	useEffect(() => {
+		console.log(state.blocked)
 		axios.post("/getPostsFromUser", {
 			username: userid
 		}).then (res => {
@@ -63,16 +74,20 @@ function Profile() {
                 promises.push(axios.post("/getUsers", {
                     username: res.data[i].author
                 }).then (response=> {
-                    let base64Flag = 'data:image/jpeg;base64,';
-                    let imageStr = arrayBufferToBase64(response.data.img.data.data);
-                    let picture=base64Flag+imageStr;
-                    temp[i] = {
-						post:{author:res.data[i].author, 
-						contents:res.data[i].contents, 
-						topic:res.data[i].topic, 
-						id:res.data[i]._id, 
-						likers:res.data[i].likers, 
-						image: picture}};
+					if(!res.data[i].anon){
+						let base64Flag = 'data:image/jpeg;base64,';
+						let imageStr = arrayBufferToBase64(response.data.img.data.data);
+						let picture=base64Flag+imageStr;
+						temp[i] = {
+							post:{author:res.data[i].author, 
+							anon: res.data[i].anon,
+							contents:res.data[i].contents, 
+							topic:res.data[i].topic, 
+							id:res.data[i]._id, 
+							likers:res.data[i].likers, 
+							image: picture}};
+					}
+                    
                 }))
             }
             Promise.all(promises).then(()=>setState(prevState => ({...prevState, posts: temp})));
@@ -80,6 +95,34 @@ function Profile() {
 			console.log("Error Detected")
 		})
 	}, [state.posts])
+
+	useEffect(() => {
+		axios.post("/getLikedPosts", {
+			username: userid
+		}).then (res => {
+            let temp=[];
+            let promises=[];
+            for(let i = 0; i < res.data.length; i++){
+                promises.push(axios.post("/getUsers", {
+                    username: res.data[i].author
+                }).then (response=> {
+					let base64Flag = 'data:image/jpeg;base64,';
+					let imageStr = arrayBufferToBase64(response.data.img.data.data);
+					let picture=base64Flag+imageStr;
+					temp[i] = {post: {author: res.data[i].author,
+						anon: res.data[i].anon,
+						contents: res.data[i].contents,
+						topic: res.data[i].topic,
+						id: res.data[i]._id,
+						likers: res.data[i].likers,
+						image: picture}}; 
+                }))
+            }
+            Promise.all(promises).then(()=>setState(prevState => ({...prevState, likedposts: temp})));
+		}).catch(function (error) {
+			console.log("Error Detected")
+		})
+	}, [state.likedposts])
 
 	function handleClickPost(e, username) {
 		if (!followbutton) {
@@ -107,7 +150,7 @@ function Profile() {
 	}
 
 	function UserPermissionsEditProfile() {
-		if(userid == location.state.username) {
+		if(userid === location.state.username) {
 			return(<button className="Big-Green-Button"
 					onClick={(e) => {
 						handleClickEdit(e, state.username)
@@ -122,7 +165,7 @@ function Profile() {
 	}
 	
 	function UserPermissionsLogout() {
-		if(userid == location.state.username) {
+		if(userid === location.state.username) {
 			return(	<button className="Big-Green-Button" onClick={(e) => {
 				handleCLickLogout(e)
 			}}><b>Log Out</b>
@@ -137,7 +180,7 @@ function Profile() {
 
 	function FollowButton(){
 		if (location.state.username !== userid && followbutton) {
-			if(state.following == false) {
+			if(state.following === false) {
 				return (
 					<button className="Edit-Profile-Button" onClick={(e) => {
 						handleClickFollow()}} >
@@ -161,7 +204,7 @@ function Profile() {
 
 	function BlockButton() {
 		if (location.state.username !== userid && blockbutton) {
-			if (state.blocking == false) {
+			if (state.blocking === false) {
 				return (
 					<button className="Edit-Profile-Button" onClick={(e) => {
 						handleClickBlock()}} >
@@ -292,41 +335,58 @@ function Profile() {
 		return window.btoa(binary);
 	};
 
+	function showPost(){
+		if(state.viewing === "Posts"){
+			return state.posts.slice(0).reverse();
+		} else if(state.viewing === "Likes"){
+			return state.likedposts.slice(0).reverse();
+		} else{
+			return state.posts.slice(0).reverse();
+		}
+	}
+
+	function switchView(view){
+		setState(prevState => ({ ...prevState, viewing: view}));
+	}
+
 
 		return (
 			<body className="Ignore-X-Overflow">
 				<div className="Profile-Top-Banner">
 					<button className="Profile-Logo-Button"
-							onClick={(e) => {
-								handleClickLogo(e, state.username)
-							}}>
+						onClick={(e) => {
+							handleClickLogo(e, state.username)
+						}}>
+						<img className='Profile-Logo-Image' src="/Logo_new.png" alt="STEM"></img>
+					</button>
+
+					<span className="Profile-Banner-Text">StemSpace</span>
+
+					<button className="Profile-Banner-Button"
+						onClick={(e) => {
+							handleClickPost(e, state.username)
+						}}>
 							
-							<img className='Profile-Logo-Image' src="/Logo_new.png" alt="STEM"></img>
-					</button>
-
-					<a className="Profile-Banner-Text">StemSpace</a>
-
-					<button className="Profile-Banner-Button"
-							onClick={(e) => {
-								handleClickPost(e, state.username)
-							}}>
-								
-							<img src="/post_button.png" className="Profile-Banner-Logos" alt="Create-post"/>
+						<img src="/post_button.png" className="Profile-Banner-Logos" alt="Create-post"/>
 					</button>
 
 					<button className="Profile-Banner-Button"
-							onClick={(e) => {
-								handleClickNotification(e, state.username)
-							}}>
-								
-							<img src="/Notification.png" className="Profile-Banner-Logos" alt="Notification"/>
+						onClick={(e) => {
+							handleClickNotification(e, state.username)
+						}}>
+							
+						<img src="/Notification.png" className="Profile-Banner-Logos" alt="Notification"/>
 					</button>
 				</div>
 
 				<div className="Profile-Horizontal-Bar"/>
 
-				<header className="Profile-bio">
-					<img className='Profile-picture' src={state.image}></img>
+				{!state.exists && <h1>PROFILE NOT FOUND</h1>}
+
+				{state.blocked && <h1>{state.username} has blocked you.</h1>}
+
+				{state.exists && !state.blocked && <header className="Profile-bio">
+					<img className='Profile-picture' src={state.image} alt={"PFP of " + state.username}></img>
 
 					<span className="Profile-info">
 							<div>
@@ -342,19 +402,46 @@ function Profile() {
 								<BlockButton />
 							</div>
 					</span>
-				</header>
+				</header>}
+				
+				<div className="Profile-Horizontal-Bar"/>
 
-				<header class="Profile-Posts-Wrapper">
-					{state.posts.map((post)=>(
+			{state.exists && loggedin && !state.blocked && <header className="Timeline-Selector">
+                <button className="Timeline-Following"
+					onClick={(event) => {
+						switchView("Posts")
+					}}>
+					Posts
+				</button>
+
+                <div className="Timeline-Vertical-Bar"/>
+
+                <button className="Timeline-Following"
+					onClick={(event) => {
+						switchView("Likes")
+					}}>
+					Likes
+				</button>
+
+            </header>}
+
+			<div className="Profile-Horizontal-Bar"/>
+
+				{loggedin && !state.blocked && <header class="Profile-Posts-Wrapper">
+					{showPost().map((post)=>(
 						<div className="Profile-Post">
-							<button className="Profile-Post-Name"
+							{!post.post.anon && <button className="Profile-Post-Name"
 								onClick={(event) => {
 									handleClickName(event, post.post.author)
 								}}>
 
-								<img className="Profile-Post-PFP" src={post.post.image}></img>
+								<img className="Profile-Post-PFP" src={post.post.image} alt={"PFP of " + post.post.author}></img>
 								<b>@{post.post.author}</b>
-							</button>  
+							</button>  }
+
+							{post.post.anon &&  <button className="Profile-Post-Name">
+								<b>@anon</b>
+							</button>  }
 
 							<p className="Profile-Post-Topic">Topic: {post.post.topic ?  post.post.topic: "None"}</p>
 
@@ -397,7 +484,7 @@ function Profile() {
 							</button>}
 						</div>
 					))}
-				</header>
+				</header>}
 			</body>
 	);
 }

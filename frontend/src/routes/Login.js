@@ -11,7 +11,8 @@ import axios from "axios";
 function Login() {
     const [user, setUser] = useState({
         username: '',
-        password: ''
+        password: '',
+        wrongInfo: false
     })
 
     function handleChange(event) {
@@ -33,7 +34,7 @@ function Login() {
             password: user.password
         }).then(res => {
             if (res.data == null || res.data.password !== Sha1.hash(user.password) || !res.data.verification) {
-                alert("Incorrect Username or Password")
+                setUser(prevState => ({ ...prevState, wrongInfo: true}))
             } else {
                 navigate("/Timeline", {state:{username:res.data.username}});
             }
@@ -83,6 +84,10 @@ function Login() {
                 }}><b>Create an Account</b>
             </button>
         </form>
+
+        {user.wrongInfo && <p className="Signup-text">
+                "Incorrect Username/Email or Password"
+                </p>}
       </section>
     </body>
     );
