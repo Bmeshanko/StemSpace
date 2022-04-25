@@ -26,6 +26,9 @@ function Signup() {
                 [name]: value
             }
         })
+        
+        setInput(prevState => ({ ...prevState, usernameUsed: false}))
+        setInput(prevState => ({ ...prevState, emailUsed: false}))
     }
 
     function handleClick(event) {
@@ -39,6 +42,7 @@ function Signup() {
                 if (res.data == "Success!") {
                     navigate("/Code", {state:{email:input.email}}).then(window.location.href = '/Code');
                 } else {
+                    console.log(res.data)
                     if(res.data === "That username is taken!"){
                         setInput(prevState => ({ ...prevState, usernameUsed: true}))
                     } else if(res.data == "That email is taken!"){
