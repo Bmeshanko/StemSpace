@@ -302,7 +302,7 @@ function Timeline() {
 
                 <div className="Timeline-Vertical-Bar"/>
 
-                <select className="Topic-Selector" name="topic" id="topic" value={input.topic} onChange={viewTopic}>
+                <select className="Timeline-Following" name="topic" id="topic" value={input.topic} onChange={viewTopic}>
                     <option className="Timeline-Topic-Selection" value="None">No Topic</option>
                     <option className="Timeline-Topic-Selection" value="Follow">Followed Topics</option>
                     {input.defaultTopics.map((topic) => <option className="Timeline-Topic-Selection" value={topic}>{topic}</option>)}

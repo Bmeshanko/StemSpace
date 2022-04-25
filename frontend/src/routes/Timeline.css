@@ -18,7 +18,7 @@
 .Timeline-Logo-Image {
     width: 40px;
     height: 40px;
-    background-color: #DDDDDD;  
+    background-color: #DDDDDD;
     border-radius: 20px;
   }
 
@@ -62,6 +62,7 @@
     padding-top: 16px;
     padding-bottom: 18px;
     border-style: hidden;
+    background-color: #DDDDDD;
 }
 
 .Timeline-Vertical-Bar{
@@ -72,7 +73,7 @@
     position: absolute;
 }
 
-.Topic-Selector{
+.Topic-Selector {
     font-size: 20px;
     display: inline-grid;
     width: 50%;
@@ -213,7 +214,7 @@
     font-family: Consolas;
     font-size: 16px;
     display: block;
-    width: 100%;
+    width: calc(100% - 2px);
     background-color: #5FAA4B;
     border-radius: 5px;
     border-color: #1F1F1F;
@@ -232,7 +233,7 @@
     font-family: Consolas;
     font-size: 16px;
     display: block;
-    width: 100%;
+    width: calc(100% - 4px);
     background-color: #5FAA4B;
     border-radius: 5px;
     border-color: #1F1F1F;
