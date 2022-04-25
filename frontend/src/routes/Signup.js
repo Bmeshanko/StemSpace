@@ -34,6 +34,7 @@ function Signup() {
         }
         if (input.confirmEmail === input.email && input.password === input.confirmPassword) {
             axios.post('/createUser', newUser).then(res => {
+                console.log(res.data);
                 if (res.data == "Success!") {
                     navigate("/Code", {state:{email:input.email}}).then(window.location.href = '/Code');
                 } else {
