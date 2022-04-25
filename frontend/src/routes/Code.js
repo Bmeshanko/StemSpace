@@ -17,14 +17,16 @@ function Code() {
             code: input.code,
             email: location.state.email
         }
-            axios.post('/emailVerification', newUser).then(res => {
-                if (res.data != null) {
-                    window.location.href = '/Login';
-                } else {
-                    //wrong code entered
-                }
-            })
-        }
+
+
+        axios.post('/emailVerification', newUser).then(res => {
+            if (res.data != null) {
+                window.location.href = '/Login';
+            } else {
+                //wrong code entered
+            }
+        })
+    }
 
     function handleChange(event) {
         const {name, value} = event.target;

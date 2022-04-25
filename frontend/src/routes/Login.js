@@ -33,7 +33,7 @@ function Login() {
             username: user.username,
             password: user.password
         }).then(res => {
-            if (res.data == null || res.data.password !== Sha1.hash(user.password) || !res.data.verification) {
+            if (res.data === null || res.data.password !== Sha1.hash(user.password) || !res.data.verification) {
                 setUser(prevState => ({ ...prevState, wrongInfo: true}))
             } else {
                 navigate("/Timeline", {state:{username:res.data.username}});

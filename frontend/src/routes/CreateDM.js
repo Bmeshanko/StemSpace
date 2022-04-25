@@ -25,8 +25,8 @@ function CreateDM() {
     }
 
     function handleClick(event) {
+        console.log(input.author);
         axios.post("/createDM", {
-            content: input.content,
             target: input.target,
             author: input.author
         });
