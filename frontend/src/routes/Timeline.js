@@ -79,6 +79,7 @@ function Timeline() {
                             contents: res.data[i].contents,
                             topic: res.data[i].topic,
                             id: res.data[i]._id,
+                            blocked: response.data.blocking.includes(location.state.username),
                             likers: res.data[i].likers,
                             image: picture}}; 
                 }))
@@ -179,7 +180,7 @@ function Timeline() {
     }
 
     function removeBlocks(post){
-        return !(input.blocked.includes(post.post.author));
+        return (!(input.blocked.includes(post.post.author)) && post.post.blocked === false);
     }
 
     function filterPosts(posts, viewing, topic){

@@ -32,6 +32,7 @@ function Profile() {
 		image: "",
 		following: false,
 		blocking: false,
+		blocked: false,
 		followers: 0,
 		following_number: 0,
 		posts: [],
@@ -55,6 +56,7 @@ function Profile() {
 				setState(prevState => ({...prevState, followers: res.data.followers.length}))
 				setState(prevState => ({...prevState, following_number: res.data.following.length}))
 				setState(prevState => ({ ...prevState,blocking:res.data.blockers.includes(location.state.username)}));
+				setState(prevState => ({ ...prevState,blocked:res.data.blocking.includes(location.state.username)}));
 			}
 		}).catch(function (error) {
 			console.log("Error Detected")
@@ -62,6 +64,7 @@ function Profile() {
 	}, [userid])
 
 	useEffect(() => {
+		console.log(state.blocked)
 		axios.post("/getPostsFromUser", {
 			username: userid
 		}).then (res => {
@@ -351,29 +354,28 @@ function Profile() {
 			<body className="Ignore-X-Overflow">
 				<div className="Profile-Top-Banner">
 					<button className="Profile-Logo-Button"
-							onClick={(e) => {
-								handleClickLogo(e, state.username)
-							}}>
-							
-							<img className='Profile-Logo-Image' src="/Logo_new.png" alt="STEM"></img>
+						onClick={(e) => {
+							handleClickLogo(e, state.username)
+						}}>
+						<img className='Profile-Logo-Image' src="/Logo_new.png" alt="STEM"></img>
 					</button>
 
 					<span className="Profile-Banner-Text">StemSpace</span>
 
 					<button className="Profile-Banner-Button"
-							onClick={(e) => {
-								handleClickPost(e, state.username)
-							}}>
-								
-							<img src="/post_button.png" className="Profile-Banner-Logos" alt="Create-post"/>
+						onClick={(e) => {
+							handleClickPost(e, state.username)
+						}}>
+							
+						<img src="/post_button.png" className="Profile-Banner-Logos" alt="Create-post"/>
 					</button>
 
 					<button className="Profile-Banner-Button"
-							onClick={(e) => {
-								handleClickNotification(e, state.username)
-							}}>
-								
-							<img src="/Notification.png" className="Profile-Banner-Logos" alt="Notification"/>
+						onClick={(e) => {
+							handleClickNotification(e, state.username)
+						}}>
+							
+						<img src="/Notification.png" className="Profile-Banner-Logos" alt="Notification"/>
 					</button>
 				</div>
 
@@ -381,7 +383,9 @@ function Profile() {
 
 				{!state.exists && <h1>PROFILE NOT FOUND</h1>}
 
-				{state.exists && <header className="Profile-bio">
+				{state.blocked && <h1>{state.username} has blocked you.</h1>}
+
+				{state.exists && !state.blocked && <header className="Profile-bio">
 					<img className='Profile-picture' src={state.image} alt={"PFP of " + state.username}></img>
 
 					<span className="Profile-info">
@@ -402,7 +406,7 @@ function Profile() {
 				
 				<div className="Profile-Horizontal-Bar"/>
 
-			{state.exists && loggedin && <header className="Timeline-Selector">
+			{state.exists && loggedin && !state.blocked && <header className="Timeline-Selector">
                 <button className="Timeline-Following"
 					onClick={(event) => {
 						switchView("Posts")
@@ -423,7 +427,7 @@ function Profile() {
 
 			<div className="Profile-Horizontal-Bar"/>
 
-				{loggedin && <header class="Profile-Posts-Wrapper">
+				{loggedin && !state.blocked && <header class="Profile-Posts-Wrapper">
 					{showPost().map((post)=>(
 						<div className="Profile-Post">
 							{!post.post.anon && <button className="Profile-Post-Name"
