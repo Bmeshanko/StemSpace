@@ -247,6 +247,24 @@ function Timeline() {
         navigate("/CreateDM", {state:{username:input.username}});
     }
 
+    function acceptDM(event, id){
+        console.log(id);
+        axios.post("/acceptDM", {
+            id: id
+        }).then( res =>{
+        }).catch(function(error){
+            console.log(" Accept Error Detected")
+        })
+    }
+    function deleteDM(event, id){
+        console.log(id);
+        axios.post("/deleteDM", {
+            id: id
+        }).then( res =>{
+        }).catch(function(error){
+            console.log(" Delete Error Detected")
+        })
+    }
     useEffect(()=>{
         axios.post("/getDMS", {
 			//criteria would go here
@@ -257,9 +275,16 @@ function Timeline() {
             for(let x=0;x<res.data.length;x++)
             {
                 if(res.data[x].creator === input.username)
-                    temp[x]=res.data[x].user;
+                {
+                    //temp[x]=res.data[x].user;
+                    temp[x]={DM:{ID:res.data[x]._id,check:res.data[x].check,user:res.data[x].user}}
+                }
                 if(res.data[x].user === input.username)
-                    temp[x]=res.data[x].creator;
+                {
+                    //temp[x]=res.data[x].creator;
+                    temp[x]={DM:{ID:res.data[x]._id,check:res.data[x].check,user:res.data[x].creator}}
+                }
+                //console.log(temp);
             }
             setInput(prevState => ({ ...prevState, DMS: temp}))
 		}).catch(function (error) {
@@ -391,11 +416,19 @@ function Timeline() {
                     </button>
 
                     {(input.DMS).map((DM)=>(
+                        <div>
+                        <b>Do you accept {DM.DM.user}'s message request</b> 
                         <button onClick={(e)=>{
-                            handleDM(e,DM) 
+                             acceptDM(e,DM.DM.ID)
                         }}>
-                            <b>{DM}</b>
+                            <b>Yes</b>
                         </button>
+                        <button onClick={(e)=>{
+                             deleteDM(e,DM.DM.ID)
+                        }}>
+                            <b>No</b>
+                        </button>
+                        </div>
                     ))}                    
                     
             </span>
