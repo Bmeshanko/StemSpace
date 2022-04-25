@@ -107,6 +107,9 @@ router.post("/createUser", (req, res) => {
     let userUser = User.findOne(userCriteria);
     let emailUser = User.findOne(emailCriteria);
 
+    console.log(userUser)
+    console.log(emailUser)
+
     if (userUser.username != null) {
         res.json("That username is taken!");
     } else if (emailUser.email != null) {
@@ -562,6 +565,40 @@ router.post("/getDMS", (req, res) => {
 
     } catch(e) {
         console.log(e);
+    }
+});
+
+router.post("/acceptDM", (req, res) => {
+    try{
+        let criteria = {_id: req.body.id};
+        let update = {$set: {check: true}}
+
+        DM.findOneAndUpdate(criteria, update, function(err, dm){
+            res.json(dm)
+        })
+    }catch(e){
+        console.log(e)
+    }
+});
+
+router.post("/sendDM", (req, res) => {
+    try{
+        let criteria = {_id: req.body.id};
+    }catch(e){
+        console.log(e)
+    }
+});
+
+router.post("/deleteDM", (req, res) => {
+    try{
+        let criteria = {_id: req.body.id};
+        
+        DM.findOneAndDelete(criteria, function(err, dm){
+            res.json(dm)
+        })
+
+    }catch(e){
+        console.log(e)
     }
 });
 module.exports = router;
