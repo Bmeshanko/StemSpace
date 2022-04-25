@@ -536,22 +536,23 @@ router.post("/unfollowTopic", (req, res) => {
     }, {collection: "users"})
 });
 router.post("/createDM", (req, res) => {
-    const content = req.body.content; //get content
-    const author = req.body.author; //get post contents
-    const target = req.body.target;
-
+    const creator = req.body.author; //get post contents
+    const user = req.body.target;
+    const messages=[];
+    const check=false;
     //create new DM object
     const newDM = new DM({
-        content,
-        author,
-        target
+        creator,
+        user,
+        messages,
+        check
     });
 
     newDM.save(); //save new DM in db
 });
 router.post("/getDMS", (req, res) => {
     try {
-        let criteria = {$or:[{author: req.body.author},{target: req.body.author}]};
+        let criteria = {$or:[{author: req.body.creator},{target: req.body.user}]};
 
         //find all DMS involving user
         //return all DMS involving user

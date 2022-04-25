@@ -243,6 +243,7 @@ function Timeline() {
         })
     }
     function createDM(event,id) {
+        console.log(input.username);
         navigate("/CreateDM", {state:{username:input.username}});
     }
 
@@ -255,10 +256,10 @@ function Timeline() {
             let temp=[];
             for(let x=0;x<res.data.length;x++)
             {
-                if(res.data[x].author === input.username)
-                    temp[x]=res.data[x].target;
-                if(res.data[x].target === input.username)
-                    temp[x]=res.data[x].author;
+                if(res.data[x].creator === input.username)
+                    temp[x]=res.data[x].user;
+                if(res.data[x].user === input.username)
+                    temp[x]=res.data[x].creator;
             }
             setInput(prevState => ({ ...prevState, DMS: temp}))
 		}).catch(function (error) {
@@ -386,7 +387,7 @@ function Timeline() {
                     <button className="Timeline-Like-Button"
                             onClick={(e) => {
                                 createDM()
-                            }}><b>makeDm</b>
+                            }}><b>makeDmRequest</b>
                     </button>
 
                     {(input.DMS).map((DM)=>(
