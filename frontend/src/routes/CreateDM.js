@@ -8,7 +8,6 @@ function CreateDM() {
     const location = useLocation();
 
     const [input, setInput] = useState({
-        content: '',
         target: '',
         author: location.state.username
     });
@@ -36,9 +35,6 @@ function CreateDM() {
     return(
         <body>
         <header className="Create-post-header">
-            <p className="Create-post-text">Create Message:</p>
-            <textarea onChange={handleChange} maxlength="500" value={input.content} id="content" name="content" placeholder="Write something..">
-            </textarea>
             <div className="space"></div>
             <p className="Create-post-text">Type Target:</p>
             <textarea onChange={handleChange} maxlength="500" value={input.target} id="target" name="target" placeholder="Write something..">
