@@ -606,4 +606,19 @@ router.post("/deleteDM", (req, res) => {
         console.log(e)
     }
 });
+
+router.post("/getDM", (req, res) => {
+    try {
+        let criteria = {_id: req.body.id};
+
+        //find all DMS involving user
+        //return all DMS involving user
+        DM.findOne(criteria, function(err, dms) {
+            res.json(dms)
+        }, {collection: 'dms'})
+
+    } catch(e) {
+        console.log(e);
+    }
+});
 module.exports = router;
