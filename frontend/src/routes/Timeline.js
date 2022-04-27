@@ -347,7 +347,14 @@ function Timeline() {
     }
 
     function sendDMrequest(){
-        if(input.users.includes(input.DMreq) && input.DMreq !== input.username){
+        let exists = false;
+        for(let i = 0; i < input.DMS.length; i++){
+            if(input.DMS[i] !== undefined && (input.DMS[i].DM.user === input.DMreq || input.DMS[i].DM.creator === input.DMreq)){
+                exists = true;
+            }
+        }
+
+        if(input.users.includes(input.DMreq) && input.DMreq !== input.username && !exists){
             axios.post("/createDM", {
             target: input.DMreq,
             author: input.username
