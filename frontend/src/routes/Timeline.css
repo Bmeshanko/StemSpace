@@ -200,7 +200,6 @@
     height: calc(100vh - 135px);
     padding: 5px;
     right: 0;
-    overflow-y: scroll;
     scrollbar-width: thin;
 }
 
@@ -243,6 +242,137 @@
     margin-bottom: 4px;
 }
 
+.DM-wrapper{
+    position: absolute;
+    width: calc(100% - 10px);
+    bottom: 0;
+    height: calc(100%);
+}
+
+.DM-back{
+    height: 10%;
+    width: 20%;
+    font-size: 50px;
+    display: inline;
+    text-align: left;
+    background-color: white;
+    border-style: hidden;
+}
+
+.DM-back:hover{
+    filter: brightness(90%);
+}
+
+.DM-textarea{
+    position:absolute;
+    bottom: 0;
+    font-family: Consolas;
+    font-size: 16px;
+    width: 80%;
+    height: 8%;
+    padding: 5px;
+    border-radius: 8px;
+    border-color: #1F1F1F;
+    border-width: 1px;
+}
+
+.DM-send-button{
+    font-size: 16px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 15%;
+    height: 10%;
+}
+
+.DM-messages{
+    height: calc(80% - 20px);
+    overflow-y: scroll;
+    border-style: solid;
+    border-color: #5FAA4B;
+    border-radius: 10px;
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.DM-name{
+    display: inline;
+    font-family: Consolas;
+    font-size: 40px;
+    margin-left: 25%;
+
+    background-color: white;
+    border-style: hidden;
+}
+
+.DM-name:hover{
+    text-decoration: underline;
+}
+
+.DM-userMSG{
+    float: inherit;
+    width: fit-content;
+    padding: 5px;
+    border-style: solid;
+    border-color: #5FAA4B;
+    border-radius: 10px;
+    margin: 1px;
+}
+
+.DM-otherMSG{
+    width: fit-content;
+    padding: 5px;
+    border-style: solid;
+    border-color: #5FAA4B;
+    border-radius: 10px;
+    margin: 1px;
+}
+
+.DM-message-wrapper{
+    width: 100%;
+    float: right;
+}
+
+.Accept-DM-Req{
+    font-size: 20px;
+    width: 97.8%;
+    float: right;
+    padding: 5px;
+    margin: 1px;
+    border-color: #5FAA4B;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 2px;
+}
+
+.Accept-DM-Button{
+    float: inherit;
+    background-color: white;
+    border-color: #5FAA4B;
+    border-style: solid;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.Accept-DM-Button:hover{
+    filter: brightness(90%);
+}
+
+.DM-button{
+    font-size: 20px;
+    width: 95%;
+    padding: 5px;
+    margin: 1px;
+    border-color: #5FAA4B;
+    border-style: solid;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.DM-button:hover{
+    filter: brightness(90%);
+}
 
 
 

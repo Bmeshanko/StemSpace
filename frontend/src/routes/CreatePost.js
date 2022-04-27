@@ -1,31 +1,30 @@
 import './CreatePost.css';
-import React, {useState} from "react";
 import axios from "axios";
 import {useLocation, useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from "react";
 
 function CreatePost() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const defaultTopics = ["Art", 
-                "Biology", 
-                "Blogs", 
-                "CompSci",
-                "Earth",
-                "Engineering",
-                "Fitness",
-                "Funny",
-                "Gaming",
-                "Health",
-                "Math",
-                "Music",
-                "Psychology",
-                "Sports"]
-
     const [input, setInput] = useState({
         topic: '',
         contents: '',
-        username: location.state.username
+        username: location.state.username,
+        defaultTopics: ["Art", 
+        "Biology", 
+        "Blogs", 
+        "CompSci",
+        "Earth",
+        "Engineering",
+        "Fitness",
+        "Funny",
+        "Gaming",
+        "Health",
+        "Math",
+        "Music",
+        "Psychology",
+        "Sports"]
     });
 
     function handleChange(event) {
@@ -59,6 +58,20 @@ function CreatePost() {
         navigate("/Timeline", {state:{username:input.username}})
     }
 
+    useEffect(()=>{
+        axios.post("/getPosts", {
+			//criteria would go here
+		}).then (res => {
+            for(let i = 0; i < res.data.length; i++){
+                if(!input.defaultTopics.includes(res.data[i].topic) && res.data[i].topic !== "" && res.data[i].topic !== "None"){
+                    input.defaultTopics.push(res.data[i].topic);
+                }
+            }
+		}).catch(function (error) {
+			console.log("Error Detected")
+		})
+    },[]);
+
     return (
         <body>
         <header className="Create-post-header">
@@ -69,7 +82,7 @@ function CreatePost() {
             <label for="topic"><p className="topic-text">Topic: </p> </label>
             <input maxlength="20" list="topic-selection" id="topic" name="topic" value={input.topic} onChange={handleChange}/>
                         <datalist id="topic-selection">
-                            {defaultTopics.map((topic) => <option value={topic}>{topic}</option>)}
+                            {input.defaultTopics.map((topic) => <option value={topic}>{topic}</option>)}
                         </datalist>  
             <div className="space"></div>
             <button className="Signup-button2"

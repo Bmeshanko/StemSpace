@@ -10,8 +10,16 @@ function Timeline() {
 
     const [input, setInput] = useState({
         username: location.state.username,
+        DMreq: "",
+        message: "",
+        users: [],
         posts: [],
         DMS: [],
+        currentDMid: "",
+        currentDMcontent: {
+            otherUser: "",
+            messages: []
+        },
         following: [],
         viewing: "",
         topic: "None",
@@ -52,6 +60,21 @@ function Timeline() {
             for(let i = 0; i < res.data.topics.length; i++){
                 input.topics.push(res.data.topics[i])
             }
+		}).catch(function (error) {
+			console.log("Error Detected")
+		})
+    },[]);
+
+    useEffect(()=>{
+        axios.post("/getAllUsers", {
+		}).then (res => {
+            input.users = [];
+            for(let i = 0; i < res.data.length; i++){
+                if(res.data[i].verification){
+                    input.users.push(res.data[i].username);
+                }
+            }
+            setInput(prevState => ({ ...prevState, users: input.users}));
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
@@ -108,10 +131,6 @@ function Timeline() {
 
     function handlePost(event, postid){
         navigate(`/Post/${postid}`, {state:{username:input.username}});
-    }
-
-    function handleDM(event, target){
-        navigate(`/SeeDM`, {state:{username:input.username, target:target}});
     }
 
     function deletePost(event,id) {
@@ -247,6 +266,45 @@ function Timeline() {
         navigate("/CreateDM", {state:{username:input.username}});
     }
 
+    function acceptDM(event, id){
+        axios.post("/acceptDM", {
+            id: id
+        }).then( res =>{
+        }).catch(function(error){
+            console.log(" Accept DM Error Detected")
+        })
+    }
+    function deleteDM(event, id){
+        axios.post("/deleteDM", {
+            id: id
+        }).then( res =>{
+        }).catch(function(error){
+            console.log(" Delete DM Error Detected")
+        })
+    }
+    function sendDM(event, id){
+        if(input.message === ""){
+            axios.post("/sendDM", {
+            id: id,
+            author: input.username,
+            content: input.message
+        }).then( res =>{
+        }).catch(function(error){
+            console.log("Send DM Error Detected")
+        })
+        }
+        setInput(prevState => ({ ...prevState, message: ""}))
+    }
+    function handleChange(event) {
+        const {name, value} = event.target;
+
+        setInput(prevInput=> {
+            return {
+                ...prevInput,
+                [name]: value
+            }
+        })
+    }
     useEffect(()=>{
         axios.post("/getDMS", {
 			//criteria would go here
@@ -256,18 +314,55 @@ function Timeline() {
             let temp=[];
             for(let x=0;x<res.data.length;x++)
             {
-                if(res.data[x].creator === input.username)
-                    temp[x]=res.data[x].user;
-                if(res.data[x].user === input.username)
-                    temp[x]=res.data[x].creator;
+                if(res.data[x].user === input.username || res.data[x].creator===input.username)
+                    temp[x]={DM:{id:res.data[x]._id,check:res.data[x].check,user:res.data[x].user,creator:res.data[x].creator}}
             }
             setInput(prevState => ({ ...prevState, DMS: temp}))
+            //console.log(input.DMS);
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
     },[input.DMS]);
 
+    useEffect(()=>{
+        if(input.currentDMid !== ""){
+            axios.post("/getDM", {
+                //criteria would go here
+                id: input.currentDMid
+            }).then (res => {
+                var temp = {
+                    otherUser: (res.data.creator === input.username? res.data.user: res.data.creator),
+                    messages: res.data.messages
+                }
+                setInput(prevState => ({ ...prevState, currentDMcontent: temp}))
+                //console.log(input.DMS);
+            }).catch(function (error) {
+                console.log("Error Detected")
+            })
+        }
+    },[input.DMS]);
 
+    function enterDM(id){
+        setInput(prevState => ({ ...prevState, currentDMid: id}))
+    }
+
+    function leaveDM(){
+        setInput(prevState => ({ ...prevState, currentDMid: ""}))
+    }
+
+    function sendDMrequest(){
+        if(input.users.includes(input.DMreq) && input.DMreq !== input.username){
+            axios.post("/createDM", {
+            target: input.DMreq,
+            author: input.username
+            }).then(res => {
+                
+            }).catch(function (error) {
+                console.log("Error Detected")
+            })
+        } 
+        setInput(prevState => ({ ...prevState, DMreq: ""}))
+    }
 
     return(
         <body>
@@ -383,21 +478,137 @@ function Timeline() {
             </span>
 
             <span class="Timeline-DMs">
-                    <p className="DM-header">Chats</p>
-                    <button className="Timeline-Like-Button"
-                            onClick={(e) => {
-                                createDM()
-                            }}><b>makeDmRequest</b>
-                    </button>
+                    {input.currentDMid==="" && <p className="DM-header">Chats</p>}
 
-                    {(input.DMS).map((DM)=>(
-                        <button onClick={(e)=>{
-                            handleDM(e,DM) 
-                        }}>
-                            <b>{DM}</b>
-                        </button>
-                    ))}                    
-                    
+                    { input.currentDMid === "" &&  
+                        <div>
+                            <input maxlength="20" list="DM-recipients" id="DMreq" name="DMreq" value={input.DMreq} onChange={handleChange}/>
+                                <datalist id="DM-recipients">
+                                    {input.users.map((user) => <option value={user}>{user}</option>)}
+                                </datalist>
+
+                                <button className="Accept-DM-Button"
+                                    onClick={(e)=>{
+                                        sendDMrequest();
+                                        }}>
+                                    <b>Send DM request</b>
+                                </button>
+                        </div>} 
+
+                    { input.currentDMid === "" &&<h3>Ongoing Requests</h3>}
+
+                    { input.currentDMid === "" && 
+                        (input.DMS).map((DM)=>(
+                        <div>
+                        {DM.DM.check===false && DM.DM.creator!==input.username &&
+                            <div className="Accept-DM-Req">
+                                <b>Accept {DM.DM.creator}'s DM</b> 
+                                <button className="Accept-DM-Button"
+                                    onClick={(e)=>{
+                                        deleteDM(e,DM.DM.id)}}>
+                                    <b>x</b>
+                                </button>
+                                <button className="Accept-DM-Button"
+                                    onClick={(e)=>{
+                                        acceptDM(e,DM.DM.id)}}>
+                                    <b>+</b>
+                                </button>
+
+                            </div>
+                        }     
+                        </div>))
+                    }
+
+                    { input.currentDMid === "" && 
+                        (input.DMS).map((DM)=>(
+                            <div>
+                                {DM.DM.check===false && DM.DM.creator===input.username &&
+                                    <div className="Accept-DM-Req">
+                                        <b>Request to {DM.DM.user} is pending</b> 
+
+                                        <button className="Accept-DM-Button"
+                                            onClick={(e)=>{
+                                                deleteDM(e,DM.DM.id)}}>
+                                            <b>x</b>
+                                        </button>
+                                    </div>
+
+                                    
+                                }
+                            </div>))
+                    }
+
+                    { input.currentDMid === "" &&<h3>Open DM's</h3>}
+
+                    { input.currentDMid === "" && 
+                        (input.DMS).map((DM)=>(
+                            <div>
+                                { DM.DM.check === true &&
+                                    <div>
+                                        <button className="DM-button"
+                                            onClick={(e)=>{
+                                                enterDM(DM.DM.id)
+                                            }}>
+                                            <b>
+                                            @{DM.DM.creator === input.username ? DM.DM.user: DM.DM.creator}
+                                            </b>
+                                        </button>
+                                        <button className="Accept-DM-Button"
+                                            onClick={(e)=>{
+                                                deleteDM(e,DM.DM.id)}}>
+                                            <b>x</b>
+                                        </button>
+                                    </div>
+                                }   
+                                
+                            </div>))
+                    }
+
+                    { input.currentDMid !== "" &&
+                        <div className="DM-wrapper">
+                            <button className="DM-back"onClick={(e)=>{
+                                leaveDM()
+                            }}>
+                                &larr;
+                            </button>
+
+                            <button className="DM-name"
+                                onClick={(event) => {
+                                    handleClickName(event, input.currentDMcontent.otherUser)}}>
+                                
+                                @{input.currentDMcontent.otherUser}</button>
+
+                            <div className="DM-messages">
+                                {(input.currentDMcontent.messages).map((message)=>
+                                <div>
+                                    {message.author === input.username && 
+                                    <div className="DM-message-wrapper">
+                                    <p className="DM-userMSG">
+                                        {message.content}
+                                        </p>
+                                        </div>}
+                                    {message.author !== input.username && 
+                                    <div className="DM-message-wrapper">
+                                    <p className="DM-otherMSG">
+                                        {message.content}
+                                        </p></div>}
+                                </div>
+                                )}
+                            </div>
+
+
+                            <textarea className="DM-textarea"
+                                onChange={handleChange} value={input.message} id="message" name="message" placeholder="Say something...">
+                            </textarea>
+                            <button className="DM-send-button" onClick={(e)=>{
+                                sendDM(e,input.currentDMid)
+                            }}>
+                            <b>Send message</b>
+                            </button>
+
+                        </div>
+
+                    }                 
             </span>
         </body>
     );

@@ -100,6 +100,7 @@ router.post("/createUser", (req, res) => {
     const email = req.body.email; //get email
     const bio = "";  //make empty bio
     const imgPath='./Blank-Profile.png'; //set default profile picture path
+    const allowDM ="All";
 
     let userCriteria = {username: username};
     let emailCriteria = {email: email};
@@ -107,7 +108,8 @@ router.post("/createUser", (req, res) => {
     let userUser = User.findOne(userCriteria);
     let emailUser = User.findOne(emailCriteria);
 
-    console.log(userUser.json());
+    console.log(userUser)
+    console.log(emailUser)
 
     if (userUser.username != null) {
         res.json("That username is taken!");
@@ -116,6 +118,7 @@ router.post("/createUser", (req, res) => {
     } else {
         const newUser = new User({ //create new user object
             username,
+            allowDM,
             password,
             email,
             bio,
@@ -142,6 +145,17 @@ router.post("/getUsers", (req, res) => {
         //find user
         //return user
         User.findOne(criteria, function(err, users) {
+            res.json(users)
+        }, {collection: 'users'})
+
+    } catch(e) {
+        console.log("Error Detected in /getUsers");
+    }
+});
+
+router.post("/getAllUsers", (req, res) => {
+    try {
+        User.find({}, function(err, users) {
             res.json(users)
         }, {collection: 'users'})
 
@@ -561,6 +575,72 @@ router.post("/getDMS", (req, res) => {
         DM.find(criteria, function(err, dms) {
             res.json(dms)
         }, {collection: 'dms'})
+
+    } catch(e) {
+        console.log(e);
+    }
+});
+
+router.post("/acceptDM", (req, res) => {
+    try{
+        let criteria = {_id: req.body.id};
+        let update = {$set: {check: true}}
+
+        DM.findOneAndUpdate(criteria, update, function(err, dm){
+            res.json(dm)
+        }, {collection: 'dms'})
+    }catch(e){
+        console.log(e)
+    }
+});
+
+router.post("/sendDM", (req, res) => {
+    try{
+        let criteria = {_id: req.body.id};
+        let update = {$push: {messages: {author: req.body.author, content: req.body.content}}}
+
+        DM.findOneAndUpdate(criteria, update, function(err, dm){
+            res.json(dm)
+        }, {collection: 'dms'})
+    }catch(e){
+        console.log(e)
+    }
+});
+
+router.post("/deleteDM", (req, res) => {
+    try{
+        let criteria = {_id: req.body.id};
+        
+        DM.findOneAndDelete(criteria, function(err, dm){
+            res.json(dm)
+        }, {collection: 'dms'})
+
+    }catch(e){
+        console.log(e)
+    }
+});
+
+router.post("/getDM", (req, res) => {
+    try {
+        let criteria = {_id: req.body.id};
+
+        //find all DMS involving user
+        //return all DMS involving user
+        DM.findOne(criteria, function(err, dms) {
+            res.json(dms)
+        }, {collection: 'dms'})
+
+    } catch(e) {
+        console.log(e);
+    }
+});
+router.post("/changeDMMode", (req, res) => {
+    try {
+        let criteria = {username: req.body.username};
+        const update = {allowDM: req.body.allowDM};
+        User.findOneAndUpdate(criteria, update, function(err, users) {
+            res.json(users)
+        }, {collection: 'users'});
 
     } catch(e) {
         console.log(e);

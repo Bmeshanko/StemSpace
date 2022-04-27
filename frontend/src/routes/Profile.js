@@ -64,7 +64,7 @@ function Profile() {
 	}, [userid])
 
 	useEffect(() => {
-		console.log(state.blocked)
+		//console.log(state.blocked)
 		axios.post("/getPostsFromUser", {
 			username: userid
 		}).then (res => {
@@ -140,6 +140,14 @@ function Profile() {
 			navigate("/DeleteAccount");
 		}
 	}
+	function handleDMMode(e, mode) {
+		//console.log(mode);
+		axios.post("/changeDMMode", {
+        	username: location.state.username,
+			allowDM: mode
+    	}).then(res => {
+    	});
+	}
 
 	function handleClickLogo(e, username) {
 		if (!followbutton) {
@@ -156,6 +164,25 @@ function Profile() {
 						handleClickEdit(e, state.username)
 					}}><b>Edit Profile</b>
 			</button>)
+		}
+		return (<p></p>)
+	}
+	function UserPermissionsEditDM() {
+		if(userid === location.state.username) {
+			return(<div>
+				<b>Select DM Mode</b>
+				<button className="Big-Green-Button"
+					onClick={(e) => {
+						handleDMMode(e, "All")
+					}}><b>ALL</b>
+				</button>
+				<button className="Big-Green-Button"
+					onClick={(e) => {
+						handleDMMode(e, "Followers")
+					}}><b>FOLLOWERS</b>
+				</button>
+			</div>
+			)
 		}
 		return (<p></p>)
 	}
@@ -393,6 +420,7 @@ function Profile() {
 								<UserPermissionsEditProfile />
 								<span className="right-space"/>
 								<UserPermissionsLogout />
+								<UserPermissionsEditDM />
 								<h3>{state.followers} <button className="Big-Green-Button" onClick={(e)=>{handClickShowFollowers(FOLLOWERS)}}>Followers</button></h3>
 								<h3>{state.following_number} <button className="Big-Green-Button" onClick={(e)=>{handClickShowFollowers(FOLLOWING)}}>Following</button></h3>
 								<p className="username">@{userid}</p>
