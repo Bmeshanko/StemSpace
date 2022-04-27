@@ -308,6 +308,15 @@ router.post("/deleteUser", (req, res) => {
         User.updateMany(userCrit, userUpdate, function(err, users){
         })
 
+        let dmCrit = {    $or: [
+            {creator: username},
+            {user: username}
+        ]};
+
+        DM.deleteMany(dmCrit, function(err, dms){
+
+        }, {collection: "dms"})
+
     } catch (e) {
         console.log(e);
     }
