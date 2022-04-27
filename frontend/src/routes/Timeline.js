@@ -476,16 +476,21 @@ function Timeline() {
                             <div>
                                 <b>Request to {DM.DM.user} is pending</b> 
                             </div>
-                        }      
-
-                        { DM.DM.check === true &&
-                            <button onClick={(e)=>{
-                                enterDM(DM.DM.id)
-                            }}>
-                                {DM.DM.creator === input.username ? DM.DM.user: DM.DM.creator}
-                            </button>
-                        }   
+                        }       
                         </div>))
+                    }
+
+                    { input.currentDMid === "" && 
+                        (input.DMS).map((DM)=>(
+                            <div>
+                                { DM.DM.check === true &&
+                                    <button onClick={(e)=>{
+                                        enterDM(DM.DM.id)
+                                    }}>
+                                        {DM.DM.creator === input.username ? DM.DM.user: DM.DM.creator}
+                                    </button>
+                                }   
+                            </div>))
                     }
 
                     { input.currentDMid !== "" &&
@@ -501,14 +506,23 @@ function Timeline() {
                                     handleClickName(event, input.currentDMcontent.otherUser)}}>
                                 
                                 @{input.currentDMcontent.otherUser}</button>
+
                             <div className="DM-messages">
                                 {(input.currentDMcontent.messages).map((message)=>
                                 <div>
-                                    {message.author === input.username && <p className='DM-userMSG'>{message.content}</p>}
-                                    {message.author !== input.username && <p className='DM-otherMSG'>{message.content}</p>}
+                                    {message.author === input.username && 
+                                    <div className="DM-message-wrapper">
+                                    <p className="DM-userMSG">
+                                        {message.content}
+                                        </p>
+                                        </div>}
+                                    {message.author !== input.username && 
+                                    <div className="DM-message-wrapper">
+                                    <p className="DM-otherMSG">
+                                        {message.content}
+                                        </p></div>}
                                 </div>
-                                
-                            )}
+                                )}
                             </div>
 
 
