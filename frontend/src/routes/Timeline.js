@@ -367,8 +367,6 @@ function Timeline() {
             axios.post("/getUsers", {
                 username: input.DMreq
             }).then(res => {
-                console.log(res.data.allowDM === "Followers")
-                console.log(input.following.includes(input.DMreq))
                 if((res.data.allowDM === "Followers" && input.following.includes(input.DMreq)) || (res.data.allowDM !== "Followers")){
                     axios.post("/createDM", {
                         target: input.DMreq,
