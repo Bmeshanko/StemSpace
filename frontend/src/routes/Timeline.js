@@ -49,6 +49,7 @@ function Timeline() {
             for(let i = 0; i < res.data.following.length; i++){
                 input.following.push(res.data.following[i]);
             }
+            setInput(prevState => ({ ...prevState, following: input.following}));
             input.blocked = [];
             for(let i = 0; i < res.data.blocking.length; i++){
                 input.blocked.push(res.data.blocking[i])
@@ -61,6 +62,7 @@ function Timeline() {
             for(let i = 0; i < res.data.topics.length; i++){
                 input.topics.push(res.data.topics[i])
             }
+            setInput(prevState => ({ ...prevState, topics: input.topics}));
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
@@ -349,23 +351,34 @@ function Timeline() {
 
     function sendDMrequest(){
         let exists = false;
-        for(let i = 0; i < input.DMS.length; i++){
-            if(input.DMS[i] !== undefined && (input.DMS[i].DM.user === input.DMreq || input.DMS[i].DM.creator === input.DMreq)){
-                exists = true;
-            }
-        }
-
+        
         let blocked = false;
         if(input.blocked.includes(input.DMreq)){
             blocked = true;
         }
 
+        for(let i = 0; i < input.DMS.length; i++){
+            if(input.DMS[i] !== undefined && (input.DMS[i].DM.user === input.DMreq || input.DMS[i].DM.creator === input.DMreq)){
+                exists = true;
+            } 
+        }
+
         if(input.users.includes(input.DMreq) && input.DMreq !== input.username && !exists && !blocked){
-            axios.post("/createDM", {
-            target: input.DMreq,
-            author: input.username
+            axios.post("/getUsers", {
+                username: input.DMreq
             }).then(res => {
-                
+                console.log(res.data.allowDM === "Followers")
+                console.log(input.following.includes(input.DMreq))
+                if((res.data.allowDM === "Followers" && input.following.includes(input.DMreq)) || (res.data.allowDM !== "Followers")){
+                    axios.post("/createDM", {
+                        target: input.DMreq,
+                        author: input.username
+                    }).then(result => {
+                        
+                    }).catch(function (error) {
+                        console.log("Error Detected")
+                    })
+                }
             }).catch(function (error) {
                 console.log("Error Detected")
             })
