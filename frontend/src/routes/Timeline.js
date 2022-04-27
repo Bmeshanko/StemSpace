@@ -462,12 +462,12 @@ function Timeline() {
                                 <b>Accept {DM.DM.creator}'s DM</b> 
                                 <button className="Accept-DM-Button"
                                     onClick={(e)=>{
-                                        deleteDM(e,DM.DM.ID)}}>
+                                        deleteDM(e,DM.DM.id)}}>
                                     <b>x</b>
                                 </button>
                                 <button className="Accept-DM-Button"
                                     onClick={(e)=>{
-                                        acceptDM(e,DM.DM.ID)}}>
+                                        acceptDM(e,DM.DM.id)}}>
                                     <b>+</b>
                                 </button>
 
@@ -482,7 +482,15 @@ function Timeline() {
                                 {DM.DM.check===false && DM.DM.creator===input.username &&
                                     <div className="Accept-DM-Req">
                                         <b>Request to {DM.DM.user} is pending</b> 
+
+                                        <button className="Accept-DM-Button"
+                                            onClick={(e)=>{
+                                                deleteDM(e,DM.DM.id)}}>
+                                            <b>x</b>
+                                        </button>
                                     </div>
+
+                                    
                                 }
                             </div>))
                     }
@@ -493,16 +501,23 @@ function Timeline() {
                         (input.DMS).map((DM)=>(
                             <div>
                                 { DM.DM.check === true &&
-                                    <button className="DM-button"
-                                        onClick={(e)=>{
-                                            enterDM(DM.DM.id)
-                                        }}>
-                                        <b>
-                                        @{DM.DM.creator === input.username ? DM.DM.user: DM.DM.creator}
-                                        </b>
-                                        
-                                    </button>
+                                    <div>
+                                        <button className="DM-button"
+                                            onClick={(e)=>{
+                                                enterDM(DM.DM.id)
+                                            }}>
+                                            <b>
+                                            @{DM.DM.creator === input.username ? DM.DM.user: DM.DM.creator}
+                                            </b>
+                                        </button>
+                                        <button className="Accept-DM-Button"
+                                            onClick={(e)=>{
+                                                deleteDM(e,DM.DM.id)}}>
+                                            <b>x</b>
+                                        </button>
+                                    </div>
                                 }   
+                                
                             </div>))
                     }
 
