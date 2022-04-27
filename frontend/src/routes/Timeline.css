@@ -334,6 +334,46 @@
     float: right;
 }
 
+.Accept-DM-Req{
+    font-size: 20px;
+    width: 97.8%;
+    float: right;
+    padding: 5px;
+    margin: 1px;
+    border-color: #5FAA4B;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 2px;
+}
+
+.Accept-DM-Button{
+    float: inherit;
+    background-color: white;
+    border-color: #5FAA4B;
+    border-style: solid;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.Accept-DM-Button:hover{
+    filter: brightness(90%);
+}
+
+.DM-button{
+    font-size: 20px;
+    width: 100%;
+    padding: 5px;
+    margin: 1px;
+    border-color: #5FAA4B;
+    border-style: solid;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.DM-button:hover{
+    filter: brightness(90%);
+}
+
 
 
 

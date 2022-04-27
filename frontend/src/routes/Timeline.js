@@ -452,42 +452,55 @@ function Timeline() {
                             }}>makeDmRequest
                     </button>}
 
+                    { input.currentDMid === "" &&<h3>Requests</h3>}
+
                     { input.currentDMid === "" && 
                         (input.DMS).map((DM)=>(
                         <div>
                         {DM.DM.check===false && DM.DM.creator!==input.username &&
-                            <div>
-                            <b>Accept {DM.DM.creator}'s DM</b> 
+                            <div className="Accept-DM-Req">
+                                <b>Accept {DM.DM.creator}'s DM</b> 
+                                <button className="Accept-DM-Button"
+                                    onClick={(e)=>{
+                                        deleteDM(e,DM.DM.ID)}}>
+                                    <b>x</b>
+                                </button>
+                                <button className="Accept-DM-Button"
+                                    onClick={(e)=>{
+                                        acceptDM(e,DM.DM.ID)}}>
+                                    <b>+</b>
+                                </button>
 
-                            <button onClick={(e)=>{
-                                acceptDM(e,DM.DM.ID)
-                            }}>
-                                <b>+</b>
-                            </button>
-                            <button onClick={(e)=>{
-                                 deleteDM(e,DM.DM.ID)
-                            }}>
-                                <b>x</b>
-                            </button>
                             </div>
-                        }
-
-                        {DM.DM.check===false && DM.DM.creator===input.username &&
-                            <div>
-                                <b>Request to {DM.DM.user} is pending</b> 
-                            </div>
-                        }       
+                        }     
                         </div>))
                     }
 
                     { input.currentDMid === "" && 
                         (input.DMS).map((DM)=>(
                             <div>
+                                {DM.DM.check===false && DM.DM.creator===input.username &&
+                                    <div className="Accept-DM-Req">
+                                        <b>Request to {DM.DM.user} is pending</b> 
+                                    </div>
+                                }
+                            </div>))
+                    }
+
+                    { input.currentDMid === "" &&<h3>DM's</h3>}
+
+                    { input.currentDMid === "" && 
+                        (input.DMS).map((DM)=>(
+                            <div>
                                 { DM.DM.check === true &&
-                                    <button onClick={(e)=>{
-                                        enterDM(DM.DM.id)
-                                    }}>
-                                        {DM.DM.creator === input.username ? DM.DM.user: DM.DM.creator}
+                                    <button className="DM-button"
+                                        onClick={(e)=>{
+                                            enterDM(DM.DM.id)
+                                        }}>
+                                        <b>
+                                        @{DM.DM.creator === input.username ? DM.DM.user: DM.DM.creator}
+                                        </b>
+                                        
                                     </button>
                                 }   
                             </div>))
