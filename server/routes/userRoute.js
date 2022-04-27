@@ -100,6 +100,7 @@ router.post("/createUser", (req, res) => {
     const email = req.body.email; //get email
     const bio = "";  //make empty bio
     const imgPath='./Blank-Profile.png'; //set default profile picture path
+    const allowDM ="All";
 
     let userCriteria = {username: username};
     let emailCriteria = {email: email};
@@ -117,6 +118,7 @@ router.post("/createUser", (req, res) => {
     } else {
         const newUser = new User({ //create new user object
             username,
+            allowDM,
             password,
             email,
             bio,
@@ -616,6 +618,18 @@ router.post("/getDM", (req, res) => {
         DM.findOne(criteria, function(err, dms) {
             res.json(dms)
         }, {collection: 'dms'})
+
+    } catch(e) {
+        console.log(e);
+    }
+});
+router.post("/changeDMMode", (req, res) => {
+    try {
+        let criteria = {username: req.body.username};
+        const update = {allowDM: req.body.allowDM};
+        User.findOneAndUpdate(criteria, update, function(err, users) {
+            res.json(users)
+        }, {collection: 'users'});
 
     } catch(e) {
         console.log(e);

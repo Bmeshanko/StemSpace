@@ -6,6 +6,7 @@ var express = require('express');
 var fs = require('fs');
 const userSchema = {
     username: String,
+    allowDM: String,
     password: String,
     email: String,
     bio: String,
