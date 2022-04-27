@@ -10,7 +10,7 @@ function Profile() {
 	let followbutton;
 	let blockbutton;
 	let loggedin = false;
-	if(location.state === null || location.state === "") {
+	if (location.state === null || location.state === "") {
 		loggedin = false;
 		followbutton = false;
 		location.state = "";
@@ -38,6 +38,7 @@ function Profile() {
 		posts: [],
 		likedposts: [],
 		viewing: "Posts",
+		allowDM: "All",
 		exists: true
 	});
 
@@ -57,6 +58,7 @@ function Profile() {
 				setState(prevState => ({...prevState, following_number: res.data.following.length}))
 				setState(prevState => ({ ...prevState,blocking:res.data.blockers.includes(location.state.username)}));
 				setState(prevState => ({ ...prevState,blocked:res.data.blocking.includes(location.state.username)}));
+				setState(prevState => ({ ...prevState, allowDM: res.data.allowDM}));
 			}
 		}).catch(function (error) {
 			console.log("Error Detected")
@@ -141,7 +143,6 @@ function Profile() {
 		}
 	}
 	function handleDMMode(e, mode) {
-		//console.log(mode);
 		axios.post("/changeDMMode", {
         	username: location.state.username,
 			allowDM: mode
@@ -169,20 +170,25 @@ function Profile() {
 	}
 	function UserPermissionsEditDM() {
 		if(userid === location.state.username) {
-			return(<div>
-				<b>Select DM Mode</b>
-				<button className="Big-Green-Button"
-					onClick={(e) => {
-						handleDMMode(e, "All")
-					}}><b>ALL</b>
-				</button>
-				<button className="Big-Green-Button"
-					onClick={(e) => {
-						handleDMMode(e, "Followers")
-					}}><b>FOLLOWERS</b>
-				</button>
-			</div>
-			)
+			if (state.allowDM == "All") {
+				return(<div>
+					<b className="DM-Mode-Text">Select DM Mode</b>
+					<button className="Big-Green-Button"
+						onClick={(e) => {
+							handleDMMode(e, "Followers")
+						}}><b>All</b>
+					</button>
+					</div>)
+			} else {
+				return (<div>
+					<b className="DM-Mode-Text">Select DM Mode</b>
+					<button className="Big-Green-Button"
+							onClick={(e) => {
+								handleDMMode(e, "All")
+							}}><b>Followers</b>
+					</button>
+				</div>)
+			}
 		}
 		return (<p></p>)
 	}
@@ -420,6 +426,7 @@ function Profile() {
 								<UserPermissionsEditProfile />
 								<span className="right-space"/>
 								<UserPermissionsLogout />
+								<div className="Profile-space"/>
 								<UserPermissionsEditDM />
 								<h3>{state.followers} <button className="Big-Green-Button" onClick={(e)=>{handClickShowFollowers(FOLLOWERS)}}>Followers</button></h3>
 								<h3>{state.following_number} <button className="Big-Green-Button" onClick={(e)=>{handClickShowFollowers(FOLLOWING)}}>Following</button></h3>

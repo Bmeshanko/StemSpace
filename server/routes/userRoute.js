@@ -632,6 +632,7 @@ router.post("/changeDMMode", (req, res) => {
     try {
         let criteria = {username: req.body.username};
         const update = {allowDM: req.body.allowDM};
+
         User.findOneAndUpdate(criteria, update, function(err, users) {
             res.json(users)
         }, {collection: 'users'});

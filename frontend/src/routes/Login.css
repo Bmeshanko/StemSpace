@@ -96,3 +96,11 @@
 .space {
   margin-top: 30px;
 }
+
+.Login-Error-Text {
+  font-family: Consolas;
+  font-size: 16px;
+  text-align: center;
+  margin-top: -5px;
+  color: #DD0000;
+}

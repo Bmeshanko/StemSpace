@@ -82,6 +82,13 @@ function Signup() {
 
     return (
         <body>
+            {input.usernameUsed && <p className="Error-text">
+                That username is taken!
+            </p>}
+
+            {input.emailUsed && <p className="Signup-Error-Text">
+                That email address is taken!
+            </p>}
             <header className="Signup-header">
                 <p className="Signup-text">Create an account on StemSpace today and join others
                     engaging with peers in their fields.</p>
@@ -118,14 +125,6 @@ function Signup() {
                         }}><b>Sign Up</b>
                 </button>
             </header>
-
-            {input.usernameUsed && <p className="Signup-text">
-                "That username is taken!"
-                </p>}
-
-            {input.emailUsed && <p className="Signup-text">
-                "That email already has an account."
-                </p>}
         </body>
     );
 }

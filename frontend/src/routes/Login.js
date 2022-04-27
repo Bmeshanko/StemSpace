@@ -57,6 +57,9 @@ function Login() {
         </p>
       </section>
       <section className="Login-right">
+          {user.wrongInfo && <p className="Login-Error-Text">
+              "Incorrect Username or Password"
+          </p>}
         <form>
             <label for="username">
                 <input onChange={handleChange} value={user.username} className="Login-username-field" type="text" id="username" name="username" placeholder="Username or Email" />
@@ -85,9 +88,7 @@ function Login() {
             </button>
         </form>
 
-        {user.wrongInfo && <p className="Signup-text">
-                "Incorrect Username/Email or Password"
-                </p>}
+
       </section>
     </body>
     );
