@@ -528,7 +528,7 @@ function Timeline() {
                     { input.currentDMid === "" && 
                         (input.DMS).map((DM)=>(
                         <div>
-                        {DM.DM.check===false && DM.DM.creator!==input.username && 
+                        {DM.DM.check===false && DM.DM.creator!==input.username && !input.blocked.includes(DM.DM.user) && !input.blocked.includes(DM.DM.creator) &&
                             <div className="Accept-DM-Req">
                                 <b>Accept {DM.DM.creator}'s DM</b> 
                                 <button className="Accept-DM-Button"
@@ -550,7 +550,7 @@ function Timeline() {
                     { input.currentDMid === "" && 
                         (input.DMS).map((DM)=>(
                             <div>
-                                {DM.DM.check===false && DM.DM.creator===input.username &&
+                                {DM.DM.check===false && DM.DM.creator===input.username && !input.blocked.includes(DM.DM.user) && !input.blocked.includes(DM.DM.creator) &&
                                     <div className="Accept-DM-Req">
                                         <b>Request to {DM.DM.user} is pending</b> 
 
