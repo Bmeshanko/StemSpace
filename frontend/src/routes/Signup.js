@@ -1,6 +1,6 @@
 import './Signup.css';
 import Sha1 from './Sha1.js';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
@@ -14,7 +14,9 @@ function Signup() {
         confirmEmail: '',
         confirmPassword: '',
         usernameUsed: false,
-        emailUsed: false
+        emailUsed: false,
+        users: [],
+        emails: []
     })
 
     function handleChange(event) {
@@ -28,8 +30,30 @@ function Signup() {
         })
         
         setInput(prevState => ({ ...prevState, usernameUsed: false}))
-        setInput(prevState => ({ ...prevState, emailUsed: false}))
+        setInput(prevState => ({ ...prevState, emailUsed: false}))  
+        console.log(input.emails)     
+        console.log(input.email)
+        console.log(input.emails.includes(input.email))
     }
+
+    useEffect(()=>{
+        axios.post("/getAllUsers", {
+		}).then (res => {
+            input.users = [];
+            input.emails = [];
+            for(let i = 0; i < res.data.length; i++){
+                if(res.data[i].verification){
+                    input.users.push(res.data[i].username);
+                    input.emails.push(res.data[i].email);
+                }
+            }
+            setInput(prevState => ({ ...prevState, users: input.users}));
+            setInput(prevState => ({ ...prevState, emails: input.emails}));
+
+		}).catch(function (error) {
+			console.log("Error Detected")
+		})
+    },[]);
 
     function handleClick(event) {
         const newUser = {
@@ -38,19 +62,24 @@ function Signup() {
             email: input.email
         }
         if (input.confirmEmail === input.email && input.password === input.confirmPassword) {
-            axios.post('/createUser', newUser).then(res => {
-                console.log(res.data);
-                if (res.data == "Success!") {
-                    navigate("/Code", {state:{email:input.email}}).then(window.location.href = '/Code');
-                } else {
-                    console.log(res.data)
-                    if(res.data === "That username is taken!"){
-                        setInput(prevState => ({ ...prevState, usernameUsed: true}))
-                    } else if(res.data == "That email is taken!"){
-                        setInput(prevState => ({ ...prevState, emailUsed: true}))
+            if(!input.users.includes(input.username) && !input.emails.includes(input.email)){
+                axios.post('/createUser', newUser).then(res => {
+                    console.log(res.data);
+                    if (res.data == "Success!") {
+                        navigate("/Code", {state:{email:input.email}}).then(window.location.href = '/Code');
+                    } else {
+                        console.log(res.data)
                     }
+                })
+            } else{
+                if(input.users.includes(input.username)){
+                    setInput(prevState => ({ ...prevState, usernameUsed: true}))
+                } 
+                if(input.emails.includes(input.email)){
+                    setInput(prevState => ({ ...prevState, emailUsed: true}))
                 }
-            })
+            }
+
         } else {
             console.log("Error, confirm email/password must be equal.");
         }
