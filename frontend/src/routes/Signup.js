@@ -31,9 +31,6 @@ function Signup() {
         
         setInput(prevState => ({ ...prevState, usernameUsed: false}))
         setInput(prevState => ({ ...prevState, emailUsed: false}))  
-        console.log(input.emails)     
-        console.log(input.email)
-        console.log(input.emails.includes(input.email))
     }
 
     useEffect(()=>{
@@ -64,11 +61,9 @@ function Signup() {
         if (input.confirmEmail === input.email && input.password === input.confirmPassword) {
             if(!input.users.includes(input.username) && !input.emails.includes(input.email)){
                 axios.post('/createUser', newUser).then(res => {
-                    console.log(res.data);
                     if (res.data == "Success!") {
                         navigate("/Code", {state:{email:input.email}}).then(window.location.href = '/Code');
                     } else {
-                        console.log(res.data)
                     }
                 })
             } else{

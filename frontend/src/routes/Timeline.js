@@ -49,6 +49,7 @@ function Timeline() {
             for(let i = 0; i < res.data.following.length; i++){
                 input.following.push(res.data.following[i]);
             }
+            setInput(prevState => ({ ...prevState, following: input.following}));
             input.blocked = [];
             for(let i = 0; i < res.data.blocking.length; i++){
                 input.blocked.push(res.data.blocking[i])
@@ -56,10 +57,12 @@ function Timeline() {
             for(let i = 0; i < res.data.blockers.length; i++){
                 input.blocked.push(res.data.blockers[i])
             }
+            setInput(prevState => ({ ...prevState, blocked: input.blocked}));
             input.topics = [];
             for(let i = 0; i < res.data.topics.length; i++){
                 input.topics.push(res.data.topics[i])
             }
+            setInput(prevState => ({ ...prevState, topics: input.topics}));
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
@@ -261,10 +264,6 @@ function Timeline() {
             console.log("Error Detected")
         })
     }
-    function createDM(event,id) {
-        console.log(input.username);
-        navigate("/CreateDM", {state:{username:input.username}});
-    }
 
     function acceptDM(event, id){
         axios.post("/acceptDM", {
@@ -351,12 +350,33 @@ function Timeline() {
     }
 
     function sendDMrequest(){
-        if(input.users.includes(input.DMreq) && input.DMreq !== input.username){
-            axios.post("/createDM", {
-            target: input.DMreq,
-            author: input.username
+        let exists = false;
+        
+        let blocked = false;
+        if(input.blocked.includes(input.DMreq)){
+            blocked = true;
+        }
+
+        for(let i = 0; i < input.DMS.length; i++){
+            if(input.DMS[i] !== undefined && (input.DMS[i].DM.user === input.DMreq || input.DMS[i].DM.creator === input.DMreq)){
+                exists = true;
+            } 
+        }
+
+        if(input.users.includes(input.DMreq) && input.DMreq !== input.username && !exists && !blocked){
+            axios.post("/getUsers", {
+                username: input.DMreq
             }).then(res => {
-                
+                if((res.data.allowDM === "Followers" && input.following.includes(input.DMreq)) || (res.data.allowDM !== "Followers")){
+                    axios.post("/createDM", {
+                        target: input.DMreq,
+                        author: input.username
+                    }).then(result => {
+                        
+                    }).catch(function (error) {
+                        console.log("Error Detected")
+                    })
+                }
             }).catch(function (error) {
                 console.log("Error Detected")
             })
@@ -489,10 +509,18 @@ function Timeline() {
 
                                 <button className="Accept-DM-Button"
                                     onClick={(e)=>{
+                                        handleClickName(e, input.DMreq);
+                                        }}>
+                                    <b>Visit Profile</b>
+                                </button>
+
+                                <button className="Accept-DM-Button"
+                                    onClick={(e)=>{
                                         sendDMrequest();
                                         }}>
                                     <b>Send DM request</b>
                                 </button>
+                                
                         </div>} 
 
                     { input.currentDMid === "" &&<h3>Ongoing Requests</h3>}
@@ -500,7 +528,7 @@ function Timeline() {
                     { input.currentDMid === "" && 
                         (input.DMS).map((DM)=>(
                         <div>
-                        {DM.DM.check===false && DM.DM.creator!==input.username &&
+                        {DM.DM.check===false && DM.DM.creator!==input.username && !input.blocked.includes(DM.DM.user) && !input.blocked.includes(DM.DM.creator) &&
                             <div className="Accept-DM-Req">
                                 <b>Accept {DM.DM.creator}'s DM</b> 
                                 <button className="Accept-DM-Button"
@@ -522,7 +550,7 @@ function Timeline() {
                     { input.currentDMid === "" && 
                         (input.DMS).map((DM)=>(
                             <div>
-                                {DM.DM.check===false && DM.DM.creator===input.username &&
+                                {DM.DM.check===false && DM.DM.creator===input.username && !input.blocked.includes(DM.DM.user) && !input.blocked.includes(DM.DM.creator) &&
                                     <div className="Accept-DM-Req">
                                         <b>Request to {DM.DM.user} is pending</b> 
 
@@ -543,7 +571,7 @@ function Timeline() {
                     { input.currentDMid === "" && 
                         (input.DMS).map((DM)=>(
                             <div>
-                                { DM.DM.check === true &&
+                                { DM.DM.check === true && !input.blocked.includes(DM.DM.user) && !input.blocked.includes(DM.DM.creator) &&
                                     <div>
                                         <button className="DM-button"
                                             onClick={(e)=>{
