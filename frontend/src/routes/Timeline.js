@@ -10,7 +10,9 @@ function Timeline() {
 
     const [input, setInput] = useState({
         username: location.state.username,
+        DMreq: "",
         message: "",
+        users: [],
         posts: [],
         DMS: [],
         currentDMid: "",
@@ -58,6 +60,21 @@ function Timeline() {
             for(let i = 0; i < res.data.topics.length; i++){
                 input.topics.push(res.data.topics[i])
             }
+		}).catch(function (error) {
+			console.log("Error Detected")
+		})
+    },[]);
+
+    useEffect(()=>{
+        axios.post("/getAllUsers", {
+		}).then (res => {
+            input.users = [];
+            for(let i = 0; i < res.data.length; i++){
+                if(res.data[i].verification){
+                    input.users.push(res.data[i].username);
+                }
+            }
+            setInput(prevState => ({ ...prevState, users: input.users}));
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
@@ -266,8 +283,8 @@ function Timeline() {
         })
     }
     function sendDM(event, id){
-        setInput(prevState => ({ ...prevState, message: ""}))
-        axios.post("/sendDM", {
+        if(input.message === ""){
+            axios.post("/sendDM", {
             id: id,
             author: input.username,
             content: input.message
@@ -275,6 +292,8 @@ function Timeline() {
         }).catch(function(error){
             console.log("Send DM Error Detected")
         })
+        }
+        setInput(prevState => ({ ...prevState, message: ""}))
     }
     function handleChange(event) {
         const {name, value} = event.target;
@@ -329,6 +348,20 @@ function Timeline() {
 
     function leaveDM(){
         setInput(prevState => ({ ...prevState, currentDMid: ""}))
+    }
+
+    function sendDMrequest(){
+        if(input.users.includes(input.DMreq) && input.DMreq !== input.username){
+            axios.post("/createDM", {
+            target: input.DMreq,
+            author: input.username
+            }).then(res => {
+                
+            }).catch(function (error) {
+                console.log("Error Detected")
+            })
+        } 
+        setInput(prevState => ({ ...prevState, DMreq: ""}))
     }
 
     return(
@@ -446,13 +479,23 @@ function Timeline() {
 
             <span class="Timeline-DMs">
                     {input.currentDMid==="" && <p className="DM-header">Chats</p>}
-                    {input.currentDMid==="" && <button className="Timeline-Like-Button"
-                            onClick={(e) => {
-                                createDM()
-                            }}>makeDmRequest
-                    </button>}
 
-                    { input.currentDMid === "" &&<h3>Requests</h3>}
+                    { input.currentDMid === "" &&  
+                        <div>
+                            <input maxlength="20" list="DM-recipients" id="DMreq" name="DMreq" value={input.DMreq} onChange={handleChange}/>
+                                <datalist id="DM-recipients">
+                                    {input.users.map((user) => <option value={user}>{user}</option>)}
+                                </datalist>
+
+                                <button className="Accept-DM-Button"
+                                    onClick={(e)=>{
+                                        sendDMrequest();
+                                        }}>
+                                    <b>Send DM request</b>
+                                </button>
+                        </div>} 
+
+                    { input.currentDMid === "" &&<h3>Ongoing Requests</h3>}
 
                     { input.currentDMid === "" && 
                         (input.DMS).map((DM)=>(
@@ -495,7 +538,7 @@ function Timeline() {
                             </div>))
                     }
 
-                    { input.currentDMid === "" &&<h3>DM's</h3>}
+                    { input.currentDMid === "" &&<h3>Open DM's</h3>}
 
                     { input.currentDMid === "" && 
                         (input.DMS).map((DM)=>(

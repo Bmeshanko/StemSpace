@@ -153,6 +153,17 @@ router.post("/getUsers", (req, res) => {
     }
 });
 
+router.post("/getAllUsers", (req, res) => {
+    try {
+        User.find({}, function(err, users) {
+            res.json(users)
+        }, {collection: 'users'})
+
+    } catch(e) {
+        console.log("Error Detected in /getUsers");
+    }
+});
+
 router.post("/getPosts", (req, res) => {
     try {
         let criteria = {}; //no criteria yet - show all posts
