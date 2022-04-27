@@ -261,10 +261,6 @@ function Timeline() {
             console.log("Error Detected")
         })
     }
-    function createDM(event,id) {
-        console.log(input.username);
-        navigate("/CreateDM", {state:{username:input.username}});
-    }
 
     function acceptDM(event, id){
         axios.post("/acceptDM", {
@@ -489,10 +485,18 @@ function Timeline() {
 
                                 <button className="Accept-DM-Button"
                                     onClick={(e)=>{
+                                        handleClickName(e, input.DMreq);
+                                        }}>
+                                    <b>Visit Profile</b>
+                                </button>
+
+                                <button className="Accept-DM-Button"
+                                    onClick={(e)=>{
                                         sendDMrequest();
                                         }}>
                                     <b>Send DM request</b>
                                 </button>
+                                
                         </div>} 
 
                     { input.currentDMid === "" &&<h3>Ongoing Requests</h3>}
