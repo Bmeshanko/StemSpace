@@ -493,16 +493,21 @@ function Timeline() {
                             <button className="DM-back"onClick={(e)=>{
                                 leaveDM()
                             }}>
-                                {"<- BACK"}
+                                &larr;
                             </button>
 
-                            <span className="DM-name">@{input.currentDMcontent.otherUser}</span>
-
-                            <div className="Timeline-Horizontal-Bar"/>
-
+                            <button className="DM-name"
+                                onClick={(event) => {
+                                    handleClickName(event, input.currentDMcontent.otherUser)}}>
+                                
+                                @{input.currentDMcontent.otherUser}</button>
                             <div className="DM-messages">
                                 {(input.currentDMcontent.messages).map((message)=>
-                                <p>{message.author}: {message.content}</p>
+                                <div>
+                                    {message.author === input.username && <p className='DM-userMSG'>{message.content}</p>}
+                                    {message.author !== input.username && <p className='DM-otherMSG'>{message.content}</p>}
+                                </div>
+                                
                             )}
                             </div>
 

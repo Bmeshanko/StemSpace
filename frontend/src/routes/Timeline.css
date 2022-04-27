@@ -251,7 +251,16 @@
 
 .DM-back{
     height: 10%;
+    width: 20%;
+    font-size: 50px;
     display: inline;
+    text-align: left;
+    background-color: white;
+    border-style: hidden;
+}
+
+.DM-back:hover{
+    filter: brightness(90%);
 }
 
 .DM-textarea{
@@ -279,22 +288,35 @@
 .DM-messages{
     height: calc(80% - 10px);
     overflow-y: scroll;
-    outline-style: solid;
-    outline-color: #5FAA4B;
+    border-style: solid;
+    border-color: #5FAA4B;
+    border-radius: 10px;
 }
 
 .DM-name{
+    display: inline;
     font-family: Consolas;
-    font-size: 24px;
-    margin-left: 20%;
+    font-size: 40px;
+    margin-left: 25%;
+
+    background-color: white;
+    border-style: hidden;
+}
+
+.DM-name:hover{
+    text-decoration: underline;
 }
 
 .DM-userMSG{
-
+    text-align: right;
 }
 
 .DM-otherMSG{
-    
+    text-align: left;
+}
+
+.DM-MSGwrapper{
+    width: 100%;
 }
 
 
