@@ -528,7 +528,7 @@ function Timeline() {
                     { input.currentDMid === "" && 
                         (input.DMS).map((DM)=>(
                         <div>
-                        {DM.DM.check===false && DM.DM.creator!==input.username &&
+                        {DM.DM.check===false && DM.DM.creator!==input.username && 
                             <div className="Accept-DM-Req">
                                 <b>Accept {DM.DM.creator}'s DM</b> 
                                 <button className="Accept-DM-Button"
@@ -571,7 +571,7 @@ function Timeline() {
                     { input.currentDMid === "" && 
                         (input.DMS).map((DM)=>(
                             <div>
-                                { DM.DM.check === true &&
+                                { DM.DM.check === true && !input.blocked.includes(DM.DM.user) && !input.blocked.includes(DM.DM.creator) &&
                                     <div>
                                         <button className="DM-button"
                                             onClick={(e)=>{
