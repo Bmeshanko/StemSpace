@@ -2,7 +2,6 @@ import './Timeline.css';
 import {createRoutesFromChildren, useLocation, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import SearchBar from './Search';
 
 function Timeline() {
     
@@ -251,7 +250,6 @@ function Timeline() {
     }
 
     function acceptDM(event, id){
-        console.log(id);
         axios.post("/acceptDM", {
             id: id
         }).then( res =>{
@@ -260,7 +258,6 @@ function Timeline() {
         })
     }
     function deleteDM(event, id){
-        console.log(id);
         axios.post("/deleteDM", {
             id: id
         }).then( res =>{
@@ -337,13 +334,12 @@ function Timeline() {
     return(
         <body>
             <div className="Timeline-Top-Banner">
-
                 <button className="Timeline-Logo-Button"
                     onClick={handleClickLogo}>
                             
                     <img className='Timeline-Logo-Image' src="Logo_new.png" alt="STEM"></img>
                 </button>
-                
+
                 <span className="Timeline-Banner-Text">StemSpace</span>
 
                 <button className="Timeline-Banner-Button"
@@ -357,17 +353,6 @@ function Timeline() {
                         
                     <img src="Notification.png" className="Timeline-Banner-Logos" alt="Notification"/>
                 </button>
-                {/* <SearchBar /> */}
-                <label htmlFor="header-search">
-                    <span className="visually-hidden">Seajjjjjjjjjjjjjjjjjjjjjjjjjjjjrch blog posts</span>
-                </label>
-                <input
-                    type="text"
-                    id="header-search"
-                    placeholder="Search blog posts"
-                    name="s" 
-                />
-                <button type="submit">Search</button>
             </div>
 
             <div className="Timeline-Horizontal-Bar"/>
@@ -460,29 +445,29 @@ function Timeline() {
             </span>
 
             <span class="Timeline-DMs">
-                    <p className="DM-header">Chats</p>
-                    <button className="Timeline-Like-Button"
+                    {input.currentDMid==="" && <p className="DM-header">Chats</p>}
+                    {input.currentDMid==="" && <button className="Timeline-Like-Button"
                             onClick={(e) => {
                                 createDM()
-                            }}><b>makeDmRequest</b>
-                    </button>
+                            }}>makeDmRequest
+                    </button>}
 
                     { input.currentDMid === "" && 
                         (input.DMS).map((DM)=>(
                         <div>
                         {DM.DM.check===false && DM.DM.creator!==input.username &&
                             <div>
-                            <b>Do you accept {DM.DM.creator}'s message request</b> 
+                            <b>Accept {DM.DM.creator}'s DM</b> 
 
                             <button onClick={(e)=>{
                                 acceptDM(e,DM.DM.ID)
                             }}>
-                                <b>Yes</b>
+                                <b>+</b>
                             </button>
                             <button onClick={(e)=>{
                                  deleteDM(e,DM.DM.ID)
                             }}>
-                                <b>No</b>
+                                <b>x</b>
                             </button>
                             </div>
                         }
@@ -495,7 +480,6 @@ function Timeline() {
 
                         { DM.DM.check === true &&
                             <button onClick={(e)=>{
-                                console.log(DM.DM.id)
                                 enterDM(DM.DM.id)
                             }}>
                                 {DM.DM.creator === input.username ? DM.DM.user: DM.DM.creator}
@@ -505,21 +489,28 @@ function Timeline() {
                     }
 
                     { input.currentDMid !== "" &&
-                        <div>
-                            <button onClick={(e)=>{
+                        <div className="DM-wrapper">
+                            <button className="DM-back"onClick={(e)=>{
                                 leaveDM()
                             }}>
-                                Back
+                                {"<- BACK"}
                             </button>
 
-                            <p>Start of messages with  {input.currentDMcontent.otherUser}</p>
-                            {(input.currentDMcontent.messages).map((message)=>
-                                <p>{message.author}-{message.content}</p>
-                            )}
+                            <span className="DM-name">@{input.currentDMcontent.otherUser}</span>
 
-                            <textarea className="Biography" onChange={handleChange} value={input.message} id="message" name="message" placeholder="Say something...">
+                            <div className="Timeline-Horizontal-Bar"/>
+
+                            <div className="DM-messages">
+                                {(input.currentDMcontent.messages).map((message)=>
+                                <p>{message.author}: {message.content}</p>
+                            )}
+                            </div>
+
+
+                            <textarea className="DM-textarea"
+                                onChange={handleChange} value={input.message} id="message" name="message" placeholder="Say something...">
                             </textarea>
-                            <button onClick={(e)=>{
+                            <button className="DM-send-button" onClick={(e)=>{
                                 sendDM(e,input.currentDMid)
                             }}>
                             <b>Send message</b>
@@ -527,7 +518,7 @@ function Timeline() {
 
                         </div>
 
-                    }                    
+                    }                 
             </span>
         </body>
     );

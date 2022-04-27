@@ -200,7 +200,6 @@
     height: calc(100vh - 135px);
     padding: 5px;
     right: 0;
-    overflow-y: scroll;
     scrollbar-width: thin;
 }
 
@@ -243,13 +242,66 @@
     margin-bottom: 4px;
 }
 
-
-.visually-hidden {
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
+.DM-wrapper{
     position: absolute;
-    white-space: nowrap;
-    width: 1px;
+    width: calc(100% - 10px);
+    bottom: 0;
+    height: calc(100%);
 }
+
+.DM-back{
+    height: 10%;
+    display: inline;
+}
+
+.DM-textarea{
+    position:absolute;
+    bottom: 0;
+    font-family: Consolas;
+    font-size: 16px;
+    width: 80%;
+    height: 8%;
+    padding: 5px;
+    border-radius: 8px;
+    border-color: #1F1F1F;
+    border-width: 1px;
+}
+
+.DM-send-button{
+    font-size: 16px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 15%;
+    height: 10%;
+}
+
+.DM-messages{
+    height: calc(80% - 10px);
+    overflow-y: scroll;
+    outline-style: solid;
+    outline-color: #5FAA4B;
+}
+
+.DM-name{
+    font-family: Consolas;
+    font-size: 24px;
+    margin-left: 20%;
+}
+
+.DM-userMSG{
+
+}
+
+.DM-otherMSG{
+    
+}
+
+
+
+
+
+
+
+
+
