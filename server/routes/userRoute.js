@@ -107,6 +107,8 @@ router.post("/createUser", (req, res) => {
     let userUser = User.findOne(userCriteria);
     let emailUser = User.findOne(emailCriteria);
 
+    console.log(userUser.json());
+
     if (userUser.username != null) {
         res.json("That username is taken!");
     } else if (emailUser.email != null) {
