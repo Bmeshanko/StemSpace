@@ -575,7 +575,7 @@ router.post("/acceptDM", (req, res) => {
 
         DM.findOneAndUpdate(criteria, update, function(err, dm){
             res.json(dm)
-        })
+        }, {collection: 'dms'})
     }catch(e){
         console.log(e)
     }
@@ -584,6 +584,11 @@ router.post("/acceptDM", (req, res) => {
 router.post("/sendDM", (req, res) => {
     try{
         let criteria = {_id: req.body.id};
+        let update = {$push: {messages: {author: req.body.author, content: req.body.content}}}
+
+        DM.findOneAndUpdate(criteria, update, function(err, dm){
+            res.json(dm)
+        }, {collection: 'dms'})
     }catch(e){
         console.log(e)
     }
@@ -595,10 +600,25 @@ router.post("/deleteDM", (req, res) => {
         
         DM.findOneAndDelete(criteria, function(err, dm){
             res.json(dm)
-        })
+        }, {collection: 'dms'})
 
     }catch(e){
         console.log(e)
+    }
+});
+
+router.post("/getDM", (req, res) => {
+    try {
+        let criteria = {_id: req.body.id};
+
+        //find all DMS involving user
+        //return all DMS involving user
+        DM.findOne(criteria, function(err, dms) {
+            res.json(dms)
+        }, {collection: 'dms'})
+
+    } catch(e) {
+        console.log(e);
     }
 });
 module.exports = router;
