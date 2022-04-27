@@ -56,6 +56,7 @@ function Timeline() {
             for(let i = 0; i < res.data.blockers.length; i++){
                 input.blocked.push(res.data.blockers[i])
             }
+            setInput(prevState => ({ ...prevState, blocked: input.blocked}));
             input.topics = [];
             for(let i = 0; i < res.data.topics.length; i++){
                 input.topics.push(res.data.topics[i])
@@ -354,7 +355,12 @@ function Timeline() {
             }
         }
 
-        if(input.users.includes(input.DMreq) && input.DMreq !== input.username && !exists){
+        let blocked = false;
+        if(input.blocked.includes(input.DMreq)){
+            blocked = true;
+        }
+
+        if(input.users.includes(input.DMreq) && input.DMreq !== input.username && !exists && !blocked){
             axios.post("/createDM", {
             target: input.DMreq,
             author: input.username
