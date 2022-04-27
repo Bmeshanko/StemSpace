@@ -2,6 +2,7 @@ import './Timeline.css';
 import {createRoutesFromChildren, useLocation, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
+import SearchBar from './Search';
 
 function Timeline() {
     
@@ -272,12 +273,13 @@ function Timeline() {
     return(
         <body>
             <div className="Timeline-Top-Banner">
+
                 <button className="Timeline-Logo-Button"
                     onClick={handleClickLogo}>
                             
                     <img className='Timeline-Logo-Image' src="Logo_new.png" alt="STEM"></img>
                 </button>
-
+                
                 <span className="Timeline-Banner-Text">StemSpace</span>
 
                 <button className="Timeline-Banner-Button"
@@ -291,6 +293,17 @@ function Timeline() {
                         
                     <img src="Notification.png" className="Timeline-Banner-Logos" alt="Notification"/>
                 </button>
+                {/* <SearchBar /> */}
+                <label htmlFor="header-search">
+                    <span className="visually-hidden">Seajjjjjjjjjjjjjjjjjjjjjjjjjjjjrch blog posts</span>
+                </label>
+                <input
+                    type="text"
+                    id="header-search"
+                    placeholder="Search blog posts"
+                    name="s" 
+                />
+                <button type="submit">Search</button>
             </div>
 
             <div className="Timeline-Horizontal-Bar"/>
