@@ -282,7 +282,7 @@ function Timeline() {
         })
     }
     function sendDM(event, id){
-        if(input.message !== ""){
+        if(input.message.trim() !== ""){
             axios.post("/sendDM", {
             id: id,
             author: input.username,
