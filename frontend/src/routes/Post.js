@@ -160,15 +160,17 @@ function Post() {
     }
 
     function handleComment(comment, author, post) {
-        axios.post("/createComment", {
-            author: author,
-            contents: comment,
-            post: post
-        }).catch(function(error) {
-            console.log("Error Detected!")
-        })
-        input.comment = '';
-    }
+        if(comment.trim() !== ""){
+            axios.post("/createComment", {
+                author: author,
+                contents: comment,
+                post: post
+            }).catch(function(error) {
+                console.log("Error Detected!")
+            })
+            input.comment = '';
+            }
+        }
     
     function deleteComment(event,id) {
         axios.post("/deleteComment", {

@@ -39,23 +39,27 @@ function CreatePost() {
     }
 
     function handleClick(event) {
-        axios.post("/createPost", {
-            contents: input.contents,
-            topic: input.topic,
-            username: input.username,
-            anon: false
-        });
-        navigate("/Timeline", {state:{username:input.username}})
+        if(input.contents.trim() !== ""){
+            axios.post("/createPost", {
+                contents: input.contents,
+                topic: input.topic,
+                username: input.username,
+                anon: false
+            });
+            navigate("/Timeline", {state:{username:input.username}})
+        }
     }
 
     function anonPost(event) {
-        axios.post("/createPost", {
-            contents: input.contents,
-            topic: input.topic,
-            username: input.username,
-            anon: true
-        });
-        navigate("/Timeline", {state:{username:input.username}})
+        if(input.contents.trim() !== ""){
+            axios.post("/createPost", {
+                contents: input.contents,
+                topic: input.topic,
+                username: input.username,
+                anon: true
+            });
+            navigate("/Timeline", {state:{username:input.username}})            
+        }
     }
 
     useEffect(()=>{
