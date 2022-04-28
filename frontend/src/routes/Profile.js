@@ -338,7 +338,7 @@ function Profile() {
 			username: username,
 			id: id
 		}).then( res => {
-			//whatever
+
 		}).catch(function(error){
 			console.log("Error Detected")
 		})
