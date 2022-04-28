@@ -70,29 +70,29 @@ function Profile() {
 		axios.post("/getPostsFromUser", {
 			username: userid
 		}).then (res => {
-            let temp=[];
-            let promises=[];
-            for(let i = 0; i < res.data.length; i++){
-                promises.push(axios.post("/getUsers", {
-                    username: res.data[i].author
-                }).then (response=> {
+			let temp=[];
+			let promises=[];
+			for(let i = 0; i < res.data.length; i++){
+				promises.push(axios.post("/getUsers", {
+					username: res.data[i].author
+				}).then (response=> {
 					if(!res.data[i].anon){
 						let base64Flag = 'data:image/jpeg;base64,';
 						let imageStr = arrayBufferToBase64(response.data.img.data.data);
 						let picture=base64Flag+imageStr;
 						temp[i] = {
-							post:{author:res.data[i].author, 
-							anon: res.data[i].anon,
-							contents:res.data[i].contents, 
-							topic:res.data[i].topic, 
-							id:res.data[i]._id, 
-							likers:res.data[i].likers, 
-							image: picture}};
+							post:{author:res.data[i].author,
+								anon: res.data[i].anon,
+								contents:res.data[i].contents,
+								topic:res.data[i].topic,
+								id:res.data[i]._id,
+								likers:res.data[i].likers,
+								image: picture}};
 					}
-                    
-                }))
-            }
-            Promise.all(promises).then(()=>setState(prevState => ({...prevState, posts: temp})));
+
+				}))
+			}
+			Promise.all(promises).then(()=>setState(prevState => ({...prevState, posts: temp})));
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
@@ -102,25 +102,25 @@ function Profile() {
 		axios.post("/getLikedPosts", {
 			username: userid
 		}).then (res => {
-            let temp=[];
-            let promises=[];
-            for(let i = 0; i < res.data.length; i++){
-                promises.push(axios.post("/getUsers", {
-                    username: res.data[i].author
-                }).then (response=> {
+			let temp=[];
+			let promises=[];
+			for(let i = 0; i < res.data.length; i++){
+				promises.push(axios.post("/getUsers", {
+					username: res.data[i].author
+				}).then (response=> {
 					let base64Flag = 'data:image/jpeg;base64,';
 					let imageStr = arrayBufferToBase64(response.data.img.data.data);
 					let picture=base64Flag+imageStr;
 					temp[i] = {post: {author: res.data[i].author,
-						anon: res.data[i].anon,
-						contents: res.data[i].contents,
-						topic: res.data[i].topic,
-						id: res.data[i]._id,
-						likers: res.data[i].likers,
-						image: picture}}; 
-                }))
-            }
-            Promise.all(promises).then(()=>setState(prevState => ({...prevState, likedposts: temp})));
+							anon: res.data[i].anon,
+							contents: res.data[i].contents,
+							topic: res.data[i].topic,
+							id: res.data[i]._id,
+							likers: res.data[i].likers,
+							image: picture}};
+				}))
+			}
+			Promise.all(promises).then(()=>setState(prevState => ({...prevState, likedposts: temp})));
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
@@ -144,10 +144,11 @@ function Profile() {
 	}
 	function handleDMMode(e, mode) {
 		axios.post("/changeDMMode", {
-        	username: location.state.username,
+			username: location.state.username,
 			allowDM: mode
-    	}).then(res => {
-    	});
+		}).then(res => {
+			setState(prevState => ({ ...prevState, allowDM: mode}));
+		});
 	}
 
 	function handleClickLogo(e, username) {
@@ -161,9 +162,9 @@ function Profile() {
 	function UserPermissionsEditProfile() {
 		if(userid === location.state.username) {
 			return(<button className="Big-Green-Button"
-					onClick={(e) => {
-						handleClickEdit(e, state.username)
-					}}><b>Edit Profile</b>
+						   onClick={(e) => {
+							   handleClickEdit(e, state.username)
+						   }}><b>Edit Profile</b>
 			</button>)
 		}
 		return (<p></p>)
@@ -174,11 +175,11 @@ function Profile() {
 				return(<div>
 					<b className="DM-Mode-Text">Select DM Mode</b>
 					<button className="Big-Green-Button"
-						onClick={(e) => {
-							handleDMMode(e, "Followers")
-						}}><b>All</b>
+							onClick={(e) => {
+								handleDMMode(e, "Followers")
+							}}><b>All</b>
 					</button>
-					</div>)
+				</div>)
 			} else {
 				return (<div>
 					<b className="DM-Mode-Text">Select DM Mode</b>
@@ -194,9 +195,9 @@ function Profile() {
 	}
 
 	function handleClickEdit(e, username) {
-			navigate("/EditProfile", {state: {username: location.state.username}});
+		navigate("/EditProfile", {state: {username: location.state.username}});
 	}
-	
+
 	function UserPermissionsLogout() {
 		if(userid === location.state.username) {
 			return(	<button className="Big-Green-Button" onClick={(e) => {
@@ -229,7 +230,7 @@ function Profile() {
 					</button>
 				);
 			}
-			}
+		}
 		return(
 			<p></p>
 		)
@@ -308,58 +309,58 @@ function Profile() {
 	}
 
 	function handleLike(event, username, id){
-        axios.post("/getPost", {
-            id: id
-        }).then( res => {
-            if(res.data.likers.includes(username)){
+		axios.post("/getPost", {
+			id: id
+		}).then( res => {
+			if(res.data.likers.includes(username)){
 				unlikePost(event, username, id);
 			} else{
 				likePost(event, username, id);
 			}
-        }).catch(function(error){
-            console.log("Error Detected")
-        })
+		}).catch(function(error){
+			console.log("Error Detected")
+		})
 	}
 
 	function likePost(event, username, id){
-        axios.post("/likePost", {
-            username: username,
-            id: id
-        }).then( res => {
-            //whatever
-        }).catch(function(error){
-            console.log("Error Detected")
-        })
-    }
+		axios.post("/likePost", {
+			username: username,
+			id: id
+		}).then( res => {
+			//whatever
+		}).catch(function(error){
+			console.log("Error Detected")
+		})
+	}
 
-    function unlikePost(event, username, id){
-        axios.post("/unlikePost", {
-            username: username,
-            id: id
-        }).then( res => {
-            //whatever
-        }).catch(function(error){
-            console.log("Error Detected")
-        })
-    }
+	function unlikePost(event, username, id){
+		axios.post("/unlikePost", {
+			username: username,
+			id: id
+		}).then( res => {
+			//whatever
+		}).catch(function(error){
+			console.log("Error Detected")
+		})
+	}
 
 	function deletePost(event,id) {
-        axios.post("/deletePost", {
+		axios.post("/deletePost", {
 			id: id
 		}).then (res => {
-            //put in console all the posts
+			//put in console all the posts
 		}).catch(function (error) {
 			console.log("Error Detected")
 		})
-    }
+	}
 
 	function handleClickName(event, name) {
-        navigate(`/Profile/${name}`, {state:{username:location.state.username}});
-    }
+		navigate(`/Profile/${name}`, {state:{username:location.state.username}});
+	}
 
 	function handlePost(event, postid){
-        navigate(`/Post/${postid}`, {state:{username:location.state.username}});
-    }
+		navigate(`/Post/${postid}`, {state:{username:location.state.username}});
+	}
 
 	function arrayBufferToBase64(buffer) {
 		let binary = '';
@@ -383,45 +384,45 @@ function Profile() {
 	}
 
 
-		return (
-			<body className="Ignore-X-Overflow">
-				<div className="Profile-Top-Banner">
-					<button className="Profile-Logo-Button"
-						onClick={(e) => {
-							handleClickLogo(e, state.username)
-						}}>
-						<img className='Profile-Logo-Image' src="/Logo_new.png" alt="STEM"></img>
-					</button>
+	return (
+		<body className="Ignore-X-Overflow">
+		<div className="Profile-Top-Banner">
+			<button className="Profile-Logo-Button"
+					onClick={(e) => {
+						handleClickLogo(e, state.username)
+					}}>
+				<img className='Profile-Logo-Image' src="/Logo_new.png" alt="STEM"></img>
+			</button>
 
-					<span className="Profile-Banner-Text">StemSpace</span>
+			<span className="Profile-Banner-Text">StemSpace</span>
 
-					<button className="Profile-Banner-Button"
-						onClick={(e) => {
-							handleClickPost(e, state.username)
-						}}>
-							
-						<img src="/post_button.png" className="Profile-Banner-Logos" alt="Create-post"/>
-					</button>
+			<button className="Profile-Banner-Button"
+					onClick={(e) => {
+						handleClickPost(e, state.username)
+					}}>
 
-					<button className="Profile-Banner-Button"
-						onClick={(e) => {
-							handleClickNotification(e, state.username)
-						}}>
-							
-						<img src="/Notification.png" className="Profile-Banner-Logos" alt="Notification"/>
-					</button>
-				</div>
+				<img src="/post_button.png" className="Profile-Banner-Logos" alt="Create-post"/>
+			</button>
 
-				<div className="Profile-Horizontal-Bar"/>
+			<button className="Profile-Banner-Button"
+					onClick={(e) => {
+						handleClickNotification(e, state.username)
+					}}>
 
-				{!state.exists && <h1>PROFILE NOT FOUND</h1>}
+				<img src="/Notification.png" className="Profile-Banner-Logos" alt="Notification"/>
+			</button>
+		</div>
 
-				{state.blocked && <h1>{state.username} has blocked you.</h1>}
+		<div className="Profile-Horizontal-Bar"/>
 
-				{state.exists && !state.blocked && <header className="Profile-bio">
-					<img className='Profile-picture' src={state.image} alt={"PFP of " + state.username}></img>
+		{!state.exists && <h1>PROFILE NOT FOUND</h1>}
 
-					<span className="Profile-info">
+		{state.blocked && <h1>{state.username} has blocked you.</h1>}
+
+		{state.exists && !state.blocked && <header className="Profile-bio">
+			<img className='Profile-picture' src={state.image} alt={"PFP of " + state.username}></img>
+
+			<span className="Profile-info">
 							<div>
 								<UserPermissionsEditProfile />
 								<span className="right-space"/>
@@ -437,90 +438,90 @@ function Profile() {
 								<BlockButton />
 							</div>
 					</span>
-				</header>}
-				
-				<div className="Profile-Horizontal-Bar"/>
+		</header>}
 
-			{state.exists && loggedin && !state.blocked && <header className="Timeline-Selector">
-                <button className="Timeline-Following"
+		<div className="Profile-Horizontal-Bar"/>
+
+		{state.exists && loggedin && !state.blocked && <header className="Timeline-Selector">
+			<button className="Timeline-Following"
 					onClick={(event) => {
 						switchView("Posts")
 					}}>
-					Posts
-				</button>
+				Posts
+			</button>
 
-                <div className="Timeline-Vertical-Bar"/>
+			<div className="Timeline-Vertical-Bar"/>
 
-                <button className="Timeline-Following"
+			<button className="Timeline-Following"
 					onClick={(event) => {
 						switchView("Likes")
 					}}>
-					Likes
-				</button>
+				Likes
+			</button>
 
-            </header>}
+		</header>}
 
-			<div className="Profile-Horizontal-Bar"/>
+		<div className="Profile-Horizontal-Bar"/>
 
-				{loggedin && !state.blocked && <header class="Profile-Posts-Wrapper">
-					{showPost().map((post)=>(
-						<div className="Profile-Post">
-							{!post.post.anon && <button className="Profile-Post-Name"
-								onClick={(event) => {
-									handleClickName(event, post.post.author)
+		{loggedin && !state.blocked && <header class="Profile-Posts-Wrapper">
+			{showPost().map((post)=>(
+				<div className="Profile-Post">
+					{!post.post.anon && <button className="Profile-Post-Name"
+												onClick={(event) => {
+													handleClickName(event, post.post.author)
+												}}>
+
+						<img className="Profile-Post-PFP" src={post.post.image} alt={"PFP of " + post.post.author}></img>
+						<b>@{post.post.author}</b>
+					</button>  }
+
+					{post.post.anon &&  <button className="Profile-Post-Name">
+						<b>@anon</b>
+					</button>  }
+
+					<p className="Profile-Post-Topic">Topic: {post.post.topic ?  post.post.topic: "None"}</p>
+
+					<button className="Profile-Post-Content"
+							onClick={(event) => {
+								handlePost(event, post.post.id)
+							}}>
+
+						<p>{post.post.contents}</p>
+					</button>
+
+
+					<button className="Profile-Like-Button"
+							onClick={(e) => {
+								handleLike(e, location.state.username, post.post.id)
+							}}>
+
+						<b>{post.post.likers.length}|{post.post.likers.includes(location.state.username)? "UNLIKE": "LIKE"}</b>
+					</button>
+
+					<div className="Profile-Likers"
+					>{post.post.likers.map((liker)=>(
+						<button className="Profile-Liker-Button"
+								onClick={(event) => {;
+									handleClickName(event, liker)
 								}}>
 
-								<img className="Profile-Post-PFP" src={post.post.image} alt={"PFP of " + post.post.author}></img>
-								<b>@{post.post.author}</b>
-							</button>  }
+							<b>@{liker}</b>
+						</button>
+					))}
+					</div>
 
-							{post.post.anon &&  <button className="Profile-Post-Name">
-								<b>@anon</b>
-							</button>  }
-
-							<p className="Profile-Post-Topic">Topic: {post.post.topic ?  post.post.topic: "None"}</p>
-
-							<button className="Profile-Post-Content" 
-								onClick={(event) => {
-									handlePost(event, post.post.id)
-								}}>
-								
-								<p>{post.post.contents}</p>
-							</button>
-							
-
-							<button className="Profile-Like-Button"
-									onClick={(e) => {
-										handleLike(e, location.state.username, post.post.id)
-									}}>
-									
-									<b>{post.post.likers.length}|{post.post.likers.includes(location.state.username)? "UNLIKE": "LIKE"}</b>
-							</button>
-
-							<div className="Profile-Likers"
-								>{post.post.likers.map((liker)=>(
-									<button className="Profile-Liker-Button" 
-										onClick={(event) => {;
-											handleClickName(event, liker)
-										}}>
-
-										<b>@{liker}</b> 
-									</button>
-								))}
-							</div>
-
-							{post.post.author===location.state.username && 
-							<button className="Profile-Like-Button"
+					{post.post.author===location.state.username &&
+						<button className="Profile-Like-Button"
 								onClick={(e) => {
 									deletePost(e, post.post.id)
 								}}>
-									
-								<b>Delete Post</b>
-							</button>}
-						</div>
-					))}
-				</header>}
-			</body>
+
+							<b>Delete Post</b>
+						</button>}
+				</div>
+			))}
+		</header>}
+		</body>
 	);
 }
 export default Profile;
