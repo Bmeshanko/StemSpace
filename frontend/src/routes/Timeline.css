@@ -149,6 +149,7 @@
     background-color: #5FAA4B;
     line-height: 1;
     border-style: hidden;
+    overflow-wrap: break-word;
 }
 
 .Timeline-Like-Button{
