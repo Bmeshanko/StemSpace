@@ -523,7 +523,7 @@ function Timeline() {
                                 
                         </div>} 
 
-                    { input.currentDMid === "" &&<h3>Ongoing Requests</h3>}
+                    { input.currentDMid === "" &&<h3 classname="DM-text">Ongoing Requests</h3>}
 
                     { input.currentDMid === "" && 
                         (input.DMS).map((DM)=>(
@@ -566,7 +566,7 @@ function Timeline() {
                             </div>))
                     }
 
-                    { input.currentDMid === "" &&<h3>Open DM's</h3>}
+                    { input.currentDMid === "" &&<h3 classname="DM-text">Open DMs</h3>}
 
                     { input.currentDMid === "" && 
                         (input.DMS).map((DM)=>(
